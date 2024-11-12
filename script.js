@@ -30,7 +30,7 @@ function clickItem(item, index) {
 
 function offsetMenuBorder(element, menuBorder) {
     const offsetActiveItem = element.getBoundingClientRect();
-    const left = Math.floor(offsetActiveItem.left - menu.offsetLeft - (menuBorder.offsetWidth - offsetActiveItem.width) / 2) + "px";
+    const left = Math.floor(offsetActiveItem.left - menu.offsetLeft - (menuBorder.offsetWidth - offsetActiveItem.width) / 4) + "px";
     menuBorder.style.transform = `translate3d(${left}, 0 , 0)`;
 }
 
