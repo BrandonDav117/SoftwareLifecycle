@@ -29,19 +29,74 @@ body{
 
 }
 
-.menu {
+#menu1 {
     margin: 10;
     display: flex;
-    width: 90vw;
-    font-size: 1.5em;
-    padding: 0 2.85em;
-    position: fixed; /* Change from relative to fixed */
-    bottom: 0; /* Place it at the bottom of the page */
+    width: 27.5vw; /* Adjusted width to fit on the left */
+    font-size: 1.2em;
+    padding-top: 5px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    position: fixed;
+    bottom: 0;
+    left: 3%; /* Align to the left side */
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
-    border-radius: 20px;
+    border-radius: 10px;
 }
+
+#menu2 {
+    margin: 10;
+    display: flex;
+    width: 31vw; /* Adjusted width to fit on the left */
+    font-size: 1.2em;
+    padding-top: 5px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    position: fixed;
+    bottom: 0;
+    left: 32.5%; /* Center horizontally */
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgColorMenu);
+    border-radius: 10px;
+}
+
+#menu3 {
+    margin: 10;
+    display: flex;
+    width: 19vw; /* Adjusted width to fit on the left */
+    font-size: 1.2em;
+    padding-top: 5px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    position: fixed;
+    bottom: 0;
+    left: 65%; /* Center horizontally */
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgColorMenu);
+    border-radius: 10px;
+}
+
+#menu4 {
+    margin: 10;
+    display: flex;
+    width: 8vw; /* Adjusted width to fit on the left */
+    font-size: 1.2em;
+    padding-top: 5px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    position: fixed;
+    bottom: 0;
+    left: 86%; /* Center horizontally */
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgColorMenu);
+    border-radius: 10px;
+}
+
 
 .containerTest {
     margin: 0;
@@ -78,8 +133,8 @@ body{
     
     content: "";
     z-index: -1;
-    width: 4.2em;
-    height: 4.2em;
+    width: 4em;
+    height: 4em;
     border-radius: 50%;
     position: absolute;
     transform: scale(0);
@@ -96,7 +151,7 @@ body{
 
 .menu__item.active::before{
     
-    transform: scale(1.4);
+    transform: scale(1.2);
     background-color: var(--bgColorItem);
 
 }
@@ -135,8 +190,8 @@ body{
 
     left: 0;
     bottom: 99%;
-    width: 10.9em;
-    height: 2.4em;
+    width: 7vw;
+    height: 2.9vw;
     position: absolute;
     clip-path: url(#menu);
     will-change: transform;
@@ -148,7 +203,7 @@ body{
 .text {
     font-family: sans-serif;
     color: whitesmoke;
-    font-size: 16px; 
+    font-size: 1rem; 
     text-align: center;
 }
 
@@ -160,8 +215,39 @@ body{
 }
 
 
-@media screen and (max-width: 50em) {
+@media screen and (max-width: 80em) {
     .menu{
-        font-size: .8em;
+        font-size: .5rem;
+
+        margin: 10;
+        display: flex;
+        width: 40vw;
+
+        padding: 0 2.85em;
+        position: fixed; /* Change from relative to fixed */
+        bottom: 0; /* Place it at the bottom of the page */
     }
+}
+
+    @media screen and (max-width: 80em) {
+        .text{
+            font-size: .6rem;
+        }
+}
+    @media screen and (max-width: 50em) {
+        .text{
+            font-size: .5rem;
+        }
+}
+    @media screen and (max-width: 60em) {
+        .menu__item.active::before{
+            transform: scale(0.6);
+            background-color: var(--bgColorItem);
+        }
+}
+    @media screen and (max-width: 40em) {
+        .menu__item.active::before{
+            transform: scale(0.51);
+            background-color: var(--bgColorItem);
+        }
 }
