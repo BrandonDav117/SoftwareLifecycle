@@ -282,8 +282,8 @@ body{
 
     left: 0;
     bottom: 99%;
-    width: 5vw;
-    height: 2.9vw;
+    height: 3vw;
+    width: 6.5vw;
     position: absolute;
     clip-path: url(#menu);
     will-change: transform;
