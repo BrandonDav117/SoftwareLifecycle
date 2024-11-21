@@ -140,10 +140,11 @@ body{
     z-index: 1;
     align-items: left;
     border: 3px solid black;
+    text-align: left;
 }
 
 #title {
-    align-self: center;
+    text-align: center;
     font-size: 1.5rem;
     font-weight: bolder;
     margin-bottom: 15px;
@@ -177,18 +178,31 @@ body{
     top: 4%;
     bottom: 2%;
     left: 2%;
-    display: flex;
     font-size: 1.5em;
-    padding: 0 2.85em;
     position: fixed;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
-    color: white;
+    background-color: transparent;
+    border: 3px solid black;
     font-family: sans-serif;
     border-radius: 20px;
     z-index: 1;
+
+    display: flex; /* Flex container */
+    flex-direction: row; /* Align items in a horizontal row */
+    justify-content: space-around; /* Distribute items evenly with space between them */
+    align-items: stretch; /* Ensure children stretch to the parent's height */
+    padding: 10px; /* Add padding inside the container */
 }
+
+.subCategory {
+    width: 20%; /* Set width for each subCategory */
+    text-align: center;
+    height: 98%; /* Retain the original height */
+    border: 3px solid black;
+    border-radius: 20px;
+    box-sizing: border-box; /* Ensure padding and border don’t expand dimensions */
+    z-index: 2;
+}
+
 
 
 .menu__item {
@@ -229,7 +243,7 @@ body{
 
 .menu__item.active::before{
     
-    transform: scale(1.2);
+    transform: scale(1.25);
     background-color: var(--bgColorItem);
 
 }
@@ -268,7 +282,7 @@ body{
 
     left: 0;
     bottom: 99%;
-    width: 7vw;
+    width: 5vw;
     height: 2.9vw;
     position: absolute;
     clip-path: url(#menu);
