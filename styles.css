@@ -101,6 +101,45 @@ body{
     text-align: center;
 }
 
+#preloader {
+    animation: fadeOut 3s forwards; /* Fade out background */
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+#preloader.active .icon {
+    animation: strok 1.5s reverse;
+}
+
+.reverse-animation {
+    animation: strok 1.5s reverse forwards; /* Play animation in reverse */
+}
+
+.reverse-animation .icon {
+    animation: strok 1.5s forwards reverse;
+}
+
+.menu__item.active .icon {
+    animation: strok 3s reverse;
+}
+
+@keyframes strok {
+
+    100% {
+
+        stroke-dashoffset: 400;
+
+    }
+
+}
+
 .containerTest {
     margin: 0;
     width: 98.5vw;
@@ -120,6 +159,30 @@ body{
     font-family: sans-serif;
     border-radius: 20px;
     z-index: 0;
+
+    display: none;
+    opacity: 0;
+}
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Apply fade-in animation */
+.containerTest.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+/* After the fade-in animation completes, make sure it's fully visible */
+.containerTest {
+    display: block; /* Ensure the container is visible */
 }
 
 .rightDisplay {
@@ -147,27 +210,32 @@ body{
     text-align: center;
     font-size: 1.5rem;
     font-weight: bolder;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 #heading {
     font-size: 1.2rem;
     font-weight: bold;
     margin-right: 20px;
-    margin-bottom: 10px;
+    display: none;
 }
 
 #sub-heading {
     font-size: 1rem;
-    margin-bottom: 40px;
+    margin-top: 2%;
     margin-right: 20px;
+}
+
+#sub-heading2 {
+    font-size: 1rem;
+    color: black;
 }
 
 #border {
     border-bottom: 3px solid black;
     margin-left: -8%;
     margin-right: -8%;
-    margin-top: -4%;
+    margin-top: 4%;
     margin-bottom: 20px;
 }
 
@@ -180,7 +248,7 @@ body{
     left: 2%;
     font-size: 1.5em;
     position: fixed;
-    background-color: transparent;
+    background-color: white;
     border: 3px solid black;
     font-family: sans-serif;
     border-radius: 20px;
@@ -188,22 +256,68 @@ body{
 
     display: flex; /* Flex container */
     flex-direction: row; /* Align items in a horizontal row */
-    justify-content: space-around; /* Distribute items evenly with space between them */
-    align-items: stretch; /* Ensure children stretch to the parent's height */
+    justify-content: flex-start; /* Items start from the left */
+    align-items: center; /* Center items vertically */
     padding: 10px; /* Add padding inside the container */
+
+    overflow: auto; /* Enable scrolling */
+    scroll-behavior: smooth; /* Smooth scroll for better UX */
 }
+
+.leftDisplay::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge */
+}
+
 
 .subCategory {
-    width: 20%; /* Set width for each subCategory */
-    text-align: center;
-    height: 98%; /* Retain the original height */
+    flex: 0 0 auto; 
+    width: 12vw; /* Fixed width */
+    height: 98%; /* Almost full height */
     border: 3px solid black;
     border-radius: 20px;
-    box-sizing: border-box; /* Ensure padding and border don’t expand dimensions */
+    box-sizing: border-box;
     z-index: 2;
+    text-align: center;
+    background-color: black;
+
+    /* Optional: Add margin to space them out */
+    margin-right: 10px;
+    
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-start; /* Align content to the top vertically */
+    align-items: center; /* Center content horizontally */
+    padding-top: 10px; /* Optional: Adds some space between the content and the top of the subCategory */
 }
 
+.active-subcategory {
+    border: 2px solid #ff6f61; /* Highlight color */
+    border-radius: 8px; /* Optional, for rounded corners */
+    padding: 5px; /* Adjust as needed */
+    transition: border-color 0.3s ease; /* Smooth transition */
+  }
+  
 
+.end-spacer {
+    flex-shrink: 0; 
+    width: 50vw; 
+    height: 1px;
+  }
+  
+  .subCategoryPart {
+    width: 95%;
+    height: 10%; 
+    border: 3px solid black;
+    border-radius: 20px;
+    z-index: 3;
+    background-color: white;
+    cursor: pointer;
+
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Align content to the top vertically */
+    align-items: center; /* Center content horizontally */
+}
 
 .menu__item {
     all: unset;
@@ -250,32 +364,18 @@ body{
 
 .icon{
     
-    width: 2.6em;
-    height: 2.6em;
+    width: 15vw;
+    height: 15vw;
     stroke: white;
     fill: transparent;
-    stroke-width: 1pt;
+    stroke-width: 0.5pt;
     stroke-miterlimit: 10;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 400;
+    background-color: black;
+    border-radius: 20px;
     
-}
-
-.menu__item.active .icon {
-
-    animation: strok 1.5s reverse;
-    
-}
-
-@keyframes strok {
-
-    100% {
-
-        stroke-dashoffset: 400;
-
-    }
-
 }
 
 .menu__border{
