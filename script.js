@@ -44,7 +44,11 @@ const subCategoryContent = [
   { title: "Start", heading: "Need", subHeading: "", description: "It is a good idea to start your project by identifying an unmet clinical need. To do this, you will need to immerse yourself in a clinical setting and use this experience to identify a problem that requires solving." },
   { title: "Start", heading: "Idea", subHeading: "", description: "During the process of understanding the clinical problem you have identified, you may have an innovative idea for a potential solution. This can range from an elegant engineering solution to the development of a novel technology. " },
   { title: "Start", heading: "Device Class", subHeading: "", description: "Once you have a firm vision of your software medical device, it is important to ascertain its medical device class. You will need to do this for each regulatory jurisdiction within which you intend to market your device. The device class will determine the exact regulatory path and the documentation that will need to be produced." },
-  { title: "Company", heading: "Placeholder Heading 3", subHeading: "Placeholder SubHeading 3", description: "This is a placeholder description for subcategory 3." }
+  { title: "Company", heading: "Placeholder Heading 3", subHeading: "Placeholder SubHeading 3", description: "This is a placeholder description for subcategory 3." },
+  { title: "QMS", heading: "Need", subHeading: "", description: "It is a good idea to start your project by identifying an unmet clinical need. To do this, you will need to immerse yourself in a clinical setting and use this experience to identify a problem that requires solving." },
+  { title: "QMS", heading: "Idea", subHeading: "", description: "During the process of understanding the clinical problem you have identified, you may have an innovative idea for a potential solution. This can range from an elegant engineering solution to the development of a novel technology. " },
+  { title: "QMS", heading: "Device Class", subHeading: "", description: "Once you have a firm vision of your software medical device, it is important to ascertain its medical device class. You will need to do this for each regulatory jurisdiction within which you intend to market your device. The device class will determine the exact regulatory path and the documentation that will need to be produced." },
+  { title: "QMS", heading: "Placeholder Heading 3", subHeading: "Placeholder SubHeading 3", description: "This is a placeholder description for subcategory 3." },
 ];
 
 // Function to handle menu item click
