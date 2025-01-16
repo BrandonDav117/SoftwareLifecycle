@@ -21,7 +21,7 @@ body{
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    background-color: #ffb457;
+    background-color: whitesmoke;
     -webkit-tap-highlight-color: transparent;
     transition: background-color var(--duration);
 
@@ -196,7 +196,7 @@ body{
     font-size: 1rem;
     position: fixed;
     flex-direction: column; /* Arrange children vertically */
-    background-color: orange;
+    background-color: black;
     color: white;
     font-family: sans-serif;
     border-radius: 20px;
@@ -204,6 +204,9 @@ body{
     align-items: left;
     border: 3px solid black;
     text-align: left;
+
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color var(--duration);
 }
 
 #title {
@@ -321,14 +324,13 @@ body{
 
 .subCategoryPartContinuous {
     width: 200%;
-    text-align: left;
-    padding-left: 2vw;
     height: 10%; 
     border: 3px solid black;
+    text-align: left;
     border-radius: 20px;
-    z-index: 6;
+    padding-left: 2vw;
+    z-index: 3;
     background-color: yellow;
-    color: white;
     cursor: pointer;
 
     display: flex; /* Enable Flexbox */
@@ -338,7 +340,7 @@ body{
 
     position: absolute;
     top: 56%;   /* 50px from the top of the containing block */
-    left: 40%; /* 100px from the left of the containing block */
+    left: 40.2%; /* 100px from the left of the containing block */
 }
 
 .subCategoryPartContinuous:nth-child(2) {
