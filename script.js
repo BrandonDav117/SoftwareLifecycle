@@ -1,7 +1,7 @@
 "use strict";
 
 const body = document.body;
-const bgColorsBody = ["#ffb457", "#ff96bd", "#9999fb", "#ffe797", "#cffff1"];
+const bgColorsBody = ["#00b4d8", "#0390b7", "#0a7394", "#0a7394", "#8f58fa", "#8235f2", "#7323de", "#601dba", "501a98", "#dc2252", "#c9184a", "9b1640", "black"];
 
 const menus = [
   document.querySelector("#menu1"),

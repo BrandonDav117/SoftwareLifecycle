@@ -330,7 +330,7 @@ body{
     border-radius: 20px;
     padding-left: 2vw;
     z-index: 3;
-    background-color: yellow;
+    background-color: white;
     cursor: pointer;
 
     display: flex; /* Enable Flexbox */
