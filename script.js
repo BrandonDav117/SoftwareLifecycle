@@ -79,16 +79,11 @@ const subCategoryPartContinuousContent = [
   { title: "QMS", heading: "FDA/CE/UKCA", subHeading: "", description: "You will need to get regulatory approval for every region in which you intend to market your software. <br><br> FDA: To market your software in the U.S, you will need to gain FDA clearance. For software medical devices this typically requires FDA 510(k). <br><br> CE Marking: To market your software in the EU, you will need to gain CE Mark. <br><br> UKCA Marking: To market your software in the UK, you will need to gain a UKCA Mark. <br><br> Other jurisdictions have their own regulatory approaches which are predominantly based on the FDA or CE Marking processes." },
 ];
 
-// Adding event listeners to all .subCategoryPartContinuous elements
-document.querySelectorAll(".subCategoryPartContinuous").forEach((element, index) => {
-  element.addEventListener("click", () => {
-    // Update the content of #subCategoryPartContinuousContent with description including <br>
-    document.getElementById("subCategoryPartContinuousContent").innerHTML = subCategoryPartContinuousContent[index].description;
-  });
-});
+// Add a variable to track the current highlighted subcategory
+let currentHighlightedSubcategory = null;
 
-// Function to handle menu item click
 function clickMenuItem(menuIndex, item, itemIndex) {
+  // Reset active states for other menus
   menus.forEach((menu, i) => {
     if (i !== menuIndex && activeItems[i]) {
       activeItems[i].classList.remove("active");
@@ -96,6 +91,7 @@ function clickMenuItem(menuIndex, item, itemIndex) {
     }
   });
 
+  // Update the active item for the current menu
   if (activeItems[menuIndex]) {
     activeItems[menuIndex].classList.remove("active");
   }
@@ -104,17 +100,40 @@ function clickMenuItem(menuIndex, item, itemIndex) {
   activeItems[menuIndex] = item;
 
   const globalIndex = calculateGlobalIndex(menuIndex, itemIndex);
-  //body.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
-  rightDisplay.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
 
+  // Update the background color for the right display
+  rightDisplay.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
+  document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
+
+
+  // Update the right display content
   const menuId = menus[menuIndex].id;
   const menuContent = rightDisplayContent[menuId]?.[itemIndex];
   if (menuContent) {
     updateRightDisplay(menuContent);
   }
 
+  // Update menu border and scroll to the corresponding subcategory
   offsetMenuBorder(item, menuBorders[menuIndex], menus[menuIndex]);
+  scrollToSubcategoryWithHighlight(globalIndex); // Call the modified function
+}
+
+function scrollToSubcategoryWithHighlight(globalIndex) {
+  // Perform the scrolling logic (assumes scrollToSubcategory exists)
   scrollToSubcategory(globalIndex);
+
+  // Highlight the current subcategory
+  const subcategoryElements = document.querySelectorAll('.subCategory'); // Updated to match CSS class
+  const newSubcategory = subcategoryElements[globalIndex];
+
+  if (currentHighlightedSubcategory) {
+    currentHighlightedSubcategory.classList.remove('highlight'); // Remove highlight from the previous subcategory
+  }
+
+  if (newSubcategory) {
+    newSubcategory.classList.add('highlight'); // Add highlight to the current subcategory
+    currentHighlightedSubcategory = newSubcategory; // Update the reference
+  }
 }
 
 // Function to calculate global index

@@ -205,7 +205,6 @@ body{
     border: 3px solid black;
     text-align: left;
 
-    -webkit-tap-highlight-color: transparent;
     transition: background-color var(--duration);
 }
 
@@ -292,14 +291,13 @@ body{
     align-items: left; /* Center content horizontally */
     padding-top: 10px; /* Optional: Adds some space between the content and the top of the subCategory */
 }
-
-.active-subcategory {
-    border: 2px solid #ff6f61; /* Highlight color */
-    border-radius: 8px; /* Optional, for rounded corners */
-    padding: 5px; /* Adjust as needed */
-    transition: border-color 0.3s ease; /* Smooth transition */
-  }
   
+.subCategory.highlight {
+    /*background-color: green;*/
+    background-color: var(--highlight-color);
+    transition: background-color var(--duration);
+    font-weight: bold;
+}
 
 .end-spacer {
     flex-shrink: 0; 
