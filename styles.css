@@ -30,31 +30,31 @@ body{
 #menu1 {
     margin: 10;
     display: flex;
-    width: 27.5vw; /* Adjusted width to fit on the left */
+    width: 8vw; /* Adjusted width to fit on the left */
     font-size: 1.2rem;
     padding-top: 5px;
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
     bottom: 0;
-    left: 3%; /* Align to the left side */
+    left: 2%; /* Align to the left side */
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
 }
 
-#menu2 {
+ #menu2 {
     margin: 10;
     display: flex;
-    width: 31vw; /* Adjusted width to fit on the left */
+    width: 20vw; 
     font-size: 1.2rem;
     padding-top: 5px;
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
     bottom: 0;
-    left: 32.5%; /* Center horizontally */
+    left: 12.5%; 
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -64,14 +64,14 @@ body{
 #menu3 {
     margin: 10;
     display: flex;
-    width: 19vw; /* Adjusted width to fit on the left */
+    width: 30vw; 
     font-size: 1.2rem;
     padding-top: 5px;
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
     bottom: 0;
-    left: 65%; /* Center horizontally */
+    left: 35%; 
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -81,19 +81,36 @@ body{
 #menu4 {
     margin: 10;
     display: flex;
-    width: 8vw; /* Adjusted width to fit on the left */
+    width: 20vw; 
     font-size: 1.2rem;
     padding-top: 5px;
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
     bottom: 0;
-    left: 86%; /* Center horizontally */
+    left: 67.5%;
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
 }
+
+#menu5 {
+    margin: 10;
+    display: flex;
+    width: 8vw; 
+    font-size: 1.2rem;
+    padding-top: 5px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    position: fixed;
+    bottom: 0;
+    left: 90%; 
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgColorMenu);
+    border-radius: 10px;
+} 
 
 .text {
     font-family: sans-serif;
@@ -163,7 +180,6 @@ body{
     display: none;
     opacity: 0;
 }
-
 
 /* Fade-in animation */
 @keyframes fadeIn {
@@ -301,7 +317,7 @@ body{
 
 .end-spacer {
     flex-shrink: 0; 
-    width: 50vw; 
+    width: 70vw; 
     height: 1px;
   }
   

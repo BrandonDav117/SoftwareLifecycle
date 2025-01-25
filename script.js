@@ -1,13 +1,14 @@
 "use strict";
 
 const body = document.body;
-const bgColorsBody = ["#00b4d8", "#0390b7", "#0a7394", "#0a7394", "#8f58fa", "#8235f2", "#7323de", "#601dba", "501a98", "#dc2252", "#c9184a", "9b1640", "black"];
+const bgColorsBody = ["black", "#0390b7", "#0a7394", "#0a7394", "#8f58fa", "#8235f2", "#7323de", "#601dba", "#501a98", "#dc2252", "#c9184a", "#9b1640", "black"];
 
 const menus = [
   document.querySelector("#menu1"),
   document.querySelector("#menu2"),
   document.querySelector("#menu3"),
-  document.querySelector("#menu4")
+  document.querySelector("#menu4"),
+  document.querySelector("#menu5")
 ];
 
 const rightDisplay = document.querySelector(".rightDisplay");
@@ -19,24 +20,26 @@ let menuBorders = menus.map(menu => menu.querySelector(".menu__border"));
 const rightDisplayContent = {
   menu1: [
     { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "" },
+  ],
+  menu2: [
     { title: "Company", heading: "Organize", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "Establish a legal company structure and define the roles and responsibilities for the team." },
     { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "Ensure that your development and documentation adhere to the relevant standards such as ISO 13485." },
     { title: "Tech File", heading: "Technical File", subHeading: "Prepare documentation to demonstrate compliance.", description: "Compile the necessary technical documentation, including risk assessments, for your medical device." }
   ],
-  menu2: [
+  menu3: [
     { title: "Specify", heading: "Requirements", subHeading: "Define the functional and non-functional requirements.", description: "Clearly specify what your device should do and the conditions it must meet." },
     { title: "Design", heading: "Design Specifications", subHeading: "Develop detailed plans for your device.", description: "Draft the design inputs and outputs, including system architecture and user interface." },
     { title: "Implement", heading: "Development", subHeading: "Turn your design into reality.", description: "Code and build the device, ensuring adherence to design specifications." },
     { title: "Verify", heading: "Verification", subHeading: "Check the implementation against the design.", description: "Conduct verification activities to ensure the product meets design specifications." },
     { title: "Validate", heading: "Validation", subHeading: "Ensure the device meets user needs.", description: "Perform validation to confirm the product satisfies the intended use." }
   ],
-  menu3: [
+  menu4: [
     { title: "Submit", heading: "Regulatory Submission", subHeading: "Prepare and submit your regulatory application.", description: "Compile the submission package and send it to the relevant regulatory authority." },
     { title: "Rollout", heading: "Product Launch", subHeading: "Introduce your device to the market.", description: "Plan and execute the marketing and distribution strategy." },
-    { title: "Maintain", heading: "Post-Market Surveillance", subHeading: "Monitor and maintain your product.", description: "Collect feedback, monitor performance, and handle any issues that arise post-launch." }
+    { title: "Maintain", heading: "Post-Market Surveillance", subHeading: "Monitor and maintain your product.", description: "Collect feedback, monitor performance, and handle any issues that arise post-launch." },
   ],
-  menu4: [
-    { title: "Finish", heading: "Project Completion", subHeading: "Wrap up and reflect on the project.", description: "Conduct a final review, archive documentation, and identify lessons learned for future projects." }
+  menu5: [
+    { title: "Finish", heading: "Project Completion", subHeading: "Wrap up and reflect on the project.", description: "Conduct a final review, archive documentation, and identify lessons learned for future projects." },
   ]
 };
 
