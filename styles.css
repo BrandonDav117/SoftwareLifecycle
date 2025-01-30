@@ -272,47 +272,102 @@ body{
     border-radius: 20px;
     z-index: 1;
 
-    display: flex; /* Flex container */
-    flex-direction: row; /* Align items in a horizontal row */
-    justify-content: flex-start; /* Items start from the left */
-    align-items: center; /* Center items vertically */
+    display: flex; /* Enable Flexbox */
+    flex-direction: row; /* Keep the items in a horizontal row */
+    align-items: flex-end; /* Align items to the bottom */
+    justify-content: flex-start; /* Keep them aligned to the left */
     padding: 10px; /* Add padding inside the container */
 
     overflow: auto; /* Enable scrolling */
     scroll-behavior: smooth; /* Smooth scroll for better UX */
 }
 
+
 .leftDisplay::-webkit-scrollbar {
     display: none; /* Chrome, Safari, and Edge */
+}
+
+.categoryHeadings {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: black;
+    background-color: rgba(128, 128, 128, 0.5); /* Slightly transparent grey */
+    width: 52%;
+    height: 2.5vw;
+    text-align: center;
+
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Align content to the top vertically */
+    align-items: left; /* Center content horizontally */
+
+    /* Add black borders on the left and right */
+    border-left: 0.2vw dashed black; /* Adjust thickness as needed */
+    border-right: 0.2vw dashed black; /* Adjust thickness as needed */
+
+    position: absolute;
+    top: 2.6%;
+    left: 14vw; 
+    padding: 0 10px; /* Add some spacing to prevent text from touching the borders */
+}
+
+.categoryHeadings:nth-child(2) {
+    left: 51.9vw; 
+    width: 85%;
+}
+
+.categoryHeadings:nth-child(3) {
+    left: 108.8vw; 
+    width: 52%;
 }
 
 
 .subCategory {
     flex: 0 0 auto; 
-    width: 12vw; /* Fixed width */
-    height: 98%; /* Almost full height */
+    width: 18%; /* Fixed width */
+    height: 89%; /* Almost full height */
     border: 3px solid black;
     border-radius: 20px;
     box-sizing: border-box;
     z-index: 2;
     text-align: center;
     background-color: black;
+    opacity: 0.5;
 
     /* Optional: Add margin to space them out */
     margin-right: 10px;
+    margin-bottom: 1%;
     
     display: flex; /* Enable Flexbox */
     flex-direction: column; /* Stack items vertically */
     justify-content: flex-start; /* Align content to the top vertically */
     align-items: left; /* Center content horizontally */
     padding-top: 10px; /* Optional: Adds some space between the content and the top of the subCategory */
+
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.subCategory:hover {
+    background-color: #333; /* Dark gray background on hover */
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    border-color: #777; /* Optional: Change border color */
+    opacity: 1;
+}
+
+#extraheight {
+    height: 97%;
+}    
   
 .subCategory.highlight {
     /*background-color: green;*/
     background-color: var(--highlight-color);
     transition: background-color var(--duration);
-    font-weight: bold;
+    font-weight: bolder;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    opacity: 1;
 }
 
 .end-spacer {
@@ -334,18 +389,37 @@ body{
     flex-direction: column; /* Stack items vertically */
     justify-content: center; /* Align content to the top vertically */
     align-items: center; /* Center content horizontally */
+
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subCategoryPart:hover {
+    background-color: grey; /* Dark gray background on hover */
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    border-color: white; /* Optional: Change border color */
+    font-weight: bolder;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.subCategoryPart.clicked {
+    background-color: grey; /* Dark gray background on hover */
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    border-color: white; /* Optional: Change border color */
 }
 
 .subCategoryPartContinuous {
     width: 200%;
-    height: 10%; 
+    height: 9%; 
     border: 3px solid black;
     text-align: left;
     border-radius: 20px;
     padding-left: 2vw;
     z-index: 3;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
     cursor: pointer;
+    opacity: 0.5;
 
     display: flex; /* Enable Flexbox */
     flex-direction: column; /* Stack items vertically */
@@ -353,21 +427,31 @@ body{
     align-items: left; /* Center content horizontally */
 
     position: absolute;
-    top: 56%;   /* 50px from the top of the containing block */
-    left: 40.2%; /* 100px from the left of the containing block */
+    top: 60%;   /* 50px from the top of the containing block */
+    left: 41%; /* 100px from the left of the containing block */
+}
+
+.subCategoryPartContinuous:hover {
+    background-color: grey; /* Dark gray background on hover */
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    border-color: white; /* Optional: Change border color */
+    font-weight: bolder;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    opacity: 1;
 }
 
 .subCategoryPartContinuous:nth-child(2) {
-    top: 66%;   /* 50px from the top of the containing block */
+    top: 69%;   /* 50px from the top of the containing block */
 }
 
 
 .subCategoryPartContinuous:nth-child(3) {
-    top: 76%;   /* 50px from the top of the containing block */
+    top: 78%;   /* 50px from the top of the containing block */
 }
 
 .subCategoryPartContinuous:nth-child(4) {
-    top: 86%;   /* 50px from the top of the containing block */
+    top: 87%;   /* 50px from the top of the containing block */
 }
 
 .menu__item {
