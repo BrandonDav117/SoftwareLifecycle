@@ -43,6 +43,22 @@ const rightDisplayContent = {
   ]
 };
 
+const rightDisplayContent2 = [
+  { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "" },
+  { title: "Company", heading: "Organise", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "Establish a legal company structure and define the roles and responsibilities for the team." },
+  { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "Ensure that your development and documentation adhere to the relevant standards such as ISO 13485." },
+  { title: "Tech File", heading: "Technical File", subHeading: "Prepare documentation to demonstrate compliance.", description: "Compile the necessary technical documentation, including risk assessments, for your medical device." },
+  { title: "Specify", heading: "Defining Requirements", subHeading: "Define the functional and non-functional requirements.", description: "Clearly specify what your device should do and the conditions it must meet." },
+  { title: "Design", heading: "Design Specifications", subHeading: "Develop detailed plans for your device.", description: "Draft the design inputs and outputs, including system architecture and user interface." },
+  { title: "Implement", heading: "Development", subHeading: "Turn your design into reality.", description: "Code and build the device, ensuring adherence to design specifications." },
+  { title: "Verify", heading: "Verification", subHeading: "Check the implementation against the design.", description: "Conduct verification activities to ensure the product meets design specifications." },
+  { title: "Validate", heading: "Validation", subHeading: "Ensure the device meets user needs.", description: "Perform validation to confirm the product satisfies the intended use." },
+  { title: "Submit", heading: "Regulatory Submission", subHeading: "Prepare and submit your regulatory application.", description: "Compile the submission package and send it to the relevant regulatory authority." },
+  { title: "Rollout", heading: "Product Launch", subHeading: "Introduce your device to the market.", description: "Plan and execute the marketing and distribution strategy." },
+  { title: "Maintain", heading: "Post-Market", subHeading: "Monitor and maintain your product.", description: "Collect feedback, monitor performance, and handle any issues that arise post-launch." },
+  { title: "Finish", heading: "Project Completion", subHeading: "Wrap up and reflect on the project.", description: "Conduct a final review, archive documentation, and identify lessons learned for future projects." },
+];
+
 const subCategoryContent = [
   { title: "Start", heading: "Need", subHeading: "", description: "It is a good idea to start your project by identifying an unmet clinical need. To do this, you will need to immerse yourself in a clinical setting and use this experience to identify a problem that requires solving." },
   { title: "Start", heading: "Idea", subHeading: "", description: "During the process of understanding the clinical problem you have identified, you may have an innovative idea for a potential solution. This can range from an elegant engineering solution to the development of a novel technology. " },
@@ -108,13 +124,40 @@ function clickMenuItem(menuIndex, item, itemIndex) {
   rightDisplay.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
   document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
 
+  // Update the right display content
+  const menuId = menus[menuIndex].id;
+  const menuContent = rightDisplayContent[menuId]?.[itemIndex];
+  if (menuContent) {
+    updateRightDisplay(menuContent);
+  }
 
-  // // Update the right display content
-  // const menuId = menus[menuIndex].id;
-  // const menuContent = rightDisplayContent[menuId]?.[itemIndex];
-  // if (menuContent) {
-  //   updateRightDisplay(menuContent);
-  // }
+  // Update menu border and scroll to the corresponding subcategory
+  offsetMenuBorder(item, menuBorders[menuIndex], menus[menuIndex]);
+  scrollToSubcategoryWithHighlight(globalIndex); // Call the modified function
+}
+
+function clickMenuItem2(menuIndex, item, itemIndex) {
+  // Reset active states for other menus
+  menus.forEach((menu, i) => {
+    if (i !== menuIndex && activeItems[i]) {
+      activeItems[i].classList.remove("active");
+      resetMenuBorder(menuBorders[i]);
+    }
+  });
+
+  // Update the active item for the current menu
+  if (activeItems[menuIndex]) {
+    activeItems[menuIndex].classList.remove("active");
+  }
+
+  item.classList.add("active");
+  activeItems[menuIndex] = item;
+
+  const globalIndex = calculateGlobalIndex(menuIndex, itemIndex);
+
+  // Update the background color for the right display
+  rightDisplay.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
+  document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
 
   // Update menu border and scroll to the corresponding subcategory
   offsetMenuBorder(item, menuBorders[menuIndex], menus[menuIndex]);
@@ -163,19 +206,50 @@ function scrollToSubcategory(globalIndex) {
   }
 }
 
-function clickSubCategoryPart(index, isContinuous = false) {
+// Initialize subCategoryParts and subCategoryPartContinuous
+const subCategory = document.querySelectorAll(".subCategory");
+const subCategoryParts = document.querySelectorAll(".subCategoryPart");
+const subCategoryPartContinuous = document.querySelectorAll(".subCategoryPartContinuous");
+
+subCategory.forEach((div, index) => {
+  div.addEventListener("click", () => {
+    console.log("subCategory Triggered");
+    clickSubCategoryPart(index, "subCategory"); // Use the original index
+  });
+});
+
+subCategoryParts.forEach((div, index) => {
+  div.addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent the click event from bubbling up
+    console.log("subCategoryPart Triggered");
+    clickSubCategoryPart(index, "subCategoryPart"); // Use the original index
+  });
+});
+
+subCategoryPartContinuous.forEach((div, index) => {
+  div.addEventListener("click", () => {
+    console.log("subCategoryContinuous Triggered");
+    clickSubCategoryPart(index, "subCategoryPartContinuous"); // Use the original index
+  });
+});
+
+function clickSubCategoryPart(index, source = "") {
   let content;
 
-  if (isContinuous) {
+  if (source === 'subCategoryPartContinuous') {
+    console.log("Continuous Condition Has Been Met");
     // If it's a continuous subcategory part, use subCategoryPartContinuousContent
-    content = subCategoryPartContinuousContent[index - subCategoryParts.length] || {
+    content = subCategoryPartContinuousContent[index] || {
       title: "Test",
       heading: "Test",
       subHeading: "",
       description: "Default continuous description."
     };
-  } else {
+  } 
+  
+  if (source === 'subCategoryPart') {
     // Ensure we fetch content from subCategoryContent (for subCategoryParts)
+    console.log("SubCategoryPart Condition Has Been Met");
     content = subCategoryContent[index] || {
       title: "Custom SubCategory",
       heading: "Dynamic Heading",
@@ -184,7 +258,16 @@ function clickSubCategoryPart(index, isContinuous = false) {
     };
   }
 
-  console.log(`Clicked SubCategoryPart: ${content.title}`);
+  if (source === 'subCategory') {
+    console.log("SubCategory Condition Has Been Met");
+        // If triggered by subCategory, use rightDisplayContent index
+      content = rightDisplayContent2[index] || {
+        title: "Right Display Title",
+        heading: "Right Display Heading",
+        subHeading: "Right Display SubHeading",
+        description: "This content is displayed when triggered by a subCategory link."
+     };
+  }
 
   // Ensure correct text is displayed in the right panel
   updateRightDisplay(content);
@@ -200,12 +283,11 @@ function clickSubCategoryPart(index, isContinuous = false) {
     if (itemIndex !== -1) {
       const menuItem = menus[menuIndex].querySelectorAll(".menu__item")[itemIndex];
       if (menuItem) {
-        clickMenuItem(menuIndex, menuItem, itemIndex);
+        clickMenuItem2(menuIndex, menuItem, itemIndex);
       }
     }
   }
 }
-
 
 // Function to update the right display content
 function updateRightDisplay(content) {
@@ -240,20 +322,6 @@ menus.forEach((menu, menuIndex) => {
     item.classList.remove("active");
     item.addEventListener("click", () => clickMenuItem(menuIndex, item, itemIndex));
   });
-});
-
-// Initialize subCategoryParts and subCategoryPartContinuous
-const subCategoryParts = document.querySelectorAll(".subCategoryPart");
-const subCategoryPartContinuous = document.querySelectorAll(".subCategoryPartContinuous");
-
-// Adjust the index for continuous parts by offsetting the index
-subCategoryParts.forEach((div, index) => {
-  div.addEventListener("click", () => clickSubCategoryPart(index));  // Use the original index
-});
-
-subCategoryPartContinuous.forEach((div, index) => {
-  const adjustedIndex = subCategoryParts.length + index;  // Offset index to avoid overlap
-  div.addEventListener("click", () => clickSubCategoryPart(adjustedIndex, true));  // Pass the adjusted index
 });
 
 // Function to update rightDisplay content
