@@ -17,6 +17,7 @@ const leftDisplay = document.querySelector(".leftDisplay");
 let activeItems = [null, null, null, null];
 let menuBorders = menus.map(menu => menu.querySelector(".menu__border"));
 
+
 const rightDisplayContent = {
   menu1: [
     { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "" },
@@ -214,7 +215,15 @@ const subCategoryPartContinuous = document.querySelectorAll(".subCategoryPartCon
 subCategory.forEach((div, index) => {
   div.addEventListener("click", () => {
     console.log("subCategory Triggered");
-    clickSubCategoryPart(index, "subCategory"); // Use the original index
+    clickSubCategoryPart(index, "subCategory"); 
+  });
+});
+
+subCategoryPartContinuous.forEach((div, index) => {
+  div.addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent the click event from bubbling up
+    console.log("subCategoryContinuous Triggered");
+    clickSubCategoryPart(index, "subCategoryPartContinuous"); 
   });
 });
 
@@ -222,16 +231,10 @@ subCategoryParts.forEach((div, index) => {
   div.addEventListener("click", (event) => {
     event.stopPropagation(); // Prevent the click event from bubbling up
     console.log("subCategoryPart Triggered");
-    clickSubCategoryPart(index, "subCategoryPart"); // Use the original index
+    clickSubCategoryPart(index, "subCategoryPart");
   });
 });
 
-subCategoryPartContinuous.forEach((div, index) => {
-  div.addEventListener("click", () => {
-    console.log("subCategoryContinuous Triggered");
-    clickSubCategoryPart(index, "subCategoryPartContinuous"); // Use the original index
-  });
-});
 
 function clickSubCategoryPart(index, source = "") {
   let content;
@@ -244,7 +247,7 @@ function clickSubCategoryPart(index, source = "") {
       heading: "Test",
       subHeading: "",
       description: "Default continuous description."
-    };
+    }; 
   } 
   
   if (source === 'subCategoryPart') {
