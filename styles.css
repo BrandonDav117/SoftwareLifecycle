@@ -355,7 +355,7 @@ body{
 
 .headingsDivider {
     position: absolute;
-    height: 200%;
+    height: 119%;
     width: 0%;
     
     border-left: 0.25vw solid black; /* Ensures only left border appears */
