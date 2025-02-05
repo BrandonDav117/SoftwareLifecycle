@@ -442,11 +442,7 @@ body{
 
 
 .subCategoryPart:hover {
-    background-color: grey; /* Dark gray background on hover */
     transform: scale(1.01); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    border-color: white; /* Optional: Change border color */
-    font-weight: bolder;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -457,13 +453,6 @@ body{
     border-color: white; /* Optional: Change border color */
     font-weight: bolder;
     transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.subCategoryPart.clicked {
-    background-color: grey; /* Dark gray background on hover */
-    transform: scale(1.01); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    border-color: white; /* Optional: Change border color */
 }
 
 .subCategoryPartContinuous {
@@ -484,6 +473,20 @@ body{
     top: 50%;
 }
 
+.subCategoryPartContinuous:hover {
+    transform: scale(1.01); /* Slight zoom */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.subCategoryPartContinuous.active {
+    background-color: grey; /* Dark gray background on hover */
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    border-color: white; /* Optional: Change border color */
+    font-weight: bolder;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
 #FullHeight {
     height: 100%;
     display: flex; 
@@ -495,14 +498,6 @@ body{
 
 #QMS {
     z-index: 900;
-}
-
-.subCategoryPartContinuous:hover {
-    background-color: grey; /* Dark gray background on hover */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    border-color: white; /* Optional: Change border color */
-    font-weight: bolder;
-    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .menu__item {

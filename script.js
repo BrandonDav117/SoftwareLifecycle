@@ -351,6 +351,7 @@ function updateRightDisplay(content) {
  // Clicked subCategoryPart Style Changes
  document.addEventListener("DOMContentLoaded", function () {
   const subCategoryParts = document.querySelectorAll(".subCategoryPart");
+  const subCategoryPartContinuous = document.querySelectorAll(".subCategoryPartContinuous");
   const subCategories = document.querySelectorAll(".subCategory");
   const menuItems = document.querySelectorAll(".menu__item");
 
@@ -366,7 +367,32 @@ function updateRightDisplay(content) {
   });
 
   // Clicking on .subCategory or .menu__item removes styles from .subCategoryPart
-  [...subCategories, ...menuItems].forEach(el => {
+  [...subCategories, ...menuItems, ...subCategoryPartContinuous].forEach(el => {
+      el.addEventListener("click", removeActiveClass);
+  });
+});
+
+
+ // Clicked subCategoryPartContinuous Style Changes
+ document.addEventListener("DOMContentLoaded", function () {
+  const subCategoryPartContinuous = document.querySelectorAll(".subCategoryPartContinuous");
+  const subCategoryParts = document.querySelectorAll(".subCategoryPart");
+  const subCategories = document.querySelectorAll(".subCategory");
+  const menuItems = document.querySelectorAll(".menu__item");
+
+  function removeActiveClass() {
+    subCategoryPartContinuous.forEach(elem => elem.classList.remove("active"));
+  }
+
+  subCategoryPartContinuous.forEach(el => {
+      el.addEventListener("click", function () {
+          removeActiveClass(); // Remove "active" class from all .subCategoryPart elements
+          this.classList.add("active"); // Add "active" class to the clicked element
+      });
+  });
+
+  // Clicking on .subCategory or .menu__item removes styles from .subCategoryPart
+  [...subCategories, ...menuItems, ...subCategoryParts].forEach(el => {
       el.addEventListener("click", removeActiveClass);
   });
 });
