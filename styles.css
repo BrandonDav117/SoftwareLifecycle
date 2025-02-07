@@ -547,7 +547,7 @@ body{
 
 .menu__item.active {
 
-    transform: translate3d(0, -.8em , 0);
+    transform: translate3d(0, -.6em , 0);
 
 }
 
@@ -675,5 +675,18 @@ body{
 @media screen and (max-width: 60em) {
     .menu__item.active {
         transform: translate3d(0, -.3em , 0);
+    }
+}
+
+@media screen and (max-width: 90em) {
+    .menu__item.active::before {
+        transform: scale(1.25);
+    }
+}
+
+
+@media screen and (max-width: 80em) {
+    .menu__item.active::before {
+        transform: scale(0.65);
     }
 }
