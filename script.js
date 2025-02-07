@@ -18,6 +18,23 @@ const bgColorsBody = [
   "rgba(0, 0, 0, 0.8)"       // rgba: rgba(0, 0, 0, 0.8)
 ];
 
+const bgColorsBody2 = [
+  "linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.3))", 
+  "rgba(3, 144, 183, 0.3)",  // rgba with 0.4 opacity
+  "rgba(10, 115, 148, 0.3)", // rgba with 0.4 opacity
+  "rgba(18, 93, 120, 0.3)",  // rgba with 0.4 opacity
+  "rgba(143, 88, 250, 0.3)", // rgba with 0.4 opacity
+  "rgba(130, 53, 242, 0.3)", // rgba with 0.4 opacity
+  "rgba(115, 35, 222, 0.3)", // rgba with 0.4 opacity
+  "rgba(96, 29, 186, 0.3)",  // rgba with 0.4 opacity
+  "rgba(80, 26, 152, 0.3)",  // rgba with 0.4 opacity
+  "rgba(220, 34, 82, 0.3)",  // rgba with 0.4 opacity
+  "rgba(201, 24, 74, 0.3)",  // rgba with 0.4 opacity
+  "rgba(155, 22, 64, 0.3)",  // rgba with 0.4 opacity
+  "rgba(0, 0, 0, 0.3)"       // rgba with 0.4 opacity
+];
+
+
 const menus = [
   document.querySelector("#menu1"),
   document.querySelector("#menu2"),
@@ -139,6 +156,7 @@ function clickMenuItem(menuIndex, item, itemIndex) {
   // Update the background color for the right display
   rightDisplay.style.background = bgColorsBody[globalIndex % bgColorsBody.length];
   document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
+  document.documentElement.style.setProperty('--highlight-color2', bgColorsBody2[globalIndex % bgColorsBody.length]);
 
 
   // Update the right display content
@@ -175,6 +193,7 @@ function clickMenuItem2(menuIndex, item, itemIndex) {
   // Update the background color for the right display
   rightDisplay.style.background = bgColorsBody[globalIndex % bgColorsBody.length];
   document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
+  document.documentElement.style.setProperty('--highlight-color2', bgColorsBody2[globalIndex % bgColorsBody.length]);
 
   // Update menu border and scroll to the corresponding subcategory
   offsetMenuBorder(item, menuBorders[menuIndex], menus[menuIndex]);

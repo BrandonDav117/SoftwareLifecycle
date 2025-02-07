@@ -25,6 +25,9 @@ body{
     -webkit-tap-highlight-color: transparent;
     transition: background-color var(--duration);
 
+    
+    background: var(--highlight-color2);
+
 }
 
 #menu1 {
@@ -158,6 +161,7 @@ body{
 }
 
 .containerTest {
+
     margin: 0;
     width: 98.5vw;
     height: 84vh;
@@ -280,6 +284,9 @@ body{
 }
 
 .leftDisplay {
+
+    background: whitesmoke;
+
     margin: 0;
     width: 65%;
     height: 80vh;
@@ -288,7 +295,6 @@ body{
     left: 2%;
     font-size: 1.5em;
     position: fixed;
-    background-color: white;
     border: 3px solid black;
     font-family: sans-serif;
     border-radius: 20px;
