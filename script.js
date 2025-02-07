@@ -1,7 +1,22 @@
 "use strict";
 
 const body = document.body;
-const bgColorsBody = ["black", "#0390b7", "#0a7394", "#0a7394", "#8f58fa", "#8235f2", "#7323de", "#601dba", "#501a98", "#dc2252", "#c9184a", "#9b1640", "black"];
+
+const bgColorsBody = [
+  "linear-gradient(to bottom, gray, black", 
+  "rgba(3, 144, 183, 0.8)",  // rgba: rgba(3, 144, 183, 0.8)
+  "rgba(10, 115, 148, 0.8)", // rgba: rgba(10, 115, 148, 0.8)
+  "rgba(18, 93, 120, 0.8)",  // rgba: rgba(18, 93, 120, 0.8)
+  "rgba(143, 88, 250, 0.8)", // rgba: rgba(143, 88, 250, 0.8)
+  "rgba(130, 53, 242, 0.8)", // rgba: rgba(130, 53, 242, 0.8)
+  "rgba(115, 35, 222, 0.8)", // rgba: rgba(115, 35, 222, 0.8)
+  "rgba(96, 29, 186, 0.8)",  // rgba: rgba(96, 29, 186, 0.8)
+  "rgba(80, 26, 152, 0.8)",  // rgba: rgba(80, 26, 152, 0.8)
+  "rgba(220, 34, 82, 0.8)",  // rgba: rgba(220, 34, 82, 0.8)
+  "rgba(201, 24, 74, 0.8)",  // rgba: rgba(201, 24, 74, 0.8)
+  "rgba(155, 22, 64, 0.8)",  // rgba: rgba(155, 22, 64, 0.8)
+  "rgba(0, 0, 0, 0.8)"       // rgba: rgba(0, 0, 0, 0.8)
+];
 
 const menus = [
   document.querySelector("#menu1"),
@@ -122,8 +137,9 @@ function clickMenuItem(menuIndex, item, itemIndex) {
   const globalIndex = calculateGlobalIndex(menuIndex, itemIndex);
 
   // Update the background color for the right display
-  rightDisplay.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
+  rightDisplay.style.background = bgColorsBody[globalIndex % bgColorsBody.length];
   document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
+
 
   // Update the right display content
   const menuId = menus[menuIndex].id;
@@ -138,7 +154,7 @@ function clickMenuItem(menuIndex, item, itemIndex) {
 }
 
 function clickMenuItem2(menuIndex, item, itemIndex) {
-  // Reset active states for other menus
+// Reset active states for other menus
   menus.forEach((menu, i) => {
     if (i !== menuIndex && activeItems[i]) {
       activeItems[i].classList.remove("active");
@@ -157,7 +173,7 @@ function clickMenuItem2(menuIndex, item, itemIndex) {
   const globalIndex = calculateGlobalIndex(menuIndex, itemIndex);
 
   // Update the background color for the right display
-  rightDisplay.style.backgroundColor = bgColorsBody[globalIndex % bgColorsBody.length];
+  rightDisplay.style.background = bgColorsBody[globalIndex % bgColorsBody.length];
   document.documentElement.style.setProperty('--highlight-color', bgColorsBody[globalIndex % bgColorsBody.length]);
 
   // Update menu border and scroll to the corresponding subcategory
@@ -165,8 +181,9 @@ function clickMenuItem2(menuIndex, item, itemIndex) {
   scrollToSubcategoryWithHighlight(globalIndex); // Call the modified function
 }
 
+// Scroll To Subcategory but Adds Active Highlight
 function scrollToSubcategoryWithHighlight(globalIndex) {
-  // Perform the scrolling logic (assumes scrollToSubcategory exists)
+
   scrollToSubcategory(globalIndex);
 
   // Highlight the current subcategory
@@ -292,14 +309,6 @@ function clickSubCategoryPart(index, source = "") {
   }
 }
 
-// Function to update the right display content
-function updateRightDisplay(content) {
-  rightDisplay.querySelector("#title").textContent = content.title || "Default Title";
-  rightDisplay.querySelector("#heading").textContent = content.heading || "Default Heading";
-  rightDisplay.querySelector("#sub-heading").textContent = content.subHeading || "Default Subheading";
-  rightDisplay.querySelector(".rightdisplayText4").textContent = content.description || "Default Description";
-}
-
 // Function to offset menu border
 function offsetMenuBorder(element, menuBorder, menu) {
   const offsetActiveItem = element.getBoundingClientRect();
@@ -327,7 +336,7 @@ menus.forEach((menu, menuIndex) => {
   });
 });
 
-// Function to update rightDisplay content
+// Function to update rightDisplay content with a smooth transition
 function updateRightDisplay(content) {
   const fields = {
     title: rightDisplay.querySelector("#title"),
@@ -336,17 +345,89 @@ function updateRightDisplay(content) {
     description: rightDisplay.querySelector(".rightdisplayText4")
   };
 
-  // Loop through each field and update visibility based on content
-  Object.keys(fields).forEach(field => {
-    const element = fields[field];
-    if (content[field]) {
-      element.innerHTML = content[field];
-      element.style.display = "block";  // Show if content exists
-    } else {
-      element.style.display = "none";  // Hide if no content
+  const border = rightDisplay.querySelector("#border"); // Select border separately
+
+  // Fade out the text and border first
+  Object.values(fields).forEach(element => {
+    element.style.opacity = "0"; // Start fade out
+  });
+
+  if (border) border.style.opacity = "0"; // Fade out the border
+
+  setTimeout(() => {
+    // Loop through each field and update visibility based on content
+    Object.keys(fields).forEach(field => {
+      const element = fields[field];
+      if (content[field]) {
+        // For description, apply innerHTML, for others just textContent
+        if (field === "description") {
+          element.innerHTML = content[field];  // Use innerHTML for description
+        } else {
+          element.textContent = content[field];  // Use textContent for other fields
+        }
+        element.style.display = "block";  // Show if content exists
+      } else {
+        element.style.display = "none";  // Hide if no content
+      }
+    });
+
+    // Fade in the text and border smoothly after changing content
+    setTimeout(() => {
+      Object.values(fields).forEach(element => {
+        element.style.opacity = "1"; // Start fade in
+      });
+
+      if (border) border.style.opacity = "1"; // Fade the border back in
+
+      typeWriterEffect(content);
+
+    }, 50); // Small delay before fading in
+  }, 300); // Allow fade-out duration before changing content
+}
+
+
+function typeWriterEffect(content) {
+  // Loop through each field in the content
+  Object.keys(content).forEach((field) => {
+    // Skip the description field
+    if (field === "description") {
+      return; // Skip typewriter effect for description
+    }
+
+    // Select the element by ID or Class, depending on how it's defined
+    const element = rightDisplay.querySelector(`#${field}`) || rightDisplay.querySelector(`.${field}`);
+    
+    // Check if element exists and content is available for it
+    if (element && content[field]) {
+      const text = content[field];
+      let i = 0;
+      let output = "";
+
+      // Start the typewriter effect with an interval for typing
+      const typeWriterInterval = setInterval(() => {
+        // Add one character at a time to the output string
+        output += text.charAt(i);
+        
+        // Update the innerHTML with the new output
+        element.innerHTML = output;
+
+        // Handle breaklines, preserving them in the output
+        if (output.includes("<br>")) {
+          output = output.replace("<br>", "");
+          element.innerHTML += "<br>";
+        }
+
+        i++;
+
+        // Stop the interval once all characters have been typed
+        if (i >= text.length) {
+          clearInterval(typeWriterInterval);
+        }
+      }, 50); // You can adjust the interval for typing speed
     }
   });
 }
+
 
  // Clicked subCategoryPart Style Changes
  document.addEventListener("DOMContentLoaded", function () {
@@ -427,4 +508,23 @@ window.addEventListener("resize", () => {
     if (activeItems[menuIndex]) offsetMenuBorder(activeItems[menuIndex], menuBorders[menuIndex], menu);
     else resetMenuBorder(menuBorders[menuIndex]);
   });
+});
+
+// Set the first menu item as active on page load, but only for menu1
+window.addEventListener('DOMContentLoaded', () => {
+  const menu1 = document.getElementById('menu1'); // Get menu1 by ID
+
+  if (menu1) {
+    // Find the first item in menu1
+    const firstItem = menu1.querySelector('.menu__item'); 
+
+    if (firstItem) {
+      // Get the index of menu1 in the `menus` array
+      const menuIndex = menus.indexOf(menu1);
+      if (menuIndex !== -1) {
+        // Set the first item as active in menu1
+        clickMenuItem(menuIndex, firstItem, 0);
+      }
+    }
+  }
 });

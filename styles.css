@@ -212,8 +212,7 @@ body{
     display: flex;
     font-size: 1rem;
     position: fixed;
-    flex-direction: column; /* Arrange children vertically */
-    background-color: black;
+    flex-direction: column;
     color: white;
     font-family: sans-serif;
     border-radius: 20px;
@@ -221,14 +220,13 @@ body{
     align-items: left;
     border: 3px solid black;
     text-align: left;
-    overscroll-behavior: contain; /* Prevents the scroll behavior from affecting other areas */
+    overscroll-behavior: contain;
+    overflow-y: auto;
+    max-height: 80vh;
+    background: linear-gradient(to bottom, gray, black);
 
-    transition: background-color var(--duration);
-
-    /* Make sure the container is scrollable vertically */
-    overflow-y: auto; /* Enables vertical scrolling */
-    max-height: 80vh; /* Ensures content doesn't overflow beyond this height */
-}
+    transition: background 1s ease; /* Add this line to apply smooth transition */
+  }
 
 /* Optional: If you have a specific content section inside .rightDisplay that should scroll, 
    you could target it specifically, for example: */
@@ -265,8 +263,13 @@ body{
 
 #sub-heading2 {
     font-size: 1rem;
-    color: black;
 }
+
+#title, #heading, #sub-heading, #border, .rightdisplayText4 {
+    transition: opacity 0.3s ease-in-out; /* Smooth fade effect */
+    opacity: 1; /* Ensure default visibility */
+}
+
 
 #border {
     border-bottom: 3px solid black;
@@ -344,14 +347,6 @@ body{
     border-right: 0.2vw dashed black;
 }
 
-.subCategory:hover {
-    background-color: #333; /* Dark gray background on hover */
-    transform: scale(1.01); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    border-color: #777; /* Optional: Change border color */
-    opacity: 1;
-}
-
 
 .headingsDivider {
     position: absolute;
@@ -375,14 +370,13 @@ body{
 
 .subCategory {
     flex: 0 0 auto; 
-    width: 10vw; /* Fixed width */
-    height: 89%; /* Almost full height */
+    width: 10vw; 
+    height: 89%; 
     border: 3px solid black;
     border-radius: 20px;
     box-sizing: border-box;
     z-index: 2;
     text-align: center;
-    background-color: black;
     opacity: 0.5;
     position: relative;
     cursor: pointer;
@@ -397,23 +391,28 @@ body{
     align-items: left; /* Center content horizontally */
     padding-top: 10px; /* Optional: Adds some space between the content and the top of the subCategory */
 
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.6s ease, background 0.6s ease, box-shadow 0.6s ease;
+    background: linear-gradient(to bottom, gray, black);
+    background-size: 200% 200%; /* Initial background size */
+}
+
+.subCategory:hover {
+    background: #333; /* Dark gray background on hover */
+    transform: scale(1.01); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    opacity: 1;
+}
+
+.subCategory.highlight {
+    background: var(--highlight-color); /* Supports solid colors */
+    transform: scale(1.02); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    opacity: 1;
 }
 
 #extraheight {
     height: 97%;
 }    
-  
-.subCategory.highlight {
-    /*background-color: green;*/
-    background-color: var(--highlight-color);
-    transition: background-color var(--duration);
-    font-weight: bolder;
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    transform: scale(1.01); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    opacity: 1;
-}
 
 .end-spacer {
     flex-shrink: 0; 
@@ -436,23 +435,28 @@ body{
     justify-content: center; /* Align content to the top vertically */
     align-items: center; /* Center content horizontally */
     padding: 10px; /* Adds some padding */
+    color: black;
     
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 
 .subCategoryPart:hover {
-    transform: scale(1.01); /* Slight zoom */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-weight: bolder;
+
+    border: 4px solid black;
+    transform: scale(1.02); /* Slight zoom */
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .subCategoryPart.active {
-    background-color: grey; /* Dark gray background on hover */
-    transform: scale(1.01); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    border-color: white; /* Optional: Change border color */
+    background-color: var(--highlight-color); 
+    color: white;
     font-weight: bolder;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    border-color: white;
+    transform: scale(1.03); /* Slight zoom */
+    transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .subCategoryPartContinuous {
@@ -469,22 +473,27 @@ body{
     justify-content: flex-start; 
     align-items: flex-start; 
     padding: 10px;
+    color: black;
 
     top: 50%;
 }
 
 .subCategoryPartContinuous:hover {
-    transform: scale(1.01); /* Slight zoom */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-weight: bolder;
+
+    border: 4px solid black;
+    transform: scale(1.001); /* Slight zoom */
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .subCategoryPartContinuous.active {
-    background-color: grey; /* Dark gray background on hover */
-    transform: scale(1.01); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    border-color: white; /* Optional: Change border color */
+    background-color: var(--highlight-color); 
+    color: white;
     font-weight: bolder;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    border-color: white;
+    transform: scale(1.01); /* Slight zoom */
+    transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 #FullHeight {
