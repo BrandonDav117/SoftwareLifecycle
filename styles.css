@@ -14,21 +14,80 @@ html *::after {
 
 }
 
-body{
-    
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-    background-color: whitesmoke;
-    -webkit-tap-highlight-color: transparent;
-    transition: background-color var(--duration);
-
-    
-    background: var(--highlight-color2);
-
+.startButton {
+    position: absolute;
+    top: 24%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 999;
 }
+
+#animation-container {
+    width: 85%; /* Adjust width as needed */
+    height: 85%; /* Adjust height as needed */
+    margin: 0 auto; /* Center horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+    bottom: 0%;
+}
+
+/* Preloader animation */
+#preloader.active .icon {
+    animation: strok 1.5s reverse;
+}
+
+/* Ensure elements start hidden with opacity 0 */
+.rightDisplay, .leftDisplay, .mainDisplayHeading, .startButton, .menu{
+    opacity: 0;
+    transition: opacity 1s ease-in; /* Fade in transition */
+}
+
+/* Preloader fade-out */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-out, visibility 1s ease-out;
+    pointer-events: none; /* Disable interactions during fade-out */
+    visibility: hidden; /* Optionally hide the element after fading */
+}
+
+/* Fade-in effect for elements */
+.fade-in {
+    opacity: 1;
+    transition: opacity 1.5s ease-in; /* Ensure smooth fade-in transition */
+}
+
+.icon{
+    
+    width: 15vw;
+    height: 15vw;
+    stroke: white;
+    fill: transparent;
+    stroke-width: 0.5pt;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    background-color: black;
+    border-radius: 20px;
+    z-index: 999;
+    visibility: hidden;
+    
+    position: absolute;
+    left: 42.5%;
+    top: 25%;
+}
+
 
 #menu1 {
     margin: 10;
@@ -115,131 +174,12 @@ body{
     border-radius: 10px;
 } 
 
+/* AllText */
 .text {
     font-family: sans-serif;
     color: whitesmoke;
     text-align: center;
 }
-
-#preloader {
-    animation: fadeOut 2.5s forwards; /* Fade out background */
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-#preloader.active .icon {
-    animation: strok 1.5s reverse;
-}
-
-.reverse-animation {
-    animation: strok 1.5s reverse forwards; /* Play animation in reverse */
-}
-
-.reverse-animation .icon {
-    animation: strok 1.5s forwards reverse;
-}
-
-.menu__item.active .icon {
-    animation: strok 3s reverse;
-}
-
-@keyframes strok {
-
-    100% {
-
-        stroke-dashoffset: 400;
-
-    }
-
-}
-
-.containerTest {
-
-    margin: 0;
-    width: 98.5vw;
-    height: 84vh;
-    top: 2%;
-    bottom: 2%;
-    display: flex;
-    font-size: 1.5em;
-    padding: 0 2.85em;
-    position: fixed;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column; /* Arrange children vertically */
-    transition: background-color var(--duration);
-    filter: blur(100);
-    color: white;
-    font-family: sans-serif;
-    border-radius: 20px;
-    z-index: 0;
-
-    display: none;
-    opacity: 0;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Apply fade-in animation */
-.containerTest.fade-in {
-    animation: fadeIn 1s forwards;
-}
-
-/* After the fade-in animation completes, make sure it's fully visible */
-.containerTest {
-    display: block; /* Ensure the container is visible */
-}
-
-.rightDisplay {
-    padding: 1%;
-    padding-right: 0.5%;
-    width: 30vw;
-    height: 80vh;
-    top: 4%;
-    bottom: 2%;
-    right: 2%;
-    display: flex;
-    font-size: 1rem;
-    position: fixed;
-    flex-direction: column;
-    color: white;
-    font-family: sans-serif;
-    border-radius: 20px;
-    z-index: 1;
-    align-items: left;
-    border: 3px solid black;
-    text-align: left;
-    overscroll-behavior: contain;
-    overflow-y: auto;
-    max-height: 80vh;
-    background: linear-gradient(to bottom, gray, black);
-
-    transition: background 1s ease; /* Add this line to apply smooth transition */
-  }
-
-/* Optional: If you have a specific content section inside .rightDisplay that should scroll, 
-   you could target it specifically, for example: */
-.rightDisplay .content {
-    max-height: 70vh;  /* Restrict height for the text content */
-    overflow-y: auto;  /* Enable scrolling for text */
-    padding-right: 10px; /* Optional padding for scrollbar */
-}
-
 
 #title {
     text-align: center;
@@ -274,7 +214,6 @@ body{
     opacity: 1; /* Ensure default visibility */
 }
 
-
 #border {
     border-bottom: 3px solid black;
     margin-top: 4%;
@@ -283,14 +222,131 @@ body{
     align-self: center;
 }
 
+body{
+    
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: whitesmoke;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color var(--duration);
+
+    
+    background: var(--highlight-color2);
+
+}
+
+.menu__item.active .icon {
+    animation: strok 3s reverse;
+}
+
+.reverse-animation {
+    animation: strok 1.5s reverse forwards;
+}
+
+.reverse-animation .icon {
+    animation: strok 1.5s forwards reverse;
+}
+
+
+@keyframes strok {
+
+    100% {
+
+        stroke-dashoffset: 400;
+
+    }
+
+}
+
+/* Main Containers */
+.containerTest {
+
+    margin: 0;
+    width: 98.5vw;
+    height: 84vh;
+    top: 2%;
+    bottom: 2%;
+    display: flex;
+    font-size: 1.5em;
+    padding: 0 2.85em;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: background-color var(--duration);
+    filter: blur(100);
+    color: white;
+    font-family: sans-serif;
+    border-radius: 20px;
+    z-index: 0;
+}
+
+.mainDisplayHeading {
+    position: fixed;
+    top: 15%;
+
+    text-align: center;
+    font-size: 2rem;
+    color: black;
+    font-weight: bolder;
+
+    height: auto;
+    width: 100%;
+    padding: 5px; 
+    padding-left: 6%;
+    padding-right: 6%;
+
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.rightDisplay {
+    padding: 1%;
+    padding-right: 0.5%;
+    width: 30vw;
+    height: 76vh;
+    top: 8.2%;
+    bottom: 2%;
+    right: 2%;
+    display: flex;
+    font-size: 1rem;
+    position: fixed;
+    flex-direction: column;
+    color: white;
+    font-family: sans-serif;
+    border-radius: 20px;
+    z-index: 1;
+    align-items: left;
+    border: 3px solid black;
+    text-align: left;
+    overscroll-behavior: contain;
+    overflow-y: auto;
+    max-height: 80vh;
+    background: linear-gradient(to bottom, gray, black);
+}
+
+/* Optional: If you have a specific content section inside .rightDisplay that should scroll, 
+   you could target it specifically, for example: */
+.rightDisplay .content {
+    max-height: 70vh;  /* Restrict height for the text content */
+    overflow-y: auto;  /* Enable scrolling for text */
+    padding-right: 10px; /* Optional padding for scrollbar */
+}
+
 .leftDisplay {
 
     background: whitesmoke;
 
     margin: 0;
     width: 65%;
-    height: 80vh;
-    top: 4%;
+    height: 76vh;
+    top: 8.2%;
     bottom: 2%;
     left: 2%;
     font-size: 1.5em;
@@ -426,7 +482,7 @@ body{
     height: 1px;
   }
   
-  .subCategoryPart {
+.subCategoryPart {
     width: auto; /* Adjust width based on content */
     max-width: 100%; /* Prevents it from overflowing its parent */
     height: auto; /* Adjusts the height based on content */
@@ -445,7 +501,6 @@ body{
     
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 .subCategoryPart:hover {
     font-weight: bolder;
@@ -544,7 +599,6 @@ body{
     
 }
 
-
 .menu__item.active {
 
     transform: translate3d(0, -.6em , 0);
@@ -556,25 +610,6 @@ body{
     transform: scale(1.25);
     background-color: var(--bgColorItem);
 
-}
-
-.icon{
-    
-    width: 15vw;
-    height: 15vw;
-    stroke: white;
-    fill: transparent;
-    stroke-width: 0.5pt;
-    stroke-miterlimit: 10;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 400;
-    background-color: black;
-    border-radius: 20px;
-    
-    position: absolute;
-    left: 25%;
-    top: 25%;
 }
 
 .menu__border{

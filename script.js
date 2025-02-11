@@ -498,28 +498,44 @@ function typeWriterEffect(content) {
 });
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.querySelector("#preloader");
-  const containerTest = document.querySelector(".containerTest");
+  const startButton = document.querySelector(".startButton");
 
-  if (preloader) {
-    // Trigger the animation on the preloader
-    preloader.classList.add("active");
+  const startFade = document.querySelectorAll(".mainDisplayHeading, .startButton");
+  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu");
+  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .startButton, #animation-container");
 
-    // Wait for the preloader icon animation to finish
-    preloader.querySelector(".icon").addEventListener("animationend", () => {
-      // Fade out the preloader
-      preloader.classList.add("fade-out");
+  // if (preloader) {
+  //   preloader.classList.add("active");
 
-      // Once the fade-out is done, show and fade in containerTest
-      preloader.addEventListener("animationend", () => {
-        containerTest.style.display = "flex";  // Make containerTest visible
-        containerTest.classList.add("fade-in");
+    // Wait for the preloader animation to end before showing elements
+    window.addEventListener('DOMContentLoaded', () => {
+      startFade.forEach(element => {
+        element.classList.add("fade-in");
       });
-    });
-  }
-});
+    }, { once: true });
+  // }
+
+  if (startButton) {
+    startButton.addEventListener("click", () => {
+      // preloader.classList.add("fade-out");
+
+      // Immediately fade out the start button and other elements
+      ClickElementsFadeout.forEach(element => {
+        element.classList.add("fade-out");
+      });
+
+      const customOrder = [2, 3, 4, 5, 6, 1, 0]; // Define the order (indices of elements)
+
+      customOrder.forEach((orderIndex, delayIndex) => {
+        setTimeout(() => {
+          ClickElementsFadein[orderIndex].classList.add("fade-in");
+        }, delayIndex * 250); // Delay each one sequentially
+      });
+    })
+}});
+
 
 // Handle window resize
 window.addEventListener("resize", () => {
