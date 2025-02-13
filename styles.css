@@ -14,7 +14,7 @@ html *::after {
 
 }
 
-.startButton {
+/* .startButton {
     position: absolute;
     top: 24%;
     left: 50%;
@@ -26,12 +26,13 @@ html *::after {
     border: none;
     cursor: pointer;
     z-index: 999;
-}
+} */
 
 #animation-container {
     width: 85%; /* Adjust width as needed */
     height: 85%; /* Adjust height as needed */
     margin: 0 auto; /* Center horizontally */
+    left: 0.6%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,17 +49,15 @@ html *::after {
 }
 
 /* Ensure elements start hidden with opacity 0 */
-.rightDisplay, .leftDisplay, .mainDisplayHeading, .startButton, .menu{
+.rightDisplay, .leftDisplay, .mainDisplayHeading, .btn-12, .menu{
     opacity: 0;
     transition: opacity 1s ease-in; /* Fade in transition */
 }
 
-/* Preloader fade-out */
 .fade-out {
-    opacity: 0;
-    transition: opacity 1s ease-out, visibility 1s ease-out;
-    pointer-events: none; /* Disable interactions during fade-out */
-    visibility: hidden; /* Optionally hide the element after fading */
+    opacity: 0 !important;
+    transition: opacity 1.6s ease-in , visibility 1.7s ease !important;
+    visibility: hidden !important;
 }
 
 /* Fade-in effect for elements */
@@ -292,7 +291,6 @@ body{
     text-align: center;
     font-size: 2rem;
     color: black;
-    font-weight: bolder;
 
     height: auto;
     width: 100%;
@@ -304,6 +302,7 @@ body{
     flex-direction: row; 
     align-items: center; 
     justify-content: center; 
+    z-index: 99;
 }
 
 .rightDisplay {
@@ -338,6 +337,22 @@ body{
     overflow-y: auto;  /* Enable scrolling for text */
     padding-right: 10px; /* Optional padding for scrollbar */
 }
+
+video {
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 85%;
+    max-width: 1000px;
+
+    position: absolute; /* Position it relative to the parent */
+    bottom: 4%; /* Align to the bottom */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for exact centering */
+
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
 
 .leftDisplay {
 
@@ -638,6 +653,92 @@ body{
 
     width: 0;
     height: 0;
+}
+
+/* 12 */
+.btn-12 {
+        position: relative;
+        top: 20%;
+        left: 0%;
+        right: 20px;
+        bottom: 20px;
+
+        width: 130px;
+        height: 40px;
+
+        font-size: 1rem;
+        color: white;
+        cursor: pointer;
+        z-index: 999;
+
+        border:none;
+        box-shadow: none;
+        line-height: 42px;
+
+        -webkit-perspective: 230px;
+        perspective: 230px;
+  }
+
+.btn-12 span {
+    background: rgb(0,172,238);
+    background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+        7px 7px 20px 0px rgba(0,0,0,.1),
+        4px 4px 5px 0px rgba(0,0,0,.1);
+    border-radius: 5px;
+    margin:0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.btn-12 span:nth-child(1) {
+    box-shadow:
+        -7px -7px 20px 0px #fff9,
+        -4px -4px 5px 0px #fff9,
+        7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.btn-12 span:nth-child(2) {
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.btn-12:hover span:nth-child(1) {
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+        7px 7px 20px 0px rgba(0,0,0,.1),
+        4px 4px 5px 0px rgba(0,0,0,.1);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.btn-12:hover span:nth-child(2) {
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+        7px 7px 20px 0px rgba(0,0,0,.1),
+        4px 4px 5px 0px rgba(0,0,0,.1);
+    color: transparent;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
 }
 
 

@@ -52,11 +52,11 @@ let menuBorders = menus.map(menu => menu.querySelector(".menu__border"));
 
 const rightDisplayContent = {
   menu1: [
-    { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "" },
+    { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "",  videoSrc: "Category1Vid.mp4" },
   ],
   menu2: [
-    { title: "Company", heading: "Organise", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "Establish a legal company structure and define the roles and responsibilities for the team." },
-    { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "Ensure that your development and documentation adhere to the relevant standards such as ISO 13485." },
+    { title: "Company", heading: "Organise", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "Establish a legal company structure and define the roles and responsibilities for the team.",  videoSrc: "Category2Vid.mp4" },
+    { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "Ensure that your development and documentation adhere to the relevant standards such as ISO 13485.",  videoSrc: "" },
     { title: "Tech File", heading: "Technical File", subHeading: "Prepare documentation to demonstrate compliance.", description: "Compile the necessary technical documentation, including risk assessments, for your medical device." }
   ],
   menu3: [
@@ -250,7 +250,7 @@ const subCategoryPartContinuous = document.querySelectorAll(".subCategoryPartCon
 
 subCategory.forEach((div, index) => {
   div.addEventListener("click", () => {
-    console.log("subCategory Triggered");
+    // console.log("subCategory Triggered");
     clickSubCategoryPart(index, "subCategory"); 
   });
 });
@@ -258,7 +258,7 @@ subCategory.forEach((div, index) => {
 subCategoryPartContinuous.forEach((div, index) => {
   div.addEventListener("click", (event) => {
     event.stopPropagation(); // Prevent the click event from bubbling up
-    console.log("subCategoryContinuous Triggered");
+    // console.log("subCategoryContinuous Triggered");
     clickSubCategoryPart(index, "subCategoryPartContinuous"); 
   });
 });
@@ -266,7 +266,7 @@ subCategoryPartContinuous.forEach((div, index) => {
 subCategoryParts.forEach((div, index) => {
   div.addEventListener("click", (event) => {
     event.stopPropagation(); // Prevent the click event from bubbling up
-    console.log("subCategoryPart Triggered");
+    // console.log("subCategoryPart Triggered");
     clickSubCategoryPart(index, "subCategoryPart");
   });
 });
@@ -355,6 +355,7 @@ menus.forEach((menu, menuIndex) => {
   });
 });
 
+
 // Function to update rightDisplay content with a smooth transition
 function updateRightDisplay(content) {
   const fields = {
@@ -365,44 +366,50 @@ function updateRightDisplay(content) {
   };
 
   const border = rightDisplay.querySelector("#border"); // Select border separately
+  const videoElement = rightDisplay.querySelector("#categoryVideo"); // Select the video element
 
-  // Fade out the text and border first
-  Object.values(fields).forEach(element => {
-    element.style.opacity = "0"; // Start fade out
-  });
+  // Fade out text, border, and video
+  Object.values(fields).forEach(element => element.style.opacity = "0");
+  if (border) border.style.opacity = "0";
+  if (videoElement) videoElement.style.opacity = "1"; // Ensure it's visible before fading out
 
-  if (border) border.style.opacity = "0"; // Fade out the border
+  // Step 1: Fade out video
+  videoElement.style.opacity = "0";
 
   setTimeout(() => {
-    // Loop through each field and update visibility based on content
+    // Update video source only after fade-out completes
+    if (videoElement && content.videoSrc) {
+      videoElement.src = content.videoSrc;
+      videoElement.load();
+      videoElement.style.display = "block";
+    }
+
+    // Step 2: Update text content after fade-out
     Object.keys(fields).forEach(field => {
       const element = fields[field];
       if (content[field]) {
-        // For description, apply innerHTML, for others just textContent
-        if (field === "description") {
-          element.innerHTML = content[field];  // Use innerHTML for description
-        } else {
-          element.textContent = content[field];  // Use textContent for other fields
-        }
-        element.style.display = "block";  // Show if content exists
+        element[field === "description" ? "innerHTML" : "textContent"] = content[field];
+        element.style.display = "block";
       } else {
-        element.style.display = "none";  // Hide if no content
+        element.style.display = "none";
       }
     });
 
-    // Fade in the text and border smoothly after changing content
+    // Step 3: Fade everything back in after a short delay
     setTimeout(() => {
-      Object.values(fields).forEach(element => {
-        element.style.opacity = "1"; // Start fade in
-      });
+      // Fade in text, border, and video
+      Object.values(fields).forEach(element => (element.style.opacity = "1"));
+      if (border) border.style.opacity = "1";
+      if (videoElement && content.videoSrc) videoElement.style.opacity = "1";
 
-      if (border) border.style.opacity = "1"; // Fade the border back in
-
+      // Trigger typewriter effect if present
       typeWriterEffect(content);
+    }, 300);
 
-    }, 50); // Small delay before fading in
-  }, 300); // Allow fade-out duration before changing content
+  }, 1000); // Fade-out duration must match CSS transition
 }
+
+
 
 
 function typeWriterEffect(content) {
@@ -500,11 +507,11 @@ function typeWriterEffect(content) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.querySelector("#preloader");
-  const startButton = document.querySelector(".startButton");
+  const startButton = document.querySelector(".btn-12");
 
-  const startFade = document.querySelectorAll(".mainDisplayHeading, .startButton");
+  const startFade = document.querySelectorAll(".mainDisplayHeading, .btn-12");
   const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu");
-  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .startButton, #animation-container");
+  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .btn-12, #animation-container");
 
   // if (preloader) {
   //   preloader.classList.add("active");
@@ -521,9 +528,17 @@ document.addEventListener("DOMContentLoaded", () => {
     startButton.addEventListener("click", () => {
       // preloader.classList.add("fade-out");
 
-      // Immediately fade out the start button and other elements
-      ClickElementsFadeout.forEach(element => {
-        element.classList.add("fade-out");
+      // // Immediately fade out the start button and other elements
+      // ClickElementsFadeout.forEach(element => {
+      //   element.classList.add("fade-out");
+      // });
+
+      const customOrder2 = [2, 0, 1]; // Define the order (indices of elements)
+
+      customOrder2.forEach((orderIndex, delayIndex) => {
+        setTimeout(() => {
+          ClickElementsFadeout[orderIndex].classList.add("fade-out");
+        }, delayIndex * 200); // Delay each one sequentially
       });
 
       const customOrder = [2, 3, 4, 5, 6, 1, 0]; // Define the order (indices of elements)

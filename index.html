@@ -15,6 +15,8 @@
     <!-- Favicon (optional) -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
     <!-- Additional metadata for SEO (optional) -->
     <meta name="description" content="Brief description of your page for search engines.">
     <meta name="keywords" content="HTML, CSS, JavaScript, Web Development">
@@ -25,7 +27,9 @@
 
     <!-- Main Display -->
 
-    <button class="startButton">Start</button>
+    <!-- <button class="startButton">Start</button> -->
+
+    <button class="custom-btn btn-12"><span>Click!</span><span>Read More</span></button>
 
     <div id="preloader">
       <svg class="icon" viewBox="0 0 24 24">
@@ -35,16 +39,32 @@
       </svg>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
-        <div id="animation-container"></div>
-        <script>
-          lottie.loadAnimation({
-            container: document.getElementById("animation-container"), // Target container
-            renderer: "svg", // Options: "svg", "canvas", "html"
-            loop: false, // Set to false for a one-time animation
-            autoplay: true,
-            path: "New.json" // JSON file path
-          });
-      </script>
+      <div id="animation-container"></div>
+
+<script>
+  const animation = lottie.loadAnimation({
+    container: document.getElementById("animation-container"),
+    renderer: "svg",
+    loop: false, // One-time animation
+    autoplay: true,
+    path: "New.json"
+  });
+
+  // Wait for the animation to load, then start playing until the 50% point
+  animation.addEventListener('DOMLoaded', function() {
+    // Use setInterval to check the animation's progress over time
+    const interval = setInterval(function() {
+      // Check if the animation has reached 50% of its total frames
+      if (animation.currentFrame >= animation.totalFrames * 0.93) {
+        // Stop the animation at 50%
+        animation.goToAndStop(animation.totalFrames * 0.93, true);
+        clearInterval(interval); // Stop the interval check
+      }
+    }, 10); // Check every 100ms
+  });
+</script>
+
+
 
     </div>
     
@@ -157,11 +177,9 @@
         <div id="border"></div>
           <div id="sub-heading" class="rightdisplayText4"></div> 
 
-          <video id="myVideo" width="600" controls>
-            <source src="QMS Course Part 0.0.mp4" type="video/mp4">
+          <video id="categoryVideo" controls>
+            <source src="Category1Vid.mp4" type="video/mp4">
           </video>
-          <button onclick="playVideo()">Play</button>
-          <button onclick="pauseVideo()">Pause</button>
 
        </div>
       </div>
