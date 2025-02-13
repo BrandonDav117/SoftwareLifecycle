@@ -32,7 +32,7 @@ html *::after {
     width: 85%; /* Adjust width as needed */
     height: 85%; /* Adjust height as needed */
     margin: 0 auto; /* Center horizontally */
-    left: 1%;
+    left: 0.6%;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -39,16 +39,32 @@
       </svg>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
-        <div id="animation-container"></div>
-        <script>
-          lottie.loadAnimation({
-            container: document.getElementById("animation-container"), // Target container
-            renderer: "svg", // Options: "svg", "canvas", "html"
-            loop: false, // Set to false for a one-time animation
-            autoplay: true,
-            path: "New.json" // JSON file path
-          });
-      </script>
+      <div id="animation-container"></div>
+
+<script>
+  const animation = lottie.loadAnimation({
+    container: document.getElementById("animation-container"),
+    renderer: "svg",
+    loop: false, // One-time animation
+    autoplay: true,
+    path: "New.json"
+  });
+
+  // Wait for the animation to load, then start playing until the 50% point
+  animation.addEventListener('DOMLoaded', function() {
+    // Use setInterval to check the animation's progress over time
+    const interval = setInterval(function() {
+      // Check if the animation has reached 50% of its total frames
+      if (animation.currentFrame >= animation.totalFrames * 0.93) {
+        // Stop the animation at 50%
+        animation.goToAndStop(animation.totalFrames * 0.93, true);
+        clearInterval(interval); // Stop the interval check
+      }
+    }, 10); // Check every 100ms
+  });
+</script>
+
+
 
     </div>
     
