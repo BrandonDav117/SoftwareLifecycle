@@ -56,7 +56,8 @@ html *::after {
 
 .fade-out {
     opacity: 0 !important;
-    transition: opacity 1.6s ease-in !important;
+    transition: opacity 1.6s ease-in , visibility 1.7s ease !important;
+    visibility: hidden !important;
 }
 
 /* Fade-in effect for elements */
