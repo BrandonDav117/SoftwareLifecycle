@@ -481,6 +481,13 @@ body{
     width: 70vw; 
     height: 1px;
   }
+
+  video {
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 800px;
+  }
   
 .subCategoryPart {
     width: auto; /* Adjust width based on content */
