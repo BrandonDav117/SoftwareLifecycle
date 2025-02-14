@@ -507,14 +507,11 @@ function typeWriterEffect(content) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.querySelector("#preloader");
-  const startButton = document.querySelector(".btn-12");
+  const startButton = document.querySelector(".switch");
 
-  const startFade = document.querySelectorAll(".mainDisplayHeading, .btn-12");
+  const startFade = document.querySelectorAll(".mainDisplayHeading, .switch, .logos");
   const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu");
-  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .btn-12, #animation-container");
-
-  // if (preloader) {
-  //   preloader.classList.add("active");
+  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .switch, #animation-container, .logos");
 
     // Wait for the preloader animation to end before showing elements
     window.addEventListener('DOMContentLoaded', () => {
@@ -526,19 +523,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (startButton) {
     startButton.addEventListener("click", () => {
-      // preloader.classList.add("fade-out");
 
-      // // Immediately fade out the start button and other elements
-      // ClickElementsFadeout.forEach(element => {
-      //   element.classList.add("fade-out");
-      // });
-
-      const customOrder2 = [2, 0, 1]; // Define the order (indices of elements)
+      const customOrder2 = [2, 0, 1, 3]; // Define the order (indices of elements)
 
       customOrder2.forEach((orderIndex, delayIndex) => {
         setTimeout(() => {
           ClickElementsFadeout[orderIndex].classList.add("fade-out");
-        }, delayIndex * 200); // Delay each one sequentially
+        }, delayIndex * 300); // Delay each one sequentially
       });
 
       const customOrder = [2, 3, 4, 5, 6, 1, 0]; // Define the order (indices of elements)
