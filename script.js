@@ -115,7 +115,7 @@ const subCategoryContent = [
   { title: "Submit", heading: "FDA/CE/UKCA", subHeading: "", description: "The details of this process depend on the intended regulatory jurisdiction, and the class of your software medical device. <br><br> Submission for CE Mark: For this you will need to find a notified body to which you submit your documentation. They will then review your work and carry out an audit. <br><br> Submission for FDA 510(k): You will submit your application directly to the FDA. You then enter an iterative cycle in which you will address questions from the FDA. <br><br> Submission for UKCA Mark: This is based on the old European model, Medical Device Directive (MDD), but is changing be more in line with the current CE Marking process, Medical Device Regulation (MDR). <br><br> Submission for Other Jurisdictions: Other jurisdictions have their own regulatory approaches which are predominantly based on the FDA or CE Marking processes." },
   { title: "Rollout", heading: "Service Desk", subHeading: "", description: "In order for your users to operate the software effectively, you will need to provide a service desk. This will provide the following: <br><br> • Customer On-boarding and Installation <br> • Software Training <br> • Troubleshooting <br> • Feedback Gathering (Bugs and Feature Requests) <br> • General Customer Support <br><br> You will want to provide digital communication for your service desk, this can be email/web based. You may want to provide telephone and face-to-face support. <br><br> Due to the critical nature of medical device software, you will want to provide continuous support 24/7, 365 days a year. To ensure quality, it is advisable to build a Service Desk within your company as opposed to third party service desk support. <br><br> You should setup your Service Desk before for your first sale and test each aspect of your SD with your beta testers." },
   { title: "Rollout", heading: "Marketing", subHeading: "", description: "It will be necessary to produce a marketing campaign for your software medical device. This could include: <br><br> • Exhibition stands at medical conferences <br> • Advertising digital and print materials <br> • Social media campaigns <br> • Recruiting opinion leaders <br> • Promoting training sessions <br><br> It is necessary to ensure all your product advertising material complies with relevant regulations. <br><br> For example, it is imperative that any performance metrics you quote are accurate. It is a good idea to employ a marketing agency that has experience within medical device marketing." },
-  { title: "Rollout", heading: "Sales", subHeading: "", description: "Selling Software Medical Devices can be a complex process, the time and effort require to make a sale should not be underestimated. <br><br> In some institutions, sales can take months or years to complete. In addition to convincing a potential end-user that they want to buy the software, it will be necessary to persuade their hospital IT department and purchasing department. <br><br> Particularly in the United States, it will be necessary to integrate with the re-imbursement procedures of the hospital. Supplier relationships with medical institutions will be an important part of the sales process. <br><br> Your software will need to run alongside existing IT infrastructure which may involve integration challenges. You will also need to meet any local requirements for the hospital or medical institution. <br><br> Once you have completed the paperwork for your first sale, you can rollout the software to your first customer." },
+  { title: "Rollout", heading: "Sales", subHeading: "", description: "Selling Software Medical Devices can be a complex process, the time and effort required to make a sale should not be underestimated. <br><br> In some institutions, sales can take months or years to complete. In addition to convincing a potential end-user that they want to buy the software, it will be necessary to persuade their hospital IT department and purchasing department. <br><br> Particularly in the United States, it will be necessary to integrate with the re-imbursement procedures of the hospital. Supplier relationships with medical institutions will be an important part of the sales process. <br><br> Your software will need to run alongside existing IT infrastructure which may involve integration challenges. You will also need to meet any local requirements for the hospital or medical institution. <br><br> Once you have completed the paperwork for your first sale, you can rollout the software to your first customer." },
   { title: "Maintain", heading: "Bug Fixes", subHeading: "", description: "When your software is in use, bugs will be identified by your users and your internal team. <br><br> It is important that bug fixes don’t inadvertently break existing features. This highlights the importance of automated verification regression tests that can identify changes to the performance of the software. <br><br> For urgent bug fixes such as security issues, you will need a fast-track approach to change control so that you can release fixes promptly whilst ensuring quality." },
   { title: "Maintain", heading: "New Features", subHeading: "", description: "Your users will request new features, and you should review and prioritise taking into account your existing development plan to ensure that the software is developed in a strategic fashion. " },
   { title: "Maintain", heading: "Post-Market Surveillance", subHeading: "", description: "As part of your regulatory submission, you will need to perform continuous post-market surveillance. <br><br> This involves monitoring the performance of your software to ensure security, user-experience and feature quality. You will need to identify potential patient safety and cyber-security issues. <br><br> You will also need to identify issues related to third-party dependencies such as software libraries, operating systems and computer hardware. You should review issues for each dependency using international cyber-security database systems such as the US National Vulnerability Database (NVD). <br><br> You will need a design review meeting once your software has been in use to review your Post-Market Surveillance." },
@@ -507,14 +507,11 @@ function typeWriterEffect(content) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.querySelector("#preloader");
-  const startButton = document.querySelector(".btn-12");
+  const startButton = document.querySelector(".switch");
 
-  const startFade = document.querySelectorAll(".mainDisplayHeading, .btn-12");
+  const startFade = document.querySelectorAll(".mainDisplayHeading, .switch, .logos");
   const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu");
-  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .btn-12, #animation-container");
-
-  // if (preloader) {
-  //   preloader.classList.add("active");
+  const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .switch, #animation-container, .logos");
 
     // Wait for the preloader animation to end before showing elements
     window.addEventListener('DOMContentLoaded', () => {
@@ -526,19 +523,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (startButton) {
     startButton.addEventListener("click", () => {
-      // preloader.classList.add("fade-out");
 
-      // // Immediately fade out the start button and other elements
-      // ClickElementsFadeout.forEach(element => {
-      //   element.classList.add("fade-out");
-      // });
-
-      const customOrder2 = [2, 0, 1]; // Define the order (indices of elements)
+      const customOrder2 = [2, 0, 1, 3]; // Define the order (indices of elements)
 
       customOrder2.forEach((orderIndex, delayIndex) => {
         setTimeout(() => {
           ClickElementsFadeout[orderIndex].classList.add("fade-out");
-        }, delayIndex * 200); // Delay each one sequentially
+        }, delayIndex * 300); // Delay each one sequentially
       });
 
       const customOrder = [2, 3, 4, 5, 6, 1, 0]; // Define the order (indices of elements)

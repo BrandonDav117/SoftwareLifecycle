@@ -14,24 +14,34 @@ html *::after {
 
 }
 
-/* .startButton {
-    position: absolute;
-    top: 24%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    z-index: 999;
-} */
+.introContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-start; /* Align content to the top vertically */
+    align-items: center; /* Align content to the left horizontally */
+    padding-top: 10px; /* Optional: Adds some space between the content and the top of the subCategory */
+}
 
-#animation-container {
-    width: 85%; /* Adjust width as needed */
-    height: 85%; /* Adjust height as needed */
-    margin: 0 auto; /* Center horizontally */
+
+.mainDisplayHeading {
+    position: relative;
+    margin-top: 10%;
+
+    text-align: center;
+    font-size: 2rem;
+    color: black;
+    font-family: sans-serif;
+
+    height: auto;
+    width: 100%;
+}
+
+/* #animation-container {
+    width: 90%; 
+    height: 90%; 
+    margin: 0 auto; 
     left: 0.6%;
     display: flex;
     justify-content: center;
@@ -41,32 +51,136 @@ html *::after {
     opacity: 1;
     position: relative;
     bottom: 0%;
+    top: 0%;
+} */
+
+.logos {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    gap: 30px;
 }
+
+.logos img {
+    width: auto;
+    height: 4.2%;
+}
+
+#ImperialLogo {
+    width: auto;
+    margin-top: 7%;
+    height: 1%;
+}
+
+#WelcomeLogo {
+    width: auto;
+    margin-top: 3%;
+    height: 3%;
+}
+
+#checkbox {
+    display: none;
+}
+  
+.switch {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background-color: rgb(99, 99, 99);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    z-index: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(126, 126, 126);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5), 0px 0px 8px rgba(0, 0, 0, 0.2) inset;
+    transition: 0.5s;
+    
+    margin-top: 40px;
+    margin-bottom: 2%;
+}
+
+
+.switch svg {
+    width: 1.2em;
+  }
+
+.switch svg path {
+    fill: rgb(48, 48, 48);
+  }
+
+#checkbox:checked + .switch {
+    box-shadow:
+      0px 0px 1px rgb(151, 243, 255) inset,
+      0px 0px 2px rgb(151, 243, 255) inset,
+      0px 0px 10px rgb(151, 243, 255) inset,
+      0px 0px 40px rgb(151, 243, 255),
+      0px 0px 100px rgb(151, 243, 255),
+      0px 0px 5px rgb(151, 243, 255);
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgb(146, 180, 184);
+  }
+
+#checkbox:checked + .switch svg {
+    filter: drop-shadow(0px 0px 5px rgb(151, 243, 255));
+}
+
+#checkbox:checked + .switch svg path {
+    fill: rgb(255, 255, 255);
+  }
+
+#checkbox:active + .switch {
+    transform: translate(0em, 0.1em);
+    box-shadow:
+      0px 0px 0.1px rgb(151, 243, 255) inset,
+      0px 0px 0.2px rgb(151, 243, 255) inset,
+      0px 0px 1px rgb(151, 243, 255) inset,
+      0px 0px 10px rgb(151, 243, 255),
+      0px 0px 50px rgb(151, 243, 255);
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgb(146, 180, 184);
+  }
+
+#checkbox:active + .switch svg path {
+    box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+    transform: translate(0em, 0.1em);
+}
+  
 
 /* Preloader animation */
 #preloader.active .icon {
     animation: strok 1.5s reverse;
 }
 
-/* Ensure elements start hidden with opacity 0 */
-.rightDisplay, .leftDisplay, .mainDisplayHeading, .btn-12, .menu{
+/* Ensure elements start with opacity 0 */
+.rightDisplay, .leftDisplay, .mainDisplayHeading, .switch, .menu, .logos{
     opacity: 0;
     transition: opacity 1s ease-in; /* Fade in transition */
 }
 
+/* Ensure elements start hidden */
+.rightDisplay, .leftDisplay{
+    visibility: hidden;
+}
+
 .fade-out {
     opacity: 0 !important;
-    transition: opacity 1.6s ease-in , visibility 1.7s ease !important;
+    transition: opacity 1s ease-in , visibility 1.7s ease !important;
     visibility: hidden !important;
 }
 
 /* Fade-in effect for elements */
 .fade-in {
     opacity: 1;
-    transition: opacity 1.5s ease-in; /* Ensure smooth fade-in transition */
+    transition: opacity 1.5s ease-in, visibility 1.5 ease-in; /* Ensure smooth fade-in transition */
+    visibility: visible;
 }
 
-.icon{
+/* .icon{
     
     width: 15vw;
     height: 15vw;
@@ -85,7 +199,7 @@ html *::after {
     position: absolute;
     left: 42.5%;
     top: 25%;
-}
+} */
 
 
 #menu1 {
@@ -284,33 +398,12 @@ body{
     z-index: 0;
 }
 
-.mainDisplayHeading {
-    position: fixed;
-    top: 15%;
-
-    text-align: center;
-    font-size: 2rem;
-    color: black;
-
-    height: auto;
-    width: 100%;
-    padding: 5px; 
-    padding-left: 6%;
-    padding-right: 6%;
-
-    display: flex; 
-    flex-direction: row; 
-    align-items: center; 
-    justify-content: center; 
-    z-index: 99;
-}
-
 .rightDisplay {
     padding: 1%;
     padding-right: 0.5%;
     width: 30vw;
     height: 76vh;
-    top: 8.2%;
+    top: 6%;
     bottom: 2%;
     right: 2%;
     display: flex;
@@ -353,15 +446,13 @@ video {
     transition: opacity 1s ease;
 }
 
-
 .leftDisplay {
 
-    background: whitesmoke;
 
     margin: 0;
     width: 65%;
     height: 76vh;
-    top: 8.2%;
+    top: 6%;
     bottom: 2%;
     left: 2%;
     font-size: 1.5em;
@@ -658,7 +749,7 @@ video {
 /* 12 */
 .btn-12 {
         position: relative;
-        top: 20%;
+        top: 21%;
         left: 0%;
         right: 20px;
         bottom: 20px;
@@ -832,4 +923,144 @@ video {
     .menu__item.active::before {
         transform: scale(0.65);
     }
+}
+
+
+*{
+    padding: 0px;
+}
+
+.context {
+    width: 100%;
+    position: absolute;
+    top:50vh;
+    
+}
+
+.context h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+
+
+.area{
+    background: #4e54c8;  
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
+    width: 100%;
+    height:100vh;
+}
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    transition: background-color var(--duration);
+    background: var(--highlight-color2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    z-index: -1;
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
 }
