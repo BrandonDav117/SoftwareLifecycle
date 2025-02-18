@@ -287,11 +287,18 @@ html *::after {
     border-radius: 10px;
 } 
 
+#arrow {
+    position: absolute;
+    left: 99.4%;
+    background-color: transparent;
+} 
+
 /* AllText */
 .text {
     font-family: sans-serif;
     color: whitesmoke;
     text-align: center;
+    font-size: 1.3rem;
 }
 
 #title {
@@ -313,13 +320,13 @@ html *::after {
 }
 
 #sub-heading {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin-top: 2%;
     margin-right: 20px;
 }
 
 #sub-heading2 {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 #title, #heading, #sub-heading, #border, .rightdisplayText4 {
@@ -429,21 +436,6 @@ body{
     max-height: 70vh;  /* Restrict height for the text content */
     overflow-y: auto;  /* Enable scrolling for text */
     padding-right: 10px; /* Optional padding for scrollbar */
-}
-
-video {
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 85%;
-    max-width: 1000px;
-
-    position: absolute; /* Position it relative to the parent */
-    bottom: 4%; /* Align to the bottom */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for exact centering */
-
-    opacity: 0;
-    transition: opacity 1s ease;
 }
 
 .leftDisplay {
@@ -588,12 +580,21 @@ video {
     height: 1px;
   }
 
-  video {
+#categoryVideo {
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 800px;
-  }
+    width: 85%;
+    max-width: 1000px;
+
+    position: absolute !important; 
+    bottom: 4% !important; 
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 20%;
+
+    opacity: 0;
+    transition: opacity 1s ease;
+}
   
 .subCategoryPart {
     width: auto; /* Adjust width based on content */
@@ -606,10 +607,10 @@ video {
     background-color: white;
     cursor: pointer;
     display: inline-flex; /* Use inline-flex so it adjusts based on content */
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: row; 
     justify-content: center; /* Align content to the top vertically */
     align-items: center; /* Center content horizontally */
-    padding: 10px; /* Adds some padding */
+    padding: 15px; /* Adds some padding */
     color: black;
     
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
@@ -633,6 +634,15 @@ video {
     transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
+.ph-arrow-u-up-left {
+    position: relative;
+    scale: 200%;
+}
+
+#whiteonhover.subCategoryPart.active{
+    color: white;
+}
+
 .subCategoryPartContinuous {
     width: 1100%;
     height: auto;
@@ -646,7 +656,7 @@ video {
     flex-direction: column;
     justify-content: flex-start; 
     align-items: flex-start; 
-    padding: 10px;
+    padding: 15px;
     color: black;
 
     top: 50%;
@@ -847,7 +857,28 @@ video {
     }
 }
 
-    @media screen and (max-width: 80em) {
+@media screen and (max-width: 110em) {
+    .text{
+        font-size: 1.2rem;
+    }
+    #title{
+        font-size: 1.4rem;
+    }
+    #extratitles{
+        font-size: 1.2rem;
+    }
+    #heading{
+        font-size: 1.2rem;
+    }
+    #sub-heading{
+        font-size: 1.1rem;
+    }
+    #sub-heading2{
+        font-size: 1rem;
+    }
+}
+
+    @media screen and (max-width: 90em) {
         .text{
             font-size: .8rem;
         }

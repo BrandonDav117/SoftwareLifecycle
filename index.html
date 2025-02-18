@@ -7,7 +7,9 @@
     <title>Software Life Cycle</title>
     
     <!-- Link to CSS stylesheet -->
-    <link rel="stylesheet" href="styles.css" href="toggle.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="arrows.css">
     
     <!-- Link to external font or icon library (optional) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
@@ -23,6 +25,8 @@
 
     <!-- Script files (if any) - defer for loading after HTML parsing -->
     <script src="script.js" defer></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
 </head>
 
     <!-- Intro -->
@@ -47,7 +51,7 @@
     <div class="introContainer">
 
       <div class="mainDisplayHeading">
-        <a id="title">The Medical Software Regulation Life Cycle </a>
+        <a id="title">The Regulatory Life Cycle for Medical Software</a>
       </div>
 
       <input id="checkbox" type="checkbox" />
@@ -184,6 +188,7 @@
               <div class="subCategoryPart">  <a id="sub-heading2"> Bug Fixes </a> </div>
               <div class="subCategoryPart">  <a id="sub-heading2"> New Features </a> </div>
               <div class="subCategoryPart">  <a id="sub-heading2"> Post-Market </a> </div>
+              <div id="whiteonhover" class="subCategoryPart"> <a class="ph ph-arrow-u-up-left" id="sub-heading2"></a>  </div>
             </div>
             <div class="subCategory" id="extraheight">
               <a id="title"> Finish </a>
@@ -253,6 +258,11 @@
         <button class="menu__item" style="--bgColorItem: #501a98;"> 
           <a class="text"> Validate </a>
         </button>
+
+        <!-- <div id="arrow">
+          <div class="arrow-2"></div>
+        </div> -->
+
         <div class="menu__border"></div>
     </menu>
 
@@ -268,7 +278,8 @@
         <button class="menu__item" style="--bgColorItem: #9b1640;"> 
           <a class="text"> Maintain </a>
         </button>
-        <div class="menu__border"></div>
+        <div class="menu__border">
+        </div>
     </menu>
 
   <!-- Fifth Menu -->
