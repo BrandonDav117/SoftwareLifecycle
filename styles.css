@@ -339,7 +339,8 @@ html *::after {
     margin-top: 4%;
     margin-bottom: 0.2vw;
     width: 100%;
-    align-self: center;
+    align-self: flex-start;
+    margin-left: -1%;
 }
 
 body{
@@ -641,6 +642,12 @@ body{
 
 #whiteonhover.subCategoryPart.active{
     color: white;
+}
+
+#italic{
+    font-style: italic;
+    font-size: large;
+    font-weight: lighter;
 }
 
 .subCategoryPartContinuous {
