@@ -27,7 +27,7 @@ html *::after {
 
 .mainDisplayHeading {
     position: relative;
-    margin-top: 10%;
+    margin-top: 6.5%;
 
     text-align: center;
     font-size: 2rem;
@@ -311,6 +311,10 @@ html *::after {
 #extratitles {
     font-size: 1.4rem;
 }
+
+/* #testTower {
+    width: 200vw;
+} */
 
 #heading {
     font-size: 1.2rem;
