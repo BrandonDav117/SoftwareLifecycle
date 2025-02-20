@@ -11,7 +11,9 @@ html, body {
 #container {
   width: 100%;
   height: 100%;
-  z-index: 90;
+  z-index: 1;
+  font-family: sans-serif;
+  font-style: normal;
 }
 #container #score {
   position: absolute;
@@ -23,19 +25,20 @@ html, body {
   font-size: 8vh;
   transition: transform 0.5s ease;
   color: #333344;
-  transform: translatey(-100px) scale(1);
+  transform: translatey(-500px) scale(1);
+  visibility: hidden;
 }
 #container #game {
   position: absolute;
   top: -20%;
   right: 0;
   bottom: 0;
-  left: -30.8%;
+  left: 162%;
 }
 #container .game-over {
   position: absolute;
-  top: 35%;
-  left: 0;
+  top: -9%;
+  left: 189.5%;
   width: 100%;
   height: 85%;
   display: flex;
@@ -52,7 +55,7 @@ html, body {
 #container .game-over h2 {
   margin: 0;
   padding: 0;
-  font-size: 40px;
+  font-size: 100%;
 }
 #container .game-ready {
   position: absolute;
@@ -79,11 +82,10 @@ html, body {
   position: absolute;
   width: 100%;
   color: black;
-  top: 58vh;
-  left: 0;
+  top: 19%;
   text-align: center;
   transition: opacity 0.5s ease, transform 0.5s ease;
-  opacity: 0;
+  left: 190%;
 }
 #container #instructions.hide {
   opacity: 0 !important;
