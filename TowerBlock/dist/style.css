@@ -81,6 +81,7 @@ html, body {
 #container #instructions {
   position: absolute;
   width: 100%;
+  font-size: 80%;
   color: black;
   top: 19%;
   text-align: center;
