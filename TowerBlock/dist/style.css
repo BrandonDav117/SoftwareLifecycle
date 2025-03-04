@@ -17,6 +17,7 @@ html, body {
 }
 #container #score {
   position: absolute;
+  opacity: 0;
   top: 20%;
   left: -30%;
   right: 0%;
@@ -31,14 +32,14 @@ html, body {
 #container #game {
   position: absolute;
   top: -20%;
-  right: 0%;
   bottom: 0;
-  left: 162%;
+  left: -120%; /* used */
 }
 #container .game-over {
   position: absolute;
+  opacity: 0;
   top: -9%;
-  left: 189.5%;
+  left: 400px; /* used */
   width: 100%;
   height: 85%;
   display: flex;
@@ -56,9 +57,11 @@ html, body {
   margin: 0;
   padding: 0;
   font-size: 100%;
+  opacity: 0;
 }
 #container .game-ready {
   position: absolute;
+  opacity: 0;
   top: 0;
   left: -30%;
   width: 100%;
@@ -80,13 +83,14 @@ html, body {
 }
 #container #instructions {
   position: absolute;
+  opacity: 0;
   width: 100%;
   font-size: 80%;
   color: black;
   top: 19%;
   text-align: center;
   transition: opacity 0.5s ease, transform 0.5s ease;
-  left: 190%;
+  left: 400px; /* used */
 }
 #container #instructions.hide {
   opacity: 0 !important;
@@ -95,7 +99,7 @@ html, body {
   transform: translatey(0px) scale(1);
 }
 #container.playing #instructions {
-  opacity: 1;
+  opacity: 0;
 }
 #container.ready .game-ready #start-button {
   opacity: 1;

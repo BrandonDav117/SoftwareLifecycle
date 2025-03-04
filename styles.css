@@ -207,7 +207,7 @@ html *::after {
     padding-left: 1vw;
     padding-right: 1vw;
     position: absolute;
-    bottom: 0;
+    bottom: 1%;
     left: 2%; /* Align to the left side */
     align-items: center;
     justify-content: center;
@@ -226,7 +226,7 @@ html *::after {
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
-    bottom: 0;
+    bottom: 1%;
     left: 12.5%; 
     align-items: center;
     justify-content: center;
@@ -245,7 +245,7 @@ html *::after {
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
-    bottom: 0;
+    bottom: 1%;
     left: 35%; 
     align-items: center;
     justify-content: center;
@@ -264,7 +264,7 @@ html *::after {
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
-    bottom: 0;
+    bottom: 1%;
     left: 67.5%;
     align-items: center;
     justify-content: center;
@@ -283,7 +283,7 @@ html *::after {
     padding-left: 1vw;
     padding-right: 1vw;
     position: fixed;
-    bottom: 0;
+    bottom: 1%;
     left: 90%; 
     align-items: center;
     justify-content: center;
@@ -471,7 +471,7 @@ body{
     left: 2%;
     font-size: 1.5em;
     position: fixed;
-    /* border: 3px solid black; */
+    border: 3px solid black;
     font-family: sans-serif;
     border-radius: 20px;
     z-index: 1;
@@ -776,7 +776,7 @@ body{
 .menu__border{
 
     left: 0;
-    bottom: 99%;
+    bottom: 97%;
     height: 3vw;
     width: 6.5vw;
     position: absolute;
@@ -786,7 +786,6 @@ body{
     transition: transform var(--timeOut , var(--duration));
     
 }
-
 
 .svg-container {
 

@@ -107,6 +107,7 @@
     <div class="containerTest">
         
         <div class="leftDisplay">
+
             <div class="subCategory" id="extraheight">
               <a id="title"> Start </a>
               <div class="subCategoryPart">  <a id="sub-heading2"> Need </a> </div>
@@ -198,23 +199,27 @@
               <div class="subCategoryPart">  <a id="sub-heading2"> Sale </a> </div>
               <div class="subCategoryPart">  <a id="sub-heading2"> Takeover </a> </div>
               <div class="subCategoryPart">  <a id="sub-heading2"> Finish </a> </div>
-              <div class= "end-spacer"> </div>
-            </div>
 
-            <div id="container">
-              <div id="game"></div>
-              <div id="score">0</div>
-              <div id="instructions">Click to build your Life Cycle</div>
-              <div class="game-over">
-                <h2>Game Over</h2>
-                <h2>Click to start again</h2>
-              </div>
-              <div class="game-ready">
-                <div id="start-button">Start</div>
-                <div></div>
-              </div>
-            </div>
+              <div class= "end-spacer"> 
 
+                <!-- Game -->
+                <div id="container">
+                  <div id="game"></div>
+                  <div id="score">0</div>
+                  <div id="instructions">Click to build your Life Cycle</div>
+                  <div class="game-over">
+                    <h2>Game Over</h2>
+                    <h2>Click to start again</h2>
+                  </div>
+                  <div class="game-ready">
+                    <div id="start-button">Start</div>
+                    <div></div>
+                  </div>
+                </div>
+                
+              </div>
+
+            </div>
           </div>
       </div>
 
@@ -238,7 +243,15 @@
 
   <menu class="menu" id="menu1">
     <button class="menu__item active" style="--bgColorItem: black;" >
-      <a class="text"> Start </a>
+
+      <!-- <a class="text"> Start </a> -->
+
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M3.8,6.6h16.4"/>
+        <path d="M20.2,12.1H3.8"/>
+        <path d="M3.8,17.5h16.4"/>
+      </svg>
+
     </button>
     <div class="menu__border"></div>
   </menu>
