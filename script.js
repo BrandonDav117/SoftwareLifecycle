@@ -543,7 +543,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 }});
 
-
 // Handle window resize
 window.addEventListener("resize", () => {
   menus.forEach((menu, menuIndex) => {

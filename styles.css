@@ -15,15 +15,13 @@ html *::after {
 }
 
 .introContainer {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex; /* Enable Flexbox */
     flex-direction: column; /* Stack items vertically */
     justify-content: flex-start; /* Align content to the top vertically */
     align-items: center; /* Align content to the left horizontally */
-    padding-top: 10px; /* Optional: Adds some space between the content and the top of the subCategory */
 }
-
 
 .mainDisplayHeading {
     position: relative;
@@ -38,7 +36,7 @@ html *::after {
     width: 100%;
 }
 
-/* #animation-container {
+#animation-container {
     width: 90%; 
     height: 90%; 
     margin: 0 auto; 
@@ -52,7 +50,7 @@ html *::after {
     position: relative;
     bottom: 0%;
     top: 0%;
-} */
+}
 
 .logos {
     position: relative;
@@ -103,7 +101,6 @@ html *::after {
     margin-top: 40px;
     margin-bottom: 2%;
 }
-
 
 .switch svg {
     width: 1.2em;
@@ -180,7 +177,7 @@ html *::after {
     visibility: visible;
 }
 
-/* .icon{
+.icon{
     
     width: 15vw;
     height: 15vw;
@@ -199,8 +196,7 @@ html *::after {
     position: absolute;
     left: 42.5%;
     top: 25%;
-} */
-
+}
 
 #menu1 {
     margin: 10;
@@ -210,13 +206,15 @@ html *::after {
     padding-top: 5px;
     padding-left: 1vw;
     padding-right: 1vw;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 2%; /* Align to the left side */
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
+
+    z-index: 999;
 }
 
  #menu2 {
@@ -234,6 +232,8 @@ html *::after {
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
+
+    z-index: 999;
 }
 
 #menu3 {
@@ -251,6 +251,8 @@ html *::after {
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
+
+    z-index: 999;
 }
 
 #menu4 {
@@ -268,6 +270,8 @@ html *::after {
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
+
+    z-index: 999;
 }
 
 #menu5 {
@@ -285,6 +289,8 @@ html *::after {
     justify-content: center;
     background-color: var(--bgColorMenu);
     border-radius: 10px;
+
+    z-index: 999;
 } 
 
 #arrow {
@@ -303,8 +309,17 @@ html *::after {
 
 #title {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 10%;
+}
+
+#titleLeftDisplay {
+    text-align: center;
+    font-size: 1.5rem !important;
+    font-weight: bolder;
+    margin-top: 10px;
     margin-bottom: 10%;
 }
 
@@ -317,14 +332,14 @@ html *::after {
 } */
 
 #heading {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     margin-right: 20px;
     display: none;
 }
 
 #sub-heading {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-top: 2%;
     margin-right: 20px;
 }
@@ -348,20 +363,23 @@ html *::after {
 }
 
 body{
-    
-    display: flex;
-    height: 100vh;
     overflow: hidden;
+    margin: 0;
+    display: flex;
+}
+
+.wrapper {
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: whitesmoke;
+    overflow: hidden;
+
     -webkit-tap-highlight-color: transparent;
     transition: background-color var(--duration);
-
     
+    /* Background color */
     background: var(--highlight-color2);
-
 }
 
 .menu__item.active .icon {
@@ -415,6 +433,7 @@ body{
     padding-right: 0.5%;
     width: 30vw;
     height: 76vh;
+    min-height: 600px;
     top: 6%;
     bottom: 2%;
     right: 2%;
@@ -435,29 +454,28 @@ body{
     background: linear-gradient(to bottom, gray, black);
 }
 
-/* Optional: If you have a specific content section inside .rightDisplay that should scroll, 
-   you could target it specifically, for example: */
+
 .rightDisplay .content {
-    max-height: 70vh;  /* Restrict height for the text content */
-    overflow-y: auto;  /* Enable scrolling for text */
-    padding-right: 10px; /* Optional padding for scrollbar */
+    max-height: 70vh;  
+    overflow-y: auto;  
+    padding-right: 10px;
 }
 
 .leftDisplay {
 
-
-    margin: 0;
     width: 65%;
     height: 76vh;
+    min-height: 600px;
     top: 6%;
     bottom: 2%;
     left: 2%;
     font-size: 1.5em;
     position: fixed;
-    border: 3px solid black;
+    /* border: 3px solid black; */
     font-family: sans-serif;
     border-radius: 20px;
     z-index: 1;
+    background: linear-gradient(to bottom, rgb(124, 124, 124), rgba(0, 0, 0, 0.535));
 
     display: flex; /* Enable Flexbox */
     flex-direction: row; /* Keep the items in a horizontal row */
@@ -465,7 +483,8 @@ body{
     justify-content: flex-start; /* Keep them aligned to the left */
     padding: 10px; /* Add padding inside the container */
 
-    overflow: auto; /* Enable scrolling */
+    overflow-x: auto;
+    overflow-y: hidden;
     scroll-behavior: smooth; /* Smooth scroll for better UX */
 }
 
@@ -493,12 +512,13 @@ body{
 .categoryHeadings {
     font-size: 1.5rem;
     font-weight: bolder;
-    color: black;
-    background-color: rgba(128, 128, 128, 0.3);
-    opacity: 1;
+    color: white;
+    /* background: linear-gradient(to bottom, whitesmoke, white);
+    background-size: 200%; */
+    opacity: 1 !important;
     
     width: auto; /* Let the content decide width */
-    padding: 0.3vw 40%; /* Add some padding instead of forcing width */
+    padding: 0.3vw 20%; /* Add some padding instead of forcing width */
     
     text-align: center;
     display: flex;
@@ -508,14 +528,14 @@ body{
     white-space: nowrap;
 
     /* Borders */
-    border-left: 0.2vw dashed black;
-    border-right: 0.2vw dashed black;
+    border-left: 0.2vw dashed white;
+    border-right: 0.2vw dashed white;
 }
 
 
 .headingsDivider {
     position: absolute;
-    height: 119%;
+    height: 130%;
     width: 0%;
     
     border-left: 0.25vw solid black; /* Ensures only left border appears */
@@ -537,12 +557,14 @@ body{
     flex: 0 0 auto; 
     width: 10vw; 
     height: 89%; 
+    min-height: 500px;
+    min-width: 200px;
     border: 3px solid black;
-    border-radius: 20px;
+    border-radius: 10px;
     box-sizing: border-box;
     z-index: 2;
     text-align: center;
-    opacity: 0.5;
+    opacity: 0.9;
     position: relative;
     cursor: pointer;
 
@@ -591,11 +613,11 @@ body{
     width: 85%;
     max-width: 1000px;
 
-    position: absolute !important; 
-    bottom: 4% !important; 
+    position: relative !important; 
+    top: 0% !important; 
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 20%;
+    margin-top: 10%;
 
     opacity: 0;
     transition: opacity 1s ease;
@@ -607,7 +629,7 @@ body{
     height: auto; /* Adjusts the height based on content */
     min-width: 0; /* Prevents unwanted shrinkage */
     border: 3px solid black;
-    border-radius: 20px;
+    border-radius: 6px;
     z-index: 3;
     background-color: white;
     cursor: pointer;
@@ -616,6 +638,9 @@ body{
     justify-content: center; /* Align content to the top vertically */
     align-items: center; /* Center content horizontally */
     padding: 15px; /* Adds some padding */
+    margin-bottom: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
     color: black;
     
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
@@ -656,21 +681,23 @@ body{
 
 .subCategoryPartContinuous {
     width: 1100%;
-    height: auto;
+    height: 13%;
+    max-height: fit-content;
     border: 3px solid black;
-    border-radius: 20px;
+    border-radius: 6px;
     z-index: 10;  
     background-color: rgba(255, 255, 255, 1);
     cursor: pointer;
 
     display: flex; 
     flex-direction: column;
-    justify-content: flex-start; 
+    justify-content: center; 
     align-items: flex-start; 
     padding: 15px;
+    margin-bottom: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
     color: black;
-
-    top: 50%;
 }
 
 .subCategoryPartContinuous:hover {
@@ -692,7 +719,7 @@ body{
 }
 
 #FullHeight {
-    height: 100%;
+    height: 100vh;
     display: flex; 
     flex-direction: column;
     justify-content: flex-end; 
@@ -709,8 +736,8 @@ body{
     flex-grow: 1;
     z-index: 100;
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;    /* Center items horizontally */
+    flex-direction: column; 
+    align-items: center;   
     justify-content: center;
     cursor: pointer;
     position: relative;
@@ -967,17 +994,28 @@ body{
     }
 }
 
+@media screen and (max-width: 75em) {
+    .wrapper{
+        display: none;
+    }
+}
+
+/* @media screen and (max-height: 39em) {
+    .wrapper{
+        display: none;
+    }
+} */
+
 
 *{
     padding: 0px;
 }
-
+/* 
 .context {
     width: 100%;
     position: absolute;
-    top:50vh;
-    
-}
+    top: 50vh;
+} */
 
 .context h1{
     text-align: center;
@@ -990,7 +1028,7 @@ body{
     background: #4e54c8;  
     background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
     width: 100%;
-    height:100vh;
+    height: 100%;
 }
 
 .circles{
