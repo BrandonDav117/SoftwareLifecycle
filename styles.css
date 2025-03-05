@@ -396,7 +396,7 @@ body{
     
     /* Background color */
     /* background: var(--highlight-color2); */
-    background: rgba(240, 240, 240, 0.7);
+    background: rgba(240, 240, 240, 0.5);
 }
 
 .menu__item.active .icon {
