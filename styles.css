@@ -199,8 +199,8 @@ html *::after {
 
 .icon{
     
-    width: 2em;
-    height: 2em;
+    width: 20%;
+    height: 20%;
     stroke: white;
     fill: transparent;
     stroke-width: 1pt;
@@ -209,6 +209,13 @@ html *::after {
     stroke-linejoin: round;
     stroke-dasharray: 400;
     
+    position: absolute;
+    left: 40%;
+    top: -17%;
+    display: flex; /* Use inline-flex so it adjusts based on content */
+    flex-direction: row; 
+    justify-content: center; /* Align content to the top vertically */
+    align-items: center; /* Center content horizontally */
 }
 
 #menu1 {
@@ -304,6 +311,16 @@ html *::after {
     background-color: var(--bgColorMenu);
     border-radius: 10px;
 
+    z-index: 999;
+} 
+
+#menuSpecial {
+    display: flex;
+    position: relative;
+    width: 8vw; 
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgColorMenu);
     z-index: 999;
 } 
 
@@ -409,6 +426,14 @@ body{
 
 .reverse-animation .icon {
     animation: strok 1.5s forwards reverse;
+}
+
+.icon {
+    transition: transform 0.3s ease;
+}
+
+.icon.animate {
+    animation: strok 1.5s reverse;
 }
 
 
@@ -550,7 +575,7 @@ body{
 
 .categoryHeadingsContainer {
     position: absolute; /* Make it stick to the parent */
-    top: -6.6%;  /* Aligns it at the very top */
+    top: -6.8%;  /* Aligns it at the very top */
     left: 0%;
     
     display: flex;
@@ -958,7 +983,7 @@ body{
         font-size: 1.4rem;
     }
     #extratitles{
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     #heading{
         font-size: 1.2rem;

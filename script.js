@@ -201,6 +201,20 @@ function clickMenuItem2(menuIndex, item, itemIndex) {
   scrollToSubcategoryWithHighlight(globalIndex); // Call the modified function
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".subCategory").forEach(div => {
+    div.addEventListener("click", () => {
+      const svg = div.querySelector(".icon");
+      if (svg) {
+        svg.classList.remove("animate"); // Remove class to reset animation
+        void svg.offsetWidth; // Force reflow to restart animation
+        svg.classList.add("animate"); // Re-add class to trigger animation again
+      }
+    });
+  });
+});
+
+
 // Scroll To Subcategory but Adds Active Highlight
 function scrollToSubcategoryWithHighlight(globalIndex) {
 
