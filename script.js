@@ -77,19 +77,19 @@ const rightDisplayContent = {
 };
 
 const rightDisplayContent2 = [
-  { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "" },
-  { title: "Company", heading: "Organise", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "Establish a legal company structure and define the roles and responsibilities for the team." },
-  { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "Ensure that your development and documentation adhere to the relevant standards such as ISO 13485." },
-  { title: "Tech File", heading: "Technical File", subHeading: "Prepare documentation to demonstrate compliance.", description: "Compile the necessary technical documentation, including risk assessments, for your medical device." },
-  { title: "Specify", heading: "Defining Requirements", subHeading: "Define the functional and non-functional requirements.", description: "Clearly specify what your device should do and the conditions it must meet." },
-  { title: "Design", heading: "Design Specifications", subHeading: "Develop detailed plans for your device.", description: "Draft the design inputs and outputs, including system architecture and user interface." },
+  { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "Welcome to our interactive guide to the regulatory life cycle for creating a software medical device. You can navigate through the various stages and requirements using this interactive guide. We have compartmentalised the entire life cycle journey into 5 sections, aiming to provide a general explanation for how each stage in the cycle works, and what actions are required for each so that you can best visualise your development journey.",  videoSrc: "StartVideo.mp4" },
+  { title: "Company", heading: "Organise", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "You will need to set up your company and its internal structure to ensure future regulatory compliance. You will need to establish a legal company structure and define the roles and responsibilities for the team. Here we provide a basic overview of what will be required.",  videoSrc: "CompanyVideo.mp4" },
+  { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "You will need to create a Quality Management System that provides the mechanisms with which you develop and distribute your product. You will need to ensure that your development and documentation adhere to the relevant standards such as ISO 13485.",  videoSrc: "" },
+  { title: "Tech File", heading: "Technical File", subHeading: "Prepare documentation to demonstrate compliance.", description: "Whilst the QMS provides documentation about your company, the Technical File provides documentation about your product. The Technical File will include documentation from each of the stages of the software life cycle of your product." },
+  { title: "Specify", heading: "Defining Requirements", subHeading: "Define the functional and non-functional requirements.", description: "The specification phase of the project involves capturing the requirements for the software, identifying use-cases and assessing risk." },
+  { title: "Design", heading: "Design Specifications", subHeading: "Develop detailed plans for your device.", description: "You can now begin designing your software based upon your specification." },
   { title: "Implement", heading: "Development", subHeading: "Turn your design into reality.", description: "Code and build the device, ensuring adherence to design specifications." },
-  { title: "Verify", heading: "Verification", subHeading: "Check the implementation against the design.", description: "Conduct verification activities to ensure the product meets design specifications." },
-  { title: "Validate", heading: "Validation", subHeading: "Ensure the device meets user needs.", description: "Perform validation to confirm the product satisfies the intended use." },
+  { title: "Verify", heading: "Verification", subHeading: "Check the implementation against the design.", description: "The verification phase is where you ensure the software meets your specification. Note this is not where user feedback is gathered, but where you are verifying your specification has been implemented correctly." },
+  { title: "Validate", heading: "Validation", subHeading: "Ensure the device meets user needs.", description: "The validation phase is where you ensure your software is fit for purpose, testing the software from a clinical perspective and within its intended scenarios." },
   { title: "Submit", heading: "Regulatory Submission", subHeading: "Prepare and submit your regulatory application.", description: "Compile the submission package and send it to the relevant regulatory authority." },
-  { title: "Rollout", heading: "Product Launch", subHeading: "Introduce your device to the market.", description: "Plan and execute the marketing and distribution strategy." },
-  { title: "Maintain", heading: "Post-Market", subHeading: "Monitor and maintain your product.", description: "Collect feedback, monitor performance, and handle any issues that arise post-launch." },
-  { title: "Finish", heading: "Project Completion", subHeading: "Wrap up and reflect on the project.", description: "Conduct a final review, archive documentation, and identify lessons learned for future projects." },
+  { title: "Rollout", heading: "Product Launch", subHeading: "Introduce your device to the market.", description: "Once your achieved regulatory approval/clearance, you can begin the rollout process. You will need to setup and Service Desk, create a marketing campaign and create a sales team." },
+  { title: "Maintain", heading: "Post-Market", subHeading: "Monitor and maintain your product.", description: "When the software is in use, you will need to provide new versions of the software to your users that incorporate bug fixes and new features. <br><br> Unless you are making a significant change to the intended use of your software, you will not need to go through the regulatory submission process for each release. You will need to follow your change control process, however. <br><br> For each new version of the software (including multiple bug fixes and new features) you will need to go through the specify, design, implementation, verification and validation phases again. This process should be fully documented in your Technical File and EQMS system so that changes are made in a controlled and auditable fashion." },
+  { title: "Finish", heading: "Project Completion", subHeading: "Wrap up and reflect on the project.", description: "It is important to think about the lifetime of your product as you will need to provide maintenance for the entirety of the product’s lifetime. For this reason, it is recommended to sell your product with a specified product lifetime." },
 ];
 
 const subCategoryContent = [
@@ -201,15 +201,36 @@ function clickMenuItem2(menuIndex, item, itemIndex) {
   scrollToSubcategoryWithHighlight(globalIndex); // Call the modified function
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll(".subCategory").forEach(div => {
+document.addEventListener("DOMContentLoaded", function () {
+  function triggerAnimation(element) {
+    const svg = element.querySelector(".icon");
+    if (svg) {
+      svg.classList.remove("animate");
+      setTimeout(() => {
+        svg.classList.add("animate");
+      }, 10); // Small delay to ensure proper reflow
+    }
+  }
+
+  // Event listener for subCategory div clicks
+  document.querySelectorAll(".subCategory").forEach((div) => {
     div.addEventListener("click", () => {
-      const svg = div.querySelector(".icon");
-      if (svg) {
-        svg.classList.remove("animate"); // Remove class to reset animation
-        void svg.offsetWidth; // Force reflow to restart animation
-        svg.classList.add("animate"); // Re-add class to trigger animation again
-      }
+      triggerAnimation(div);
+    });
+  });
+
+  // Event listener for menu item clicks
+  document.querySelectorAll(".menu__item").forEach((menuItem) => {
+    menuItem.addEventListener("click", () => {
+      const menuText = menuItem.querySelector(".text").textContent.trim();
+
+      // Find the corresponding subCategory div with matching text
+      document.querySelectorAll(".subCategory").forEach((div) => {
+        const divText = div.querySelector("#titleLeftDisplay")?.textContent.trim();
+        if (divText === menuText) {
+          triggerAnimation(div);
+        }
+      });
     });
   });
 });
@@ -390,9 +411,11 @@ function updateRightDisplay(content) {
 
   // Step 1: Fade out video
   videoElement.style.opacity = "0";
-  videoElement.style.display = "none";
 
+  // Wait for opacity transition to complete before hiding
   setTimeout(() => {
+    if (videoElement) videoElement.style.display = "none";
+
     // Update video source only after fade-out completes
     if (videoElement && content.videoSrc) {
       videoElement.src = content.videoSrc;
@@ -422,10 +445,8 @@ function updateRightDisplay(content) {
       typeWriterEffect(content);
     }, 300);
 
-  }, 1000); // Fade-out duration must match CSS transition
+  }, 1000); // Matches the fade-out duration
 }
-
-
 
 
 function typeWriterEffect(content) {
@@ -558,13 +579,26 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 }});
 
+// Track the last active menu
+let lastActiveMenuIndex = null;
+
 // Handle window resize
 window.addEventListener("resize", () => {
   menus.forEach((menu, menuIndex) => {
-    if (activeItems[menuIndex]) offsetMenuBorder(activeItems[menuIndex], menuBorders[menuIndex], menu);
-    else resetMenuBorder(menuBorders[menuIndex]);
+    if (activeItems[menuIndex]) {
+      lastActiveMenuIndex = menuIndex; // Store the last active menu
+    }
+  });
+
+  menus.forEach((menu, menuIndex) => {
+    if (menuIndex === lastActiveMenuIndex && activeItems[menuIndex]) {
+      offsetMenuBorder(activeItems[menuIndex], menuBorders[menuIndex], menu);
+    } else {
+      resetMenuBorder(menuBorders[menuIndex]);
+    }
   });
 });
+
 
 // Set the first menu item as active on page load, but only for menu1
 window.addEventListener('DOMContentLoaded', () => {

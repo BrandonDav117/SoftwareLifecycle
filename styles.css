@@ -63,7 +63,7 @@ html *::after {
 
 .logosHamlyn {
     position: absolute;
-    left: 50%;
+    left: 49%;
     top: -3%;
     z-index: 10;
     padding: -10px;
@@ -83,7 +83,7 @@ html *::after {
 
 #HamlynLogo {
     width: auto !important;
-    height: 10.2vh !important;
+    height: 10.5vh !important;
 }
 
 #ImperialLogo {
@@ -211,7 +211,7 @@ html *::after {
     
     position: absolute;
     left: 40%;
-    top: -17%;
+    top: 2%;
     display: flex; /* Use inline-flex so it adjusts based on content */
     flex-direction: row; 
     justify-content: center; /* Align content to the top vertically */
@@ -348,11 +348,20 @@ html *::after {
 
 #titleLeftDisplay {
     text-align: center;
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
     font-weight: bolder;
     margin-top: 10px;
-    margin-bottom: 10%;
+    margin-bottom: 30%;
+    
+    /* padding-bottom: 8px;
+    border-bottom: 3px solid white; */
+    
+    width: auto;  /* Adjust width as needed */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;  /* Ensures centering works */
 }
+
 
 #extratitles {
     font-size: 1.6rem;
@@ -429,11 +438,11 @@ body{
 }
 
 .icon {
-    transition: transform 0.3s ease;
+    transition: transform 3s ease-in;
 }
 
 .icon.animate {
-    animation: strok 1.5s reverse;
+    animation: strok 2.8s reverse;
 }
 
 
@@ -472,7 +481,7 @@ body{
 
 .rightDisplay {
     padding: 1.65%;
-    padding-right: 1.8%;
+    padding-right: 1.7%;
     width: 30vw;
     height: 75vh;
     min-height: 600px;
@@ -661,11 +670,9 @@ body{
     background-size: 200% 200%; /* Initial background size */
 }
 
-
-
 .subCategory:hover {
     background: #333; /* Dark gray background on hover */
-    transform: scale(1.01); /* Slight zoom */
+    transform: scale(1); /* Slight zoom */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
     opacity: 1;
 }
@@ -699,6 +706,7 @@ body{
     transform: translateX(-50%);
     margin-top: 5px;
     margin-bottom: 5%;
+    border: 3px solid black;
 
     opacity: 0;
     transition: opacity 1s ease;
@@ -1005,13 +1013,39 @@ body{
 
     @media screen and (max-width: 90em) {
         .text{
-            font-size: .8rem;
+            font-size: .9rem;
         }
         #title{
             font-size: 1rem;
         }
         #extratitles{
+            font-size: 1.2rem;
+        }
+        #titleLeftDisplay{
+            font-size: 1.2rem;
+        }
+        #heading{
+            font-size: .9rem;
+        }
+        #sub-heading{
+            font-size: .9rem;
+        }
+        #sub-heading2{
             font-size: .8rem;
+        }
+}
+    @media screen and (max-width: 60em) {
+        .text{
+            font-size: .7rem;
+        }
+        #title{
+            font-size: 0.9rem;
+        }
+        #extratitles{
+            font-size: 1rem;
+        }
+        #titleLeftDisplay{
+            font-size: 1rem;
         }
         #heading{
             font-size: .8rem;
@@ -1022,43 +1056,32 @@ body{
         #sub-heading2{
             font-size: .7rem;
         }
-}
-    @media screen and (max-width: 50em) {
-        .text{
-            font-size: .5rem;
+        .leftDisplay{
+            width: 48vw;
         }
-        #title{
-            font-size: .5rem;
-        }
-        #extratitles{
-            font-size: .5rem;
-        }
-        #heading{
-            font-size: .5rem;
-        }
-        #sub-heading{
-            font-size: .5rem;
-        }
-        #sub-heading2{
-            font-size: .5rem;
+        .rightDisplay{
+            width: 46vw;
         }
 }
-    @media screen and (max-width: 87em) {
-        .menu__item.active::before{
-            transform: scale(0.86);
-            background-color: var(--bgColorItem);
+
+@media screen and (max-width: 48em) {
+        #menu1 {
+            display: none;
         }
-}
-    @media screen and (max-width: 60em) {
-        .menu__item.active::before{
-            transform: scale(0.68);
-            background-color: var(--bgColorItem);
+        #menu2 {
+            display: none;
         }
-}
-    @media screen and (max-width: 40em) {
-        .menu__item.active::before{
-            transform: scale(0.52);
-            background-color: var(--bgColorItem);
+        #menu3 {
+            display: none;
+        }
+        #menu4 {
+            display: none;
+        }
+        #menu5 {
+            display: none;
+        }
+        .subCategory {
+            min-width: 22vw;
         }
 }
 
@@ -1074,7 +1097,6 @@ body{
     }
 }
 
-
 @media screen and (max-width: 80em) {
     .menu__item.active::before {
         transform: scale(0.65);
@@ -1087,8 +1109,15 @@ body{
     }
 }
 
-@media screen and (max-height: 39em) {
-    .wrapper{
+@media screen and (max-height: 20em) {
+    body{
+        display: none !important;
+    }
+}
+
+
+@media screen and (max-width: 40em) {
+    body{
         display: none !important;
     }
 }
@@ -1225,4 +1254,61 @@ body{
         border-radius: 50%;
     }
 
+}
+
+.arrows {
+	width: 32px;
+	height: auto;
+	position: absolute;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#GameText {
+    position: absolute;
+    top: 2.4%;
+    right: 3.6%;
+    color: black;
+    font-size: 85%;
+    font-weight: 50;
+    font-style: italic;
+}
+
+.arrows path {
+	stroke: #2994D1;
+	fill: transparent;
+	stroke-width: 2px;	
+	animation: arrow 2s infinite;
+	-webkit-animation: arrow 2s infinite; 
+}
+
+@keyframes arrow
+{
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
+}
+
+@-webkit-keyframes arrow /*Safari and Chrome*/
+{
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
+}
+
+.arrows path.a1 {
+	animation-delay:-1s;
+	-webkit-animation-delay:-1s; /* Safari 和 Chrome */
+}
+
+.arrows path.a2 {
+	animation-delay:-0.5s;
+	-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+}
+
+.arrows path.a3 {	
+	animation-delay:0s;
+	-webkit-animation-delay:0s; /* Safari 和 Chrome */
 }
