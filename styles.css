@@ -200,7 +200,7 @@ html *::after {
 .fade-in2 {
     opacity: 1 !important;  /* Fade in */
     visibility: visible !important;  /* Ensure visibility is applied */
-    transition: opacity 1.5s ease-in;  /* Smooth opacity transition */
+    transition: opacity 3s ease-in;  /* Smooth opacity transition */
 }
 
 .icon{
