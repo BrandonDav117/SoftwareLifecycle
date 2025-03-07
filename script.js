@@ -579,6 +579,69 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 }});
 
+document.addEventListener("DOMContentLoaded", () => {
+  const arrowsButton = document.querySelector(".arrows");
+  const gameText = document.querySelector("#GameText a"); // Target the <a> inside #GameText
+  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn");
+  const container = document.querySelector("#container #game");
+
+  let isContainerVisible = false; // Track visibility state of the container
+
+  if (arrowsButton) {
+    arrowsButton.addEventListener("click", () => {
+      // Change text content, starting with "Back to Life Cycle" on first click
+      if (gameText.textContent === "Back to Life Cycle") {
+        gameText.textContent = "Mini-Game"; // Change text to "Mini-Game" on the second click
+      } else {
+        gameText.textContent = "Back to Life Cycle"; // Revert text to "Back to Life Cycle" on the first click
+      }
+
+      // Check if the container is visible or not
+      if (!isContainerVisible) {
+        // Fade out elements sequentially
+        ClickElementsFadein.forEach((element, index) => {
+          setTimeout(() => {
+            element.classList.add("fade-out");
+          }, index * 250); // Delayed fade-out effect
+        });
+
+        // After all elements fade out, show and fade in the container
+        setTimeout(() => {
+          // Change visibility and display to start transition
+          container.style.visibility = "visible";  // Make it visible
+          container.style.display = "block";  // Set it to block to make it part of the layout
+          container.classList.add("fade-in2");  // Add fade-in class to trigger opacity transition
+          isContainerVisible = true; // Mark container as visible
+        }, ClickElementsFadein.length * 250); // Wait for the fade-out to finish
+      } else {
+        // Reverse the effect: Fade in elements and hide container
+        ClickElementsFadein.forEach((element, index) => {
+          setTimeout(() => {
+            element.classList.remove("fade-out"); // Fade elements back in
+            element.classList.add("fade-in"); // Make elements visible again
+          }, index * 250); // Delayed fade-in effect
+        });
+
+        // Fade out and hide the container
+        setTimeout(() => {
+          container.classList.remove("fade-in2"); // Remove fade-in class to trigger fade-out
+          container.style.opacity = 0;  // Fade the container out
+          setTimeout(() => {
+            container.style.display = "none"; // Hide the container
+            container.style.visibility = "hidden"; // Set visibility back to hidden
+          }, 1000); // Delay hiding the container until after the fade-out transition
+          isContainerVisible = false; // Mark container as hidden
+        }, ClickElementsFadein.length * 250); // Wait for the fade-in to finish
+      }
+    });
+  }
+});
+
+
+
+
+
+
 // Track the last active menu
 let lastActiveMenuIndex = null;
 
