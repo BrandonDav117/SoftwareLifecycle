@@ -637,22 +637,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
-
-
-
-
 // Track the last active menu
 let lastActiveMenuIndex = null;
 
 // Handle window resize
 window.addEventListener("resize", () => {
+  // Check for the last active menu
   menus.forEach((menu, menuIndex) => {
     if (activeItems[menuIndex]) {
       lastActiveMenuIndex = menuIndex; // Store the last active menu
     }
   });
 
+  // If no active menu is found, default to the first menu item (menu 1)
+  if (lastActiveMenuIndex === null) {
+    lastActiveMenuIndex = 0;
+  }
+
+  // Resize and adjust the active menu item or the default one
   menus.forEach((menu, menuIndex) => {
     if (menuIndex === lastActiveMenuIndex && activeItems[menuIndex]) {
       offsetMenuBorder(activeItems[menuIndex], menuBorders[menuIndex], menu);
@@ -661,6 +663,7 @@ window.addEventListener("resize", () => {
     }
   });
 });
+
 
 
 // Set the first menu item as active on page load, but only for menu1
