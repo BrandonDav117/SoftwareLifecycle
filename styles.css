@@ -1178,18 +1178,11 @@ body{
     }
 } */
 
-@media screen and (max-width: 75em) {
-    .wrapper{
-        display: none !important;
-    }
-}
-
 @media screen and (max-height: 20em) {
     body{
         display: none !important;
     }
 }
-
 
 @media screen and (max-width: 40em) {
     body{
