@@ -63,14 +63,10 @@ html *::after {
 
 .logosHamlyn {
     position: absolute;
-    left: 49%;
-    top: -3%;
+    top: 3.2%;
     z-index: 10;
-    padding: -10px;
+    width: 100%;
 
-    /* border-left: 3px solid black;
-    border-right: 3px solid black;
-    border-radius: 50%; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -81,15 +77,24 @@ html *::after {
     height: 4.2%;
 }
 
-#HamlynLogo {
-    width: auto !important;
-    height: 10.5vh !important;
-}
-
 #ImperialLogo {
     width: auto;
     margin-top: 7%;
     height: 1%;
+}
+
+#ImperialLogo2 {
+    width: auto !important;
+    height: 2vh !important;
+    position: absolute;
+    left: 4%
+}
+
+#HamlynLogo {
+    width: auto !important;
+    height: 10.5vh !important;
+    position: absolute;
+    left: 49%;
 }
 
 #WelcomeLogo {
@@ -174,34 +179,53 @@ html *::after {
 }
 
 /* Ensure elements start with opacity 0 */
-.rightDisplay, .leftDisplay, .mainDisplayHeading, .switch, .menu, .logos, .logosHamlyn{
+.rightDisplay, .leftDisplay, .mainDisplayHeading, .switch, .menu, .logos, .logosHamlyn, #GameText{
     opacity: 0;
     transition: opacity 1s ease-in; /* Fade in transition */
+    pointer-events: none; 
 }
 
 /* Ensure elements start hidden */
-.rightDisplay, .leftDisplay{
+.rightDisplay, .leftDisplay, .menu{
     visibility: hidden;
 }
 
+/* Fade-in effect */
+.fade-in {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 1s ease-in-out;
+    pointer-events: auto;
+}
+
+/* Fade-out effect */
 .fade-out {
     opacity: 0 !important;
-    transition: opacity 1s ease-in , visibility 1.7s ease !important;
+    transition: opacity 1s ease-in; /* Only transition opacity */
+    pointer-events: none;
+}
+
+/* Hide elements after fade-out completes */
+.fade-out-hidden {
     visibility: hidden !important;
 }
 
-/* Fade-in effect for elements */
-.fade-in {
+.fade-out-text {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+}
+  
+.fade-in-text {
     opacity: 1;
-    transition: opacity 1.5s ease-in, visibility 1.5 ease-in; /* Ensure smooth fade-in transition */
-    visibility: visible;
+    transition: opacity 0.5s ease-in-out;
 }
 
-.fade-in2 {
-    opacity: 1 !important;  /* Fade in */
-    visibility: visible !important;  /* Ensure visibility is applied */
-    transition: opacity 3s ease-in;  /* Smooth opacity transition */
+    /* Ensure the arrows button is always clickable */
+.arrows {
+    pointer-events: auto !important; /* Force the arrows button to be clickable */
+    z-index: 10;
 }
+  
 
 .icon{
     
@@ -222,16 +246,22 @@ html *::after {
     justify-content: center;
 }
 
+.menu {
+    width: 100vw;
+    height: 100vw;
+}
+
 #menu1 {
     margin: 10;
     display: flex;
-    width: 8vw; /* Adjusted width to fit on the left */
+    width: 9.3vw; /* Adjusted width to fit on the left */
+    height: auto;
     font-size: 1.2rem;
     padding-top: 5px;
     padding-bottom: 0px;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    position: absolute;
+    padding-left: 1.8vw;
+    padding-right: 1.8vw;
+    position: fixed;
     bottom: 1%;
     left: 2%; /* Align to the left side */
     align-items: center;
@@ -245,14 +275,15 @@ html *::after {
  #menu2 {
     margin: 10;
     display: flex;
-    width: 20vw; 
+    width: 20.9vw; 
+    height: auto;
     font-size: 1.2rem;
     padding-top: 5px;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
     position: fixed;
     bottom: 1%;
-    left: 12.5%; 
+    left: 12.3%; 
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -264,14 +295,15 @@ html *::after {
 #menu3 {
     margin: 10;
     display: flex;
-    width: 30vw; 
+    width: 31.5vw;
+    height: auto;
     font-size: 1.2rem;
     padding-top: 5px;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    padding-left: 1.8vw;
+    padding-right: 1.8vw;
     position: fixed;
     bottom: 1%;
-    left: 35%; 
+    left: 34.3%; 
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -283,14 +315,15 @@ html *::after {
 #menu4 {
     margin: 10;
     display: flex;
-    width: 20vw; 
+    width: 20.9vw; 
+    height: auto;
     font-size: 1.2rem;
     padding-top: 5px;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    padding-left: 1.8vw;
+    padding-right: 1.8vw;
     position: fixed;
     bottom: 1%;
-    left: 67.5%;
+    right: 12.3%;
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -302,14 +335,15 @@ html *::after {
 #menu5 {
     margin: 10;
     display: flex;
-    width: 8vw; 
+    width: 9.3vw; 
+    height: auto;
     font-size: 1.2rem;
     padding-top: 5px;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    padding-left: 1.8vw;
+    padding-right: 1.8vw;
     position: fixed;
     bottom: 1%;
-    left: 90%; 
+    right: 2%; 
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -380,7 +414,6 @@ html *::after {
     font-weight: bold;
     margin-right: 20px;
     margin-top: 4%;
-    margin-bottom: 7px;
     display: none;
 }
 
@@ -388,10 +421,17 @@ html *::after {
     font-size: 1.3rem;
     margin-right: 20px;
     line-height: 1.4;
+    margin-top: 7px;
 }
 
 #sub-heading2 {
     font-size: 1.2rem;
+}
+
+#sub-heading3 {
+    font-size: 1.3rem;
+    margin-right: 20px;
+    line-height: 1.4;
 }
 
 #title, #heading, #sub-heading, #border, .rightdisplayText4 {
@@ -430,7 +470,7 @@ body{
 }
 
 .menu__item.active .icon {
-    animation: strok 2s reverse;
+    animation: strok 1.5s reverse;
 }
 
 .reverse-animation {
@@ -488,7 +528,7 @@ body{
     padding-right: 1.7%;
     width: 30vw;
     height: 75vh;
-    min-height: 600px;
+    min-height: 635px;
     top: 9.5%;
     bottom: 2%;
     right: 2%;
@@ -557,7 +597,7 @@ body{
 
     width: 65%;
     height: 75vh;
-    min-height: 600px;
+    min-height: 635px;
     top: 9.5%;
     bottom: 2%;
     left: 2%;
@@ -637,7 +677,7 @@ body{
     z-index: -2;
     opacity: 1;
     top: -15%;
-    left: -10px;
+    left: -11.5px;
 }
 
 #extraMarginRight {
@@ -647,7 +687,7 @@ body{
 .subCategory {
     flex: 0 0 auto; 
     width: 10vw; 
-    height: 89%; 
+    height: 90%; 
     min-width: 200px;
     border: 3px solid black;
     border-radius: 10px;
@@ -853,8 +893,8 @@ body{
     
     content: "";
     z-index: -1;
-    width: 4em;
-    height: 4em;
+    width: 5vw;
+    height: 4.6vw;
     border-radius: 50%;
     position: absolute;
     transform: scale(0);
@@ -864,23 +904,30 @@ body{
 
 .menu__item.active {
 
-    transform: translate3d(0, -.6em , 0);
+    transform: translate3d(0, -.6vw , 0);
 
 }
 
-.menu__item.active::before{
+/* .menu__item.active::before{
     
     transform: scale(1.3);
+    background-color: var(--bgColorItem);
+
+} */
+
+.menu__item.active::before{
+    
+    transform: scale(1);
     background-color: var(--bgColorItem);
 
 }
 
 .menu__border{
 
-    left: 0.2%;
-    bottom: 97%;
-    height: 2.2vw;
-    width: 8vw;
+    left: 0%;
+    bottom: 99%;
+    width: 9vw;
+    height: 2.5vw;
     position: absolute;
     clip-path: url(#menu);
     will-change: transform;
@@ -982,20 +1029,6 @@ body{
 }
 
 
-@media screen and (max-width: 80em) {
-    .menu{
-        font-size: .5rem;
-
-        margin: 10;
-        display: flex;
-        width: 40vw;
-
-        padding: 0 2.85em;
-        position: fixed; /* Change from relative to fixed */
-        bottom: 0; /* Place it at the bottom of the page */
-    }
-}
-
 @media screen and (max-width: 110em) {
     .text{
         font-size: 1.2rem;
@@ -1014,6 +1047,9 @@ body{
     }
     #sub-heading2{
         font-size: 1rem;
+    }
+    #sub-heading3{
+        font-size: 1.1rem;
     }
 }
 
@@ -1039,13 +1075,16 @@ body{
         #sub-heading2{
             font-size: .8rem;
         }
+        #sub-heading3{
+            font-size: .9rem;
+        }
 }
-    @media screen and (max-width: 60em) {
+    @media screen and (max-width: 72em) {
         .text{
             font-size: .7rem;
         }
         #title{
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
         #extratitles{
             font-size: 1rem;
@@ -1054,13 +1093,16 @@ body{
             font-size: 1rem;
         }
         #heading{
-            font-size: .8rem;
+            font-size: .9rem;
         }
         #sub-heading{
-            font-size: .8rem;
+            font-size: .9rem;
         }
         #sub-heading2{
-            font-size: .7rem;
+            font-size: .8rem;
+        }
+        #sub-heading3{
+            font-size: .9rem;
         }
         .leftDisplay{
             width: 48vw;
@@ -1070,7 +1112,7 @@ body{
         }
 }
 
-@media screen and (max-width: 48em) {
+@media screen and (max-width: 50em) {
         #menu1 {
             display: none;
         }
@@ -1086,12 +1128,33 @@ body{
         #menu5 {
             display: none;
         }
-        /* .subCategory {
-            min-width: 22vw;
-        } */
+        .leftDisplay{
+            min-height: 86vh;
+        }
+        .rightDisplay{
+            min-height: 86vh;
+        }
 }
 
-@media screen and (max-width: 60em) {
+/* @media screen and (max-height: 52em) {
+    #menu1 {
+        display: none;
+    }
+    #menu2 {
+        display: none;
+    }
+    #menu3 {
+        display: none;
+    }
+    #menu4 {
+        display: none;
+    }
+    #menu5 {
+        display: none;
+    }
+} */
+
+/* @media screen and (max-width: 60em) {
     .menu__item.active {
         transform: translate3d(0, -.3em , 0);
     }
@@ -1107,7 +1170,7 @@ body{
     .menu__item.active::before {
         transform: scale(0.65);
     }
-}
+} */
 
 @media screen and (max-width: 75em) {
     .wrapper{
@@ -1132,7 +1195,7 @@ body{
     width: 100%;
     position: absolute;
     top: 50vh;
-} */
+}
 
 .context h1{
     text-align: center;

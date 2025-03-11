@@ -542,100 +542,121 @@ function typeWriterEffect(content) {
 });
 
 
+
+ // Main Button Logic 
 document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.querySelector("#preloader");
   const startButton = document.querySelector(".switch");
 
   const startFade = document.querySelectorAll(".mainDisplayHeading, .switch, .logos");
-  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn");
+  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn, #GameText");
   const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .switch, #animation-container, .logos");
 
-    // Wait for the preloader animation to end before showing elements
-    window.addEventListener('DOMContentLoaded', () => {
-      startFade.forEach(element => {
-        element.classList.add("fade-in");
-      });
-    }, { once: true });
-  // }
+  // Wait for the preloader animation to end before showing elements
+  window.addEventListener("DOMContentLoaded", () => {
+    startFade.forEach(element => element.classList.add("fade-in"));
+  }, { once: true });
 
   if (startButton) {
     startButton.addEventListener("click", () => {
+        const fadeOutOrder = [2, 0, 1, 3];
 
-      const customOrder2 = [2, 0, 1, 3]; // Define the order (indices of elements)
+        fadeOutOrder.forEach((orderIndex, delayIndex) => {
+            setTimeout(() => {
+                const element = ClickElementsFadeout[orderIndex];
+                element.classList.add("fade-out");
 
-      customOrder2.forEach((orderIndex, delayIndex) => {
-        setTimeout(() => {
-          ClickElementsFadeout[orderIndex].classList.add("fade-out");
-        }, delayIndex * 300); // Delay each one sequentially
-      });
+                // Delay adding 'fade-out-hidden' to allow smooth opacity transition
+                setTimeout(() => {
+                    element.classList.add("fade-out-hidden");
+                }, 1000); // This matches the opacity transition duration
+            }, delayIndex * 250);
+        });
 
-      const customOrder = [3, 4, 5, 6, 7, 2, 1, 0]; // Define the order (indices of elements)
+        const fadeInOrder = [4, 5, 6, 7, 8, 2, 3, 0, 1, 9];
+        fadeInOrder.forEach((orderIndex, delayIndex) => {
+            setTimeout(() => ClickElementsFadein[orderIndex].classList.add("fade-in"), delayIndex * 250);
+        });
+    });
+  }
+});
 
-      customOrder.forEach((orderIndex, delayIndex) => {
-        setTimeout(() => {
-          ClickElementsFadein[orderIndex].classList.add("fade-in");
-        }, delayIndex * 250); // Delay each one sequentially
-      });
-    })
-}});
 
+//Game Toggle
 document.addEventListener("DOMContentLoaded", () => {
   const arrowsButton = document.querySelector(".arrows");
-  const gameText = document.querySelector("#GameText a"); // Target the <a> inside #GameText
+  const gameText = document.querySelector("#GameText a");
   const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn");
-  const container = document.querySelector("#container #game");
+  const game = document.querySelector("#container #game");
+  const gameOver = document.querySelector("#container .game-over");
 
-  let isContainerVisible = false; // Track visibility state of the container
+  let isContainerVisible = false;
 
   if (arrowsButton) {
     arrowsButton.addEventListener("click", () => {
-      // Change text content, starting with "Back to Life Cycle" on first click
-      if (gameText.textContent === "Back to Life Cycle") {
-        gameText.textContent = "Mini-Game"; // Change text to "Mini-Game" on the second click
-      } else {
-        gameText.textContent = "Back to Life Cycle"; // Revert text to "Back to Life Cycle" on the first click
-      }
+      // Smooth text transition
+      gameText.classList.add("fade-out-text");
+      setTimeout(() => {
+        gameText.textContent = isContainerVisible ? "Mini-Game" : "Back";
+        gameText.classList.remove("fade-out-text");
+        gameText.classList.add("fade-in-text");
+        setTimeout(() => gameText.classList.remove("fade-in-text"), 500);
+      }, 250);
 
-      // Check if the container is visible or not
       if (!isContainerVisible) {
-        // Fade out elements sequentially
+        // Fade out current elements first
         ClickElementsFadein.forEach((element, index) => {
           setTimeout(() => {
             element.classList.add("fade-out");
-          }, index * 250); // Delayed fade-out effect
+          }, index * 250);
         });
 
-        // After all elements fade out, show and fade in the container
         setTimeout(() => {
-          // Change visibility and display to start transition
-          container.style.visibility = "visible";  // Make it visible
-          container.style.display = "block";  // Set it to block to make it part of the layout
-          container.classList.add("fade-in2");  // Add fade-in class to trigger opacity transition
-          isContainerVisible = true; // Mark container as visible
-        }, ClickElementsFadein.length * 250); // Wait for the fade-out to finish
+          // Make both the #game and .game-over visible **before** fading in
+          game.style.visibility = "visible"; // Make #game visible
+          gameOver.style.visibility = "visible"; // Make .game-over visible
+          game.style.transition = "opacity 1s ease-in-out"; // Add transition timing for #game
+          gameOver.style.transition = "opacity 1s ease-in-out"; // Add transition timing for .game-over
+          game.style.opacity = "1";  // Fade in #game
+          gameOver.style.opacity = "1"; // Fade in .game-over
+
+          // Enable interaction once game is visible
+          game.style.pointerEvents = "auto"; // Enable interactions
+          gameOver.style.pointerEvents = "auto"; // Enable interactions
+
+          isContainerVisible = true;
+        }, ClickElementsFadein.length * 250 + 100); // Small delay to prevent pop-in
       } else {
-        // Reverse the effect: Fade in elements and hide container
+        // Fade out both elements first
+        game.style.transition = "opacity 1s ease-in-out"; // Add transition timing for #game
+        gameOver.style.transition = "opacity 1s ease-in-out"; // Add transition timing for .game-over
+        game.style.opacity = "0"; // Fade out #game
+        gameOver.style.opacity = "0"; // Fade out .game-over
+
+        // Disable interactions while fading out
+        game.style.pointerEvents = "none"; // Disable interactions on #game
+        gameOver.style.pointerEvents = "none"; // Disable interactions on .game-over
+
+        setTimeout(() => {
+          // Hide both elements after fade-out
+          game.style.visibility = "hidden"; // Hide #game after fade-out
+          gameOver.style.visibility = "hidden"; // Hide .game-over after fade-out
+        }, 1000); // Matches CSS transition time
+
+        // Bring back the main UI
         ClickElementsFadein.forEach((element, index) => {
           setTimeout(() => {
-            element.classList.remove("fade-out"); // Fade elements back in
-            element.classList.add("fade-in"); // Make elements visible again
-          }, index * 250); // Delayed fade-in effect
+            element.classList.remove("fade-out");
+            element.classList.add("fade-in");
+          }, index * 250);
         });
 
-        // Fade out and hide the container
-        setTimeout(() => {
-          container.classList.remove("fade-in2"); // Remove fade-in class to trigger fade-out
-          container.style.opacity = 0;  // Fade the container out
-          setTimeout(() => {
-            container.style.display = "none"; // Hide the container
-            container.style.visibility = "hidden"; // Set visibility back to hidden
-          }, 1000); // Delay hiding the container until after the fade-out transition
-          isContainerVisible = false; // Mark container as hidden
-        }, ClickElementsFadein.length * 250); // Wait for the fade-in to finish
+        isContainerVisible = false;
       }
     });
   }
 });
+
 
 // Track the last active menu
 let lastActiveMenuIndex = null;
@@ -663,7 +684,6 @@ window.addEventListener("resize", () => {
     }
   });
 });
-
 
 
 // Set the first menu item as active on page load, but only for menu1
