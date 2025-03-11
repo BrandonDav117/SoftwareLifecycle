@@ -582,79 +582,62 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-//Game Toggle
+// Game Toggle
 document.addEventListener("DOMContentLoaded", () => {
   const arrowsButton = document.querySelector(".arrows");
   const gameText = document.querySelector("#GameText a");
-  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn");
+  const fadeElements = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn");
   const game = document.querySelector("#container #game");
   const gameOver = document.querySelector("#container .game-over");
 
   let isContainerVisible = false;
+  let isAnimating = false;
 
-  if (arrowsButton) {
-    arrowsButton.addEventListener("click", () => {
-      // Smooth text transition
-      gameText.classList.add("fade-out-text");
-      setTimeout(() => {
-        gameText.textContent = isContainerVisible ? "Mini-Game" : "Back";
-        gameText.classList.remove("fade-out-text");
-        gameText.classList.add("fade-in-text");
-        setTimeout(() => gameText.classList.remove("fade-in-text"), 500);
-      }, 250);
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-      if (!isContainerVisible) {
-        // Fade out current elements first
-        ClickElementsFadein.forEach((element, index) => {
-          setTimeout(() => {
-            element.classList.add("fade-out");
-          }, index * 250);
-        });
+  async function toggleGame() {
+    if (isAnimating) return;
+    isAnimating = true;
+    arrowsButton.style.pointerEvents = "none";
 
-        setTimeout(() => {
-          // Make both the #game and .game-over visible **before** fading in
-          game.style.visibility = "visible"; // Make #game visible
-          gameOver.style.visibility = "visible"; // Make .game-over visible
-          game.style.transition = "opacity 1s ease-in-out"; // Add transition timing for #game
-          gameOver.style.transition = "opacity 1s ease-in-out"; // Add transition timing for .game-over
-          game.style.opacity = "1";  // Fade in #game
-          gameOver.style.opacity = "1"; // Fade in .game-over
+    // Update button text smoothly
+    gameText.classList.add("fade-out-text");
+    await delay(250);
+    gameText.textContent = isContainerVisible ? "Mini-Game" : "Back";
+    gameText.classList.replace("fade-out-text", "fade-in-text");
+    await delay(500);
+    gameText.classList.remove("fade-in-text");
 
-          // Enable interaction once game is visible
-          game.style.pointerEvents = "auto"; // Enable interactions
-          gameOver.style.pointerEvents = "auto"; // Enable interactions
+    if (!isContainerVisible) {
+      fadeElements.forEach((el) => el.classList.add("fade-out"));
+      await delay(fadeElements.length * 250 + 100);
 
-          isContainerVisible = true;
-        }, ClickElementsFadein.length * 250 + 100); // Small delay to prevent pop-in
-      } else {
-        // Fade out both elements first
-        game.style.transition = "opacity 1s ease-in-out"; // Add transition timing for #game
-        gameOver.style.transition = "opacity 1s ease-in-out"; // Add transition timing for .game-over
-        game.style.opacity = "0"; // Fade out #game
-        gameOver.style.opacity = "0"; // Fade out .game-over
+      // Ensure the game elements are ready to transition
+      [game, gameOver].forEach((el) => {
+        el.style.transition = "opacity 1s ease-in-out";
+        el.style.visibility = "visible";
+        el.style.opacity = "0"; // Start from transparent
+      });
 
-        // Disable interactions while fading out
-        game.style.pointerEvents = "none"; // Disable interactions on #game
-        gameOver.style.pointerEvents = "none"; // Disable interactions on .game-over
+      requestAnimationFrame(() => {
+        [game, gameOver].forEach((el) => (el.style.opacity = "1"));
+      });
 
-        setTimeout(() => {
-          // Hide both elements after fade-out
-          game.style.visibility = "hidden"; // Hide #game after fade-out
-          gameOver.style.visibility = "hidden"; // Hide .game-over after fade-out
-        }, 1000); // Matches CSS transition time
+    } else {
+      [game, gameOver].forEach((el) => (el.style.opacity = "0"));
+      await delay(1000);
+      [game, gameOver].forEach((el) => (el.style.visibility = "hidden"));
 
-        // Bring back the main UI
-        ClickElementsFadein.forEach((element, index) => {
-          setTimeout(() => {
-            element.classList.remove("fade-out");
-            element.classList.add("fade-in");
-          }, index * 250);
-        });
+      fadeElements.forEach((el) => el.classList.replace("fade-out", "fade-in"));
+    }
 
-        isContainerVisible = false;
-      }
-    });
+    isContainerVisible = !isContainerVisible;
+    await delay(1000);
+    isAnimating = false;
+    arrowsButton.style.pointerEvents = "auto";
   }
+
+  if (arrowsButton) arrowsButton.addEventListener("click", toggleGame);
 });
 
 
