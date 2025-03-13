@@ -530,7 +530,7 @@ body{
     margin: 0;
     width: 100vw;
     height: 92vh;
-    min-height: 760px;
+    min-height: 720px;
     top: 2%;
     bottom: 2%;
     display: flex;
@@ -546,15 +546,17 @@ body{
     font-family: sans-serif;
     border-radius: 20px;
     z-index: 0;
+
+    overscroll-behavior: contain;
 }
 
 .rightDisplay {
     padding: 1.65%;
     padding-right: 1.7%;
     width: 30vw;
-    height: 75vh;
+    height: 74vh;
+    min-height: 560px;
     top: 9.5%;
-    min-height: 635px;
     right: 2%;
     display: flex;
     font-size: 1rem;
@@ -619,8 +621,8 @@ body{
 .leftDisplay {
 
     width: 65%;
-    height: 75vh;
-    min-height: 635px;
+    height: 74vh;
+    min-height: 560px;
     top: 9.5%;
     bottom: 2%;
     left: 2%;
@@ -708,7 +710,7 @@ body{
 }    
 
 .subCategory {
-    flex: 0 0 auto; 
+    /* flex: 0 0 auto;  */
     width: 10vw; 
     height: 90%; 
     min-width: 200px;
@@ -738,6 +740,20 @@ body{
     background: linear-gradient(to bottom, gray, black);
     background-size: 200% 200%; /* Initial background size */
 }
+
+#FullHeight {
+    height: 100%;
+    margin-top: 7px;
+    width: 100%;
+    /* left: 7px; */
+    bottom: 0px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-end; 
+    align-items: flex-start; 
+    position: relative;
+}
+
 
 .subCategory:hover {
     background: #333; /* Dark gray background on hover */
@@ -851,11 +867,46 @@ body{
     justify-content: center; 
     align-items: flex-start; 
     padding: 15px;
+    max-height: 80px;
     margin-bottom: 7px;
     color: black;
 
     transition: opacity 0.3s ease;
 }
+
+@media screen and (max-height: 55em) {
+    .subCategoryPartContinuous{
+        padding: 3%;
+    }
+    .subCategory{
+        min-height: fit-content;
+    }
+    #FullHeight {
+        height: auto;
+    }
+    .text{
+        font-size: 1.1rem;
+    }
+    #title{
+        font-size: 1.4rem;
+    }
+    #extratitles{
+        font-size: 1.4rem;
+    }
+    #heading{
+        font-size: 1.2rem;
+    }
+    #sub-heading{
+        font-size: 1.1rem;
+    }
+    #sub-heading2{
+        font-size: 1rem;
+    }
+    #sub-heading3{
+        font-size: 1.1rem;
+    }
+}
+
 
 .subCategoryPartContinuous:hover {
     font-weight: bolder;
@@ -877,19 +928,6 @@ body{
     border-color: white;
     transform: scale(1.01); /* Slight zoom */
     transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-}
-
-#FullHeight {
-    height: 100%;
-    margin-top: 7px;
-    width: 100%;
-    /* left: 7px; */
-    bottom: 0px;
-    display: flex; 
-    flex-direction: column;
-    justify-content: flex-end; 
-    align-items: flex-start; 
-    position: relative;
 }
 
 #QMS {
@@ -1089,21 +1127,15 @@ body{
 
 @media screen and (max-width: 72em) {
     .text{
-        font-size: .8rem;
+        font-size: .9rem;
     }
 
     .leftDisplay{
-        width: 42vw;
+        width: 45vw;
     }
     .rightDisplay{
-        width: 52vw;
+        width: 50vw;
         padding: 3%;
-    }
-}
-
-@media screen and (max-width: 60em) {
-    .text{
-        font-size: .7rem;
     }
 }
 
@@ -1113,7 +1145,7 @@ body{
     }
 }
 
-@media screen and (max-width: 55em) {
+@media screen and (max-width: 62em) {
     body{
         display: none !important;
     }
