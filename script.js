@@ -549,7 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.querySelector(".switch");
 
   const startFade = document.querySelectorAll(".mainDisplayHeading, .switch, .logos");
-  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn, #GameText");
+  const ClickElementsFadein = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosMainDisplay, #GameText");
   const ClickElementsFadeout = document.querySelectorAll(".mainDisplayHeading, .switch, #animation-container, .logos");
 
   // Wait for the preloader animation to end before showing elements
@@ -586,7 +586,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const arrowsButton = document.querySelector(".arrows");
   const gameText = document.querySelector("#GameText a");
-  const fadeElements = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosHamlyn");
+  const fadeElements = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosMainDisplay");
   const game = document.querySelector("#container #game");
   const gameOver = document.querySelector("#container .game-over");
 

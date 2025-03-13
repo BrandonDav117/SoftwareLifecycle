@@ -41,25 +41,26 @@
 
 </head>
 
-<div class="wrapper">
+<body>
+  <div class="wrapper">
+
+    <!-- Background Effect -->
+    <div class="area">
+      <ul class="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+      </ul>
+    </div>
 
     <!-- Intro -->
-
-      <div class="area">
-        <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-          </ul>
-        </div>
-
     <div class="introContainer">
 
       <div class="mainDisplayHeading">
@@ -83,36 +84,34 @@
         <img id="ImperialLogo" src="Imperial logo.png" alt="Logo 2">
         <img id="WelcomeLogo" src="Welcome Trust logo.png" alt="Logo 3">
       </div>
-<!-- 
-   <div class=containerTest> -->
-          <div id="container">
-            <div id="game"></div>
-            <div id="score">0</div>
-            <div id="instructions">Click to build a mini-game</div>
-            <div class="game-over">
-              <h2>Game Over</h2>
-              <p>Click or spacebar to start again</p>
-            </div>
-            <div class="game-ready">
-              <div id="start-button">Start</div>
-              <div></div>
-            </div>
-          </div>
+
+      <!-- Game -->
+      <div id="container">
+        <div id="game"></div>
+        <div id="score">0</div>
+        <div id="instructions">Click to build a mini-game</div>
+        <div class="game-over">
+          <h2>Game Over</h2>
+          <p>Click or spacebar to start again</p>
         </div>
-        
-        </div>
+        <div class="game-ready">
+          <div id="start-button">Start</div>
+        <div></div>
       </div>
+
+    </div>
+  </div>
 
     <!-- Main Display -->
     
     <div class="containerTest">
 
-      <div class="logosHamlyn">
+      <div class="logosMainDisplay">
         <img id="HamlynLogo" src="Hamlyn logo.png" alt="Logo 1">
         <img id="ImperialLogo2" src="Imperial logo.png" alt="Logo 2">
       </div>
 
-      <div id="GameText"> <a> Mini-Game </a>
+      <div id="GameText"> <a id="GameText2"> Mini-Game </a>
       <svg class="arrows" viewBox="0 0 80 80">
         <path class="a1" d="M0 0 L32 30 L0 60"></path>
         <path class="a2" d="M20 0 L52 30 L20 60"></path>
@@ -246,105 +245,102 @@
 
             </div>
           </div>
-      </div>
 
-      <div class="rightDisplay">
-          <a id="title"> Start </a>
-          <a id="heading"> </a>
-          <a id="sub-heading"> Welcome to our interactive guide to the development lifecycle for creating a software medical device. </a>
-        <div id="border"></div>
 
-          <video id="categoryVideo" controls>
-            <source src="Category1Vid.mp4" type="video/mp4">
-          </video>
+        <div class="rightDisplay">
+            <a id="title"> Start </a>
+            <a id="heading"> </a>
+            <a id="sub-heading"> Welcome to our interactive guide to the development lifecycle for creating a software medical device. </a>
+          <div id="border"></div>
 
-          <div id="sub-heading3" class="rightdisplayText4"></div> 
+            <video id="categoryVideo" controls>
+              <source src="Category1Vid.mp4" type="video/mp4">
+            </video>
 
-       </div>
-      </div>
-
-<body>
-
-  <!-- First Menu -->
-  <menu class="menu" id="menu1">
-    <button class="menu__item active" style="--bgColorItem: black;" >
-      <a class="text"> Start </a>
-    </button>
-    <div class="menu__border"></div>
-  </menu>
-
-  <!-- Second Menu -->
-
-  <menu class="menu" id="menu2">
-    <button class="menu__item" style="--bgColorItem: #0390b7;">
-      <a class="text"> Company </a>
-
-      
-    </button>
-    <button class="menu__item" style="--bgColorItem: #0a7394;" >
-      <a class="text"> QMS </a>
-    </button>
-    <button class="menu__item" style="--bgColorItem: #125d78;" > 
-      <a class="text"> Tech File </a>
-    </button>
-    <div class="menu__border"></div>
-  </menu>
-      
-  <!-- Third Menu -->
-
-    <menu class="menu" id="menu3">
-        <button class="menu__item" style="--bgColorItem: #8f58fa;"> 
-          <a class="text"> Specify </a>
-        </button>
-        <button class="menu__item" style="--bgColorItem: #8235f2;"> 
-          <a class="text"> Design </a>
-        </button>
-        <button class="menu__item" style="--bgColorItem: #7323de;"> 
-          <a class="text"> IMP </a>
-        </button>
-        <button class="menu__item" style="--bgColorItem: #601dba;"> 
-          <a class="text"> Verify </a>
-        </button>
-        <button class="menu__item" style="--bgColorItem: #501a98;"> 
-          <a class="text"> Validate </a>
-        </button>
-        <div class="menu__border"></div>
-    </menu>
-
-  <!-- Fourth Menu -->
-
-    <menu class="menu" id="menu4">
-        <button class="menu__item" style="--bgColorItem: #dc2252;"> 
-          <a class="text"> Submit </a>
-        </button>
-        <button class="menu__item" style="--bgColorItem: #c9184a;"> 
-          <a class="text"> Rollout </a>
-        </button>
-        <button class="menu__item" style="--bgColorItem: #9b1640;"> 
-          <a class="text"> Maintain </a>
-        </button>
-        <div class="menu__border">
+            <div id="sub-heading3" class="rightdisplayText4"></div> 
+            
         </div>
-    </menu>
 
-  <!-- Fifth Menu -->
+      <div class="menuContainer">
 
-    <menu class="menu" id="menu5">
+        <!-- First Menu -->
+        <menu class="menu" id="menu1">
+          <button class="menu__item active" style="--bgColorItem: black;" >
+            <a class="text"> Start </a>
+          </button>
+          <div class="menu__border"></div>
+        </menu>
+
+        <!-- Second Menu -->
+        <menu class="menu" id="menu2">
+          <button class="menu__item" style="--bgColorItem: #0390b7;">
+            <a class="text"> Company </a>
+
+            
+          </button>
+          <button class="menu__item" style="--bgColorItem: #0a7394;" >
+            <a class="text"> QMS </a>
+          </button>
+          <button class="menu__item" style="--bgColorItem: #125d78;" > 
+            <a class="text"> Tech File </a>
+          </button>
+          <div class="menu__border"></div>
+        </menu>
+            
+        <!-- Third Menu -->
+        <menu class="menu" id="menu3">
+            <button class="menu__item" style="--bgColorItem: #8f58fa;"> 
+              <a class="text"> Specify </a>
+            </button>
+            <button class="menu__item" style="--bgColorItem: #8235f2;"> 
+              <a class="text"> Design </a>
+            </button>
+            <button class="menu__item" style="--bgColorItem: #7323de;"> 
+              <a class="text"> IMP </a>
+            </button>
+            <button class="menu__item" style="--bgColorItem: #601dba;"> 
+              <a class="text"> Verify </a>
+            </button>
+            <button class="menu__item" style="--bgColorItem: #501a98;"> 
+              <a class="text"> Validate </a>
+            </button>
+            <div class="menu__border"></div>
+        </menu>
+
+        <!-- Fourth Menu -->
+        <menu class="menu" id="menu4">
+            <button class="menu__item" style="--bgColorItem: #dc2252;"> 
+              <a class="text"> Submit </a>
+            </button>
+            <button class="menu__item" style="--bgColorItem: #c9184a;"> 
+              <a class="text"> Rollout </a>
+            </button>
+            <button class="menu__item" style="--bgColorItem: #9b1640;"> 
+              <a class="text"> Maintain </a>
+            </button>
+            <div class="menu__border">
+            </div>
+        </menu>
+
+        <!-- Fifth Menu -->
+        <menu class="menu" id="menu5">
           <button class="menu__item" style="--bgColorItem: black;"> 
             <a class="text"> Finish </a>
           </button>
           <div class="menu__border"></div>
-    </menu>
+        </menu>
 
-    <div class="svg-container">
-      <svg viewBox="0 0 202.9 45.5" >
-        <clipPath id="menu" clipPathUnits="objectBoundingBox" transform="scale(0.0049285362247413 0.021978021978022)">
-          <path  d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7
-            c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,5.5,12.4,8.2,18.1,10.5
-            c9.2,3.6,17.6,4.2,23.3,4H6.7z"/>
-        </clipPath>
-      </svg>
-    </div>
+        <div class="svg-container">
+          <svg viewBox="0 0 202.9 45.5" >
+            <clipPath id="menu" clipPathUnits="objectBoundingBox" transform="scale(0.0049285362247413 0.021978021978022)">
+              <path  d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7
+                c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,5.5,12.4,8.2,18.1,10.5
+                c9.2,3.6,17.6,4.2,23.3,4H6.7z"/>
+            </clipPath>
+          </svg>
+        </div>
+      </div>
+     </div>
 
     </body>
   </div>
