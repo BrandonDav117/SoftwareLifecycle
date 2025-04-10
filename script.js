@@ -52,29 +52,108 @@ let menuBorders = menus.map(menu => menu.querySelector(".menu__border"));
 
 const rightDisplayContent = {
   menu1: [
-    { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "Welcome to our interactive guide to the regulatory life cycle for creating a software medical device. You can navigate through the various stages and requirements using this interactive guide. We have compartmentalised the entire life cycle journey into 5 sections, aiming to provide a general explanation for how each stage in the cycle works, and what actions are required for each so that you can best visualise your development journey.",  videoSrc: "StartVideo.mp4" },
+    {
+      title: "Start",
+      heading: "",
+      subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.",
+      description: "Welcome to our interactive guide to the regulatory life cycle for creating a software medical device. You can navigate through the various stages and requirements using this interactive guide. We have compartmentalised the entire life cycle journey into 5 sections, aiming to provide a general explanation for how each stage in the cycle works, and what actions are required for each so that you can best visualise your development journey.",
+      videoSrc: "Synthesia_Videos/Start.mp4"
+    }
   ],
   menu2: [
-    { title: "Company", heading: "Setting Up a Company", subHeading: "Set up your company structure and ensure regulatory compliance.", description: "You will need to set up your company and its internal structure to ensure future regulatory compliance. You will need to establish a legal company structure and define the roles and responsibilities for the team. Here we provide a basic overview of what will be required.",  videoSrc: "CompanyVideo.mp4" },
-    { title: "QMS", heading: "Quality Management System", subHeading: "Implement a quality management system for regulatory adherence.", description: "You will need to create a Quality Management System that provides the mechanisms with which you develop and distribute your product. You will need to ensure that your development and documentation adhere to the relevant standards such as ISO 13485.",  videoSrc: "" },
-    { title: "Tech File", heading: "Technical File", subHeading: "Prepare documentation to demonstrate compliance.", description: "Whilst the QMS provides documentation about your company, the Technical File provides documentation about your product. The Technical File will include documentation from each of the stages of the software life cycle of your product." }
+    {
+      title: "Company",
+      heading: "Setting Up a Company",
+      subHeading: "Set up your company structure and ensure regulatory compliance.",
+      description: "You will need to set up your company and its internal structure to ensure future regulatory compliance. You will need to establish a legal company structure and define the roles and responsibilities for the team. Here we provide a basic overview of what will be required.",
+      videoSrc: "Synthesia_Videos/Company.mp4"
+    },
+    {
+      title: "QMS",
+      heading: "Quality Management System",
+      subHeading: "Implement a quality management system for regulatory adherence.",
+      description: "You will need to create a Quality Management System that provides the mechanisms with which you develop and distribute your product. You will need to ensure that your development and documentation adhere to the relevant standards such as ISO 13485.",
+      videoSrc: "Synthesia_Videos/QMS.mp4"
+    },
+    {
+      title: "Tech File",
+      heading: "Technical File",
+      subHeading: "Prepare documentation to demonstrate compliance.",
+      description: "Whilst the QMS provides documentation about your company, the Technical File provides documentation about your product. The Technical File will include documentation from each of the stages of the software life cycle of your product.",
+      videoSrc: "Synthesia_Videos/Tech File.mp4"
+    }
   ],
   menu3: [
-    { title: "Specify", heading: "Defining Requirements", subHeading: "Define the functional and non-functional requirements.", description: "The specification phase of the project involves capturing the requirements for the software, identifying use-cases and assessing risk." },
-    { title: "Design", heading: "Design Specifications", subHeading: "Develop detailed plans for your device.", description: "You can now begin designing your software based upon your specification." },
-    { title: "Implement", heading: "Development", subHeading: "Turn your design into reality.", description: "Code and build the device, ensuring adherence to design specifications." },
-    { title: "Verify", heading: "Verification", subHeading: "Check the implementation against the design.", description: "The verification phase is where you ensure the software meets your specification. Note this is not where user feedback is gathered, but where you are verifying your specification has been implemented correctly." },
-    { title: "Validate", heading: "Validation", subHeading: "Ensure the device meets user needs.", description: "The validation phase is where you ensure your software is fit for purpose, testing the software from a clinical perspective and within its intended scenarios." }
+    {
+      title: "Specify",
+      heading: "Defining Requirements",
+      subHeading: "Define the functional and non-functional requirements.",
+      description: "The specification phase of the project involves capturing the requirements for the software, identifying use-cases and assessing risk.",
+      videoSrc: "Synthesia_Videos/Specify_Requirements.mp4"
+    },
+    {
+      title: "Design",
+      heading: "Design Specifications",
+      subHeading: "Develop detailed plans for your device.",
+      description: "You can now begin designing your software based upon your specification.",
+      videoSrc: "Synthesia_Videos/Design.mp4"
+    },
+    {
+      title: "Implement",
+      heading: "Development",
+      subHeading: "Turn your design into reality.",
+      description: "Code and build the device, ensuring adherence to design specifications.",
+      videoSrc: "Synthesia_Videos/Implementation.mp4"
+    },
+    {
+      title: "Verify",
+      heading: "Verification",
+      subHeading: "Check the implementation against the design.",
+      description: "The verification phase is where you ensure the software meets your specification. Note this is not where user feedback is gathered, but where you are verifying your specification has been implemented correctly.",
+      videoSrc: "Synthesia_Videos/Verification.mp4"
+    },
+    {
+      title: "Validate",
+      heading: "Validation",
+      subHeading: "Ensure the device meets user needs.",
+      description: "The validation phase is where you ensure your software is fit for purpose, testing the software from a clinical perspective and within its intended scenarios.",
+      videoSrc: "Synthesia_Videos/Validation.mp4"
+    }
   ],
   menu4: [
-    { title: "Submit", heading: "Regulatory Submission", subHeading: "Prepare and submit your regulatory application.", description: "Compile the submission package and send it to the relevant regulatory authority." },
-    { title: "Rollout", heading: "Product Launch", subHeading: "Introduce your device to the market.", description: "Once your achieved regulatory approval/clearance, you can begin the rollout process. You will need to setup and Service Desk, create a marketing campaign and create a sales team." },
-    { title: "Maintain", heading: "Post-Market", subHeading: "Monitor and maintain your product.", description: "When the software is in use, you will need to provide new versions of the software to your users that incorporate bug fixes and new features. <br><br> Unless you are making a significant change to the intended use of your software, you will not need to go through the regulatory submission process for each release. You will need to follow your change control process, however. <br><br> For each new version of the software (including multiple bug fixes and new features) you will need to go through the specify, design, implementation, verification and validation phases again. This process should be fully documented in your Technical File and EQMS system so that changes are made in a controlled and auditable fashion." },
+    {
+      title: "Submit",
+      heading: "Regulatory Submission",
+      subHeading: "Prepare and submit your regulatory application.",
+      description: "Compile the submission package and send it to the relevant regulatory authority.",
+      videoSrc: "Synthesia_Videos/Submission.mp4"
+    },
+    {
+      title: "Rollout",
+      heading: "Product Launch",
+      subHeading: "Introduce your device to the market.",
+      description: "Once your achieved regulatory approval/clearance, you can begin the rollout process. You will need to setup and Service Desk, create a marketing campaign and create a sales team.",
+      videoSrc: "Synthesia_Videos/Rollout.mp4"
+    },
+    {
+      title: "Maintain",
+      heading: "Post-Market",
+      subHeading: "Monitor and maintain your product.",
+      description: "When the software is in use, you will need to provide new versions of the software to your users that incorporate bug fixes and new features. <br><br> Unless you are making a significant change to the intended use of your software, you will not need to go through the regulatory submission process for each release. You will need to follow your change control process, however. <br><br> For each new version of the software (including multiple bug fixes and new features) you will need to go through the specify, design, implementation, verification and validation phases again. This process should be fully documented in your Technical File and EQMS system so that changes are made in a controlled and auditable fashion.",
+      videoSrc: "Synthesia_Videos/Maintenance.mp4"
+    }
   ],
   menu5: [
-    { title: "Finish", heading: "Project Completion", subHeading: "Wrap up and reflect on the project.", description: "It is important to think about the lifetime of your product as you will need to provide maintenance for the entirety of the product’s lifetime. For this reason, it is recommended to sell your product with a specified product lifetime." },
+    {
+      title: "Finish",
+      heading: "Project Completion",
+      subHeading: "Wrap up and reflect on the project.",
+      description: "It is important to think about the lifetime of your product as you will need to provide maintenance for the entirety of the product’s lifetime. For this reason, it is recommended to sell your product with a specified product lifetime.",
+      videoSrc: "Synthesia_Videos/Finish.mp4"
+    }
   ]
 };
+
 
 const rightDisplayContent2 = [
   { title: "Start", heading: "", subHeading: "Welcome to our interactive guide to the development lifecycle for creating a software medical device.", description: "Welcome to our interactive guide to the regulatory life cycle for creating a software medical device. You can navigate through the various stages and requirements using this interactive guide. We have compartmentalised the entire life cycle journey into 5 sections, aiming to provide a general explanation for how each stage in the cycle works, and what actions are required for each so that you can best visualise your development journey.",  videoSrc: "StartVideo.mp4" },
