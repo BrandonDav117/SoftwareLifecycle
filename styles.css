@@ -288,7 +288,7 @@ html *::after {
     /* max-width: 2000PX; */
     height: 10vh;
     position: relative;
-    bottom: -50%;
+    bottom: -43.5%;
 }
 
 #menu1 {
@@ -491,6 +491,9 @@ body{
     /* Background color */
     /* background: var(--highlight-color2); */
     background: rgba(240, 240, 240, 0.5);
+
+    overscroll-behavior: contain;
+    overflow-y: auto;
 }
 
 .menu__item.active .icon {
@@ -529,8 +532,8 @@ body{
 
     margin: 0;
     width: 100vw;
-    height: 92vh;
-    min-height: 720px;
+    height: 100vh;
+    min-height: 760px;
     top: 2%;
     bottom: 2%;
     display: flex;
@@ -547,12 +550,13 @@ body{
     border-radius: 20px;
     z-index: 0;
 
+    max-height: 100vh;
     overscroll-behavior: contain;
 }
 
 .rightDisplay {
-    padding: 1.65%;
-    padding-right: 1.7%;
+    padding: 1.8%;
+    padding-right: 1.9%;
     width: 30vw;
     height: 74vh;
     min-height: 560px;
