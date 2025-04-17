@@ -3,7 +3,7 @@
 const body = document.body;
 
 const bgColorsBody = [
-  "linear-gradient(to bottom, gray, black", 
+  "white", 
   "rgba(3, 144, 183, 1)",  // rgba: rgba(3, 144, 183, 1)
   "rgba(10, 115, 148, 1)", // rgba: rgba(10, 115, 148, 1)
   "rgba(18, 93, 120, 1)",  // rgba: rgba(18, 93, 120, 1)
