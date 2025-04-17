@@ -1328,8 +1328,8 @@ body{
   justify-content: center;
   gap: 1rem;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 0%;
+  margin-top: 0px;
+  margin-bottom: 1%;
 }
 
 #rightDisplayIcon {
@@ -1370,26 +1370,6 @@ body{
   100% {
     fill: white;
   }
-}
-
-#menu5 .icon,
-#menu5 .icon.active,
-#menu5 .menu__item .icon,
-#menu5 .menu__item.active .icon {
-    /* These rules should be removed to use default icon styles */
-}
-
-#menu5 .text {
-    color: white !important;
-}
-
-#menu5 .menu__item.active .text {
-    color: white !important;
-}
-
-#menu5 .subCategory .subCategoryPart.active {
-    color: white !important;
-    background-color: var(--highlight-color) !important;
 }
 
 .subCategoryPart {
