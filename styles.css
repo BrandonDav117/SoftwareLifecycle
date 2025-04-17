@@ -265,21 +265,21 @@ html *::after {
     height: auto;
     margin-top: 13px;
     margin-bottom: 13px;
-    stroke: white;
+    stroke: white !important;
     fill: transparent;
     stroke-width: 0.8pt;
     stroke-miterlimit: 10;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 400;
-    transition: fill 2.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: fill 2.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
     position: relative;
     justify-content: center;
 }
 
 .icon.active {
+    stroke: black !important;
     fill: white !important;
-    transition: fill 2.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 2.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu {
@@ -288,7 +288,6 @@ html *::after {
 
 .menuContainer {
     width: 100vw;
-    /* max-width: 2000PX; */
     height: 10vh;
     position: relative;
     bottom: -43.5%;
@@ -305,7 +304,9 @@ html *::after {
     cursor: pointer;
     position: relative;
     border-radius: 50%;
-    padding: 0.55em 0 0.85em;
+    padding: 0.85em 0 1.15em;
+    margin-top: -0.3em;
+    margin-bottom: -0.3em;
     will-change: transform;
     transition: transform var(--timeOut, var(--duration)), border-color 0.5s ease;
     border: 2px solid transparent;
@@ -325,6 +326,7 @@ html *::after {
 .menu__item.active {
     transform: translate3d(0, -.6vw , 0);
     border-color: var(--highlight-color);
+    color: black;
 }
 
 .menu__item.active::before{
@@ -332,7 +334,8 @@ html *::after {
 }
 
 .menu__item.active .icon {
-    animation: strok 1.5s;
+    stroke: black !important;
+    fill: white !important;
 }
 
 #menu1 {
@@ -540,7 +543,8 @@ body{
 }
 
 .menu__item.active .icon {
-    animation: strok 1.5s reverse;
+    stroke: black !important;
+    fill: white !important;
 }
 
 .reverse-animation {
@@ -616,7 +620,19 @@ body{
     overscroll-behavior: contain;
     overflow-y: auto;
     background: linear-gradient(to bottom, gray, black);
-    transition: border-color 0.6s ease;
+    transition: all 1s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.rightDisplay.fade-in {
+    opacity: 1;
+    visibility: visible;
+}
+
+.rightDisplay.fade-out {
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Customizing the scrollbar itself */
@@ -753,7 +769,6 @@ body{
 }    
 
 .subCategory {
-    /* flex: 0 0 auto;  */
     width: 10vw; 
     height: 90%; 
     min-width: 200px;
@@ -768,18 +783,23 @@ body{
     transition: border-color 0.6s ease, transform 0.6s ease, box-shadow 0.6s ease;
     background: linear-gradient(to bottom, gray, black);
     background-size: 200% 200%;
-    /* Optional: Add margin to space them out */
     margin-right: 7px;
     margin-bottom: 7px;
     padding-left: 7px;
     padding-right: 7px;
-    
     display: flex; 
     flex-direction: column; 
     justify-content: flex-start;
     align-items: center;
     padding-top: 10px; 
     padding-bottom: 0px;
+}
+
+.subCategory.highlight {
+    transform: scale(1.0); /* Slight zoom */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    opacity: 1;
+    border-color: var(--highlight-color);
 }
 
 #FullHeight {
@@ -801,16 +821,6 @@ body{
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
     opacity: 1;
 }
-
-.subCategory.highlight {
-    transform: scale(1.0); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
-    opacity: 1;
-}
-
-/* #extraheight {
-    height: 97%;
-}     */
 
 .end-spacer {
     flex-shrink: 0; 
@@ -852,7 +862,7 @@ body{
     margin-bottom: 7px;
     margin-left: 7px;
     margin-right: 7px;
-    color: black;
+    color: black !important;
     
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -867,7 +877,7 @@ body{
 
 .subCategoryPart.active {
     background-color: var(--highlight-color); 
-    color: white;
+    color: white !important;
     font-weight: bolder;
 
     border-color: white;
@@ -1326,7 +1336,7 @@ body{
   width: 3.5em;
   height: 3.5em;
   opacity: 1;
-  stroke: white;
+  stroke: white !important;
   stroke-width: 1;
   stroke-miterlimit: 10;
   stroke-linecap: round;
@@ -1337,17 +1347,20 @@ body{
 
 #rightDisplayIcon path {
   fill: transparent;
+  stroke: white !important;
   stroke-dashoffset: 400;
-  transition: fill 1.2s linear;
+  transition: fill 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #rightDisplayIcon.active {
   animation: strok 2.8s reverse forwards;
+  stroke: black !important;
 }
 
 #rightDisplayIcon.active path {
   fill: white;
-  animation: fillTransition 1.2s linear forwards;
+  stroke: black !important;
+  animation: fillTransition 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes fillTransition {
@@ -1359,22 +1372,74 @@ body{
   }
 }
 
-#menu5 .icon {
-    stroke: white !important;
-    fill: white !important;
-}
-
-#menu5 .icon.active {
-    stroke: white !important;
-    fill: white !important;
-}
-
+#menu5 .icon,
+#menu5 .icon.active,
+#menu5 .menu__item .icon,
 #menu5 .menu__item.active .icon {
+    /* These rules should be removed to use default icon styles */
+}
+
+#menu5 .text {
+    color: white !important;
+}
+
+#menu5 .menu__item.active .text {
+    color: white !important;
+}
+
+#menu5 .subCategory .subCategoryPart.active {
+    color: white !important;
+    background-color: var(--highlight-color) !important;
+}
+
+.subCategoryPart {
+    color: black !important;
+}
+
+.subCategoryPart.active {
+    color: black !important;
+    background-color: var(--highlight-color);
+}
+
+#menu1 .menu__item.active {
+    border-color: white !important;
+}
+
+#menu5 .menu__item.active {
+    border-color: white !important;
+}
+
+.subCategory .icon {
+    width: 25%;
+    height: auto;
+    margin-top: 13px;
+    margin-bottom: 13px;
     stroke: white !important;
+    fill: transparent;
+    stroke-width: 0.8pt;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    transition: fill 2.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
+}
+
+.subCategory .icon.active,
+.subCategory.highlight .icon {
+    stroke: black !important;
     fill: white !important;
 }
 
-#menu5 .menu__item .icon {
+#menu5 .subCategory .icon,
+#menu5 .subCategory > .icon {
     stroke: white !important;
+    fill: transparent !important;
+}
+
+#menu5 .subCategory .icon.active,
+#menu5 .subCategory > .icon.active,
+#menu5 .subCategory.highlight .icon,
+#menu5 .subCategory.highlight > .icon {
+    stroke: black !important;
     fill: white !important;
 }

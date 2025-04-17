@@ -15,7 +15,7 @@ const bgColorsBody = [
   "rgba(220, 34, 82, 1)",  // rgba: rgba(220, 34, 82, 1)
   "rgba(201, 24, 74, 1)",  // rgba: rgba(201, 24, 74, 1)
   "rgba(155, 22, 64, 1)",  // rgba: rgba(155, 22, 64, 1)
-  "rgba(255, 255, 255, 1)"       // rgba: rgba(0, 0, 0, 1)
+  "rgb(0, 0, 0)"       // rgba: rgba(0, 0, 0, 1)
 ];
 
 const bgColorsBody2 = [
@@ -120,7 +120,7 @@ const subCategoryContent = [
   { title: "Maintain", heading: "Bug Fixes", subHeading: "", description: "When your software is in use, bugs will be identified by your users and your internal team. <br><br> It is important that bug fixes don't inadvertently break existing features. This highlights the importance of automated verification regression tests that can identify changes to the performance of the software. <br><br> For urgent bug fixes such as security issues, you will need a fast-track approach to change control so that you can release fixes promptly whilst ensuring quality.", videoSrc: "Synthesia_Videos/Maintenance_ Bug Fixes.mp4" },
   { title: "Maintain", heading: "New Features", subHeading: "", description: "Your users will request new features, and you should review and prioritise taking into account your existing development plan to ensure that the software is developed in a strategic fashion.", videoSrc: "Synthesia_Videos/Maintenance_ New Features.mp4" },
   { title: "Maintain", heading: "Post-Market Surveillance", subHeading: "", description: "As part of your regulatory submission, you will need to perform continuous post-market surveillance. <br><br> This involves monitoring the performance of your software to ensure security, user-experience and feature quality. You will need to identify potential patient safety and cyber-security issues. <br><br> You will also need to identify issues related to third-party dependencies such as software libraries, operating systems and computer hardware. You should review issues for each dependency using international cyber-security database systems such as the US National Vulnerability Database (NVD). <br><br> You will need a design review meeting once your software has been in use to review your Post-Market Surveillance.", videoSrc: "Synthesia_Videos/Maintenance__ Post.mp4" },
-  { title: "Maintain", heading: "Revisiting D&D", subHeading: "", description: "You may need to revisit the D&D process.", videoSrc: "Synthesia_Videos/Maintenance.mp4" },
+  { title: "Maintain", heading: "Revisiting D&D", subHeading: "", description: "It is likely that you will want to continue to improve the software after the first release. <br><br> For each new version, it is necessary to repeat the development steps (specify, design, code, verify and validate), focusing on the new features, bug fixes and changes in performance of the software. <br><br> For minor changes such as bug fixes it is not necessary to make a resubmission to the regulatory authorities. <br><br> For larger changes that change the way in which the software can be used, a resubmission is necessary."},
   { title: "Finish", heading: "Sale", subHeading: "", description: "One scenario that could arise, is that your company will be purchased by another. For this to happen, your company will need to pass through the due diligence process. <br><br> Following the QMS and your Regulatory Approval process will help ensure that your company attains to sufficient quality standards.", videoSrc: "Synthesia_Videos/Finish_ Sale.mp4" },
   { title: "Finish", heading: "Close", subHeading: "", description: "At some point, it may be necessary to close your company. In this scenario it is desirable to ensure that each customer has time to find replacement solutions. Any outstanding commercial agreements you have must be handled on a case-by-case basis.", videoSrc: "Synthesia_Videos/Finish_ Close.mp4" },
   { title: "Finish", heading: "Conclusion", subHeading: "", description: "Creating a software medical device can be very rewarding, both financially and in terms of providing real benefit to patients' lives.", videoSrc: "Synthesia_Videos/Finish_ Conclusion.mp4" }
@@ -722,9 +722,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }, delayIndex * 250);
         });
 
+        // Stagger the fade-in of elements
         const fadeInOrder = [4, 5, 6, 7, 8, 2, 3, 0, 1, 9];
         fadeInOrder.forEach((orderIndex, delayIndex) => {
-            setTimeout(() => ClickElementsFadein[orderIndex].classList.add("fade-in"), delayIndex * 250);
+            setTimeout(() => {
+                const element = ClickElementsFadein[orderIndex];
+                if (element) {
+                    element.style.visibility = 'visible';
+                    // Force a reflow before adding the fade-in class
+                    void element.offsetWidth;
+                    element.classList.add("fade-in");
+                }
+            }, delayIndex * 250);
         });
     });
   }
