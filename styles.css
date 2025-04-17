@@ -772,7 +772,7 @@ body{
     width: 10vw; 
     height: 90%; 
     min-width: 200px;
-    border: 3px solid black;
+    border: none;
     border-radius: 10px;
     box-sizing: border-box;
     z-index: 2;
@@ -796,10 +796,10 @@ body{
 }
 
 .subCategory.highlight {
-    transform: scale(1.0); /* Slight zoom */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+    transform: scale(1.0);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     opacity: 1;
-    border-color: var(--highlight-color);
+    border: 3px solid var(--highlight-color);
 }
 
 #FullHeight {
