@@ -542,11 +542,6 @@ body{
     overflow-y: auto;
 }
 
-.menu__item.active .icon {
-    stroke: black !important;
-    fill: white !important;
-}
-
 .reverse-animation {
     animation: strok 1.5s reverse forwards;
 }
@@ -761,7 +756,7 @@ body{
     z-index: -2;
     opacity: 1;
     top: -15%;
-    left: -11.5px;
+    left: -8.5px;
 }
 
 #extraMarginRight {
@@ -1372,15 +1367,6 @@ body{
   }
 }
 
-.subCategoryPart {
-    color: black !important;
-}
-
-.subCategoryPart.active {
-    color: black !important;
-    background-color: var(--highlight-color);
-}
-
 #menu1 .menu__item.active {
     border-color: white !important;
 }
@@ -1406,20 +1392,6 @@ body{
 
 .subCategory .icon.active,
 .subCategory.highlight .icon {
-    stroke: black !important;
-    fill: white !important;
-}
-
-#menu5 .subCategory .icon,
-#menu5 .subCategory > .icon {
-    stroke: white !important;
-    fill: transparent !important;
-}
-
-#menu5 .subCategory .icon.active,
-#menu5 .subCategory > .icon.active,
-#menu5 .subCategory.highlight .icon,
-#menu5 .subCategory.highlight > .icon {
     stroke: black !important;
     fill: white !important;
 }
