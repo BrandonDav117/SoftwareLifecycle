@@ -83,10 +83,12 @@ html *::after {
     top: 3.2%;
     z-index: 10;
     width: 100%;
-
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #ImperialLogo2 {
@@ -95,16 +97,31 @@ html *::after {
     position: absolute;
     left: 4%;
     min-height: 20px;
-    margin-top: 5px;
+    margin-top: 0;
+    top: 0;
 }
 
 #HamlynLogo {
     width: auto !important;
     height: 10.5vh !important;
-    position: absolute;
-    left: 49%;
+    position: relative !important;
     min-height: 100px;
-    margin-top: 5px;
+    margin-top: 0;
+    transition: transform 0.2s ease;
+    left: 0 !important;
+    cursor: pointer;
+    vertical-align: top;
+    transform: translateY(-40px);
+}
+
+#HamlynLogo.clicked {
+    animation: logoClick 0.3s ease-in-out;
+}
+
+@keyframes logoClick {
+    0% { transform: translateY(-40px) scale(1); }
+    50% { transform: translateY(-40px) scale(0.95); }
+    100% { transform: translateY(-40px) scale(1); }
 }
 
 #arrow {
@@ -124,7 +141,7 @@ html *::after {
 
 #GameText {
     position: absolute;
-    top: 2%;
+    top: 3%;
     right: 7%;
 }
 
@@ -1394,4 +1411,37 @@ body{
 .subCategory.highlight .icon {
     stroke: black !important;
     fill: white !important;
+}
+
+.control-icon {
+    width: 24px;
+    height: 24px;
+    fill: black !important;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin: 0 10px;
+    z-index: 100;
+    position: relative;
+    top: 0;
+    vertical-align: top;
+    transform: translateY(-40px);
+}
+
+.control-icon:hover {
+    transform: translateY(-40px) scale(1.1);
+}
+
+#playIcon {
+    margin-right: 15px;
+    margin-top: 0;
+}
+
+#pauseIcon {
+    margin-left: 15px;
+    margin-top: 0;
+}
+
+.control-icon.disabled {
+    opacity: 0.5;
+    cursor: pointer;
 }

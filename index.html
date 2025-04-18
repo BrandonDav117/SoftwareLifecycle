@@ -35,6 +35,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" defer></script>
     <script src="./TowerBlock/dist/script.js" defer></script>
     <script src="script.js" defer></script>
+    <script src="autoplay.js" defer></script>
 
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
@@ -107,7 +108,13 @@
     <div class="containerTest">
 
       <div class="logosMainDisplay">
+        <svg id="playIcon" class="control-icon" viewBox="0 0 24 24" style="pointer-events: all;">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
         <img id="HamlynLogo" src="Hamlyn logo.png" alt="Logo 1">
+        <svg id="pauseIcon" class="control-icon" viewBox="0 0 24 24" style="pointer-events: all;">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
         <img id="ImperialLogo2" src="Imperial logo.png" alt="Logo 2">
       </div>
 
@@ -307,7 +314,7 @@
             <a id="sub-heading"> Welcome to our interactive guide to the development lifecycle for creating a software medical device. </a>
           <div id="border"></div>
 
-            <video id="categoryVideo" controls>
+            <video id="categoryVideo" controlslist="nodownload nofullscreen noremoteplayback" disablePictureInPicture>
               <source src="Category1Vid.mp4" type="video/mp4">
             </video>
 
