@@ -913,7 +913,7 @@ body{
 }
 
 .subCategoryPartContinuous {
-    width: 1100%;
+    width: 1005%;
     height: auto;
     max-height: fit-content;
     border: 3px solid black;
