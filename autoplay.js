@@ -1,8 +1,11 @@
 let isAutoplayActive = false;
 let currentSubcategoryIndex = 0;
+let currentSubcategoryPartIndex = 0;
 let subcategories = [];
+let subcategoryParts = [];
 let isPaused = true;
 let currentVideo = null;
+let isPlayingSubcategoryPart = false;
 
 function initAutoplay() {
     // Get all subcategories in order
@@ -128,6 +131,13 @@ function startAutoplay() {
     isAutoplayActive = true;
     isPaused = false;
     currentSubcategoryIndex = 0;
+    currentSubcategoryPartIndex = 0;
+    isPlayingSubcategoryPart = false;
+    
+    // Clear all highlighting classes
+    document.querySelectorAll('.subCategoryPart.active, .subCategoryPartContinuous.active').forEach(part => {
+        part.classList.remove('active', 'subCategoryPartContinuous');
+    });
     
     const hamlynLogo = document.querySelector('#HamlynLogo');
     hamlynLogo.classList.add('clicked');
@@ -135,30 +145,48 @@ function startAutoplay() {
     
     // Start from the first subcategory
     if (subcategories.length > 0) {
-        // Trigger the subcategory click using clickSubCategoryPart
+        playCurrentContent();
+    }
+    updateControlState();
+}
+
+function playCurrentContent() {
+    if (!isAutoplayActive || isPaused) return;
+
+    if (currentSubcategoryIndex >= subcategories.length) {
+        stopAutoplay();
+        return;
+    }
+
+    const currentSubcategory = subcategories[currentSubcategoryIndex];
+    const currentTitle = currentSubcategory.querySelector('#titleLeftDisplay')?.textContent.trim();
+    
+    // Clear any active subcategory parts from previous subcategory
+    document.querySelectorAll('.subCategoryPart.active').forEach(part => {
+        part.classList.remove('active');
+    });
+    
+    if (!isPlayingSubcategoryPart) {
+        // Play the main subcategory video
         clickSubCategoryPart(currentSubcategoryIndex, "subCategory");
-        
-        // Find and play video
         const video = document.querySelector('#categoryVideo');
         if (video) {
             let videoStarted = false;
             
-            // Set up the onended handler first
             video.onended = () => {
                 if (videoStarted && !isPaused) {
-                    currentSubcategoryIndex++;
-                    playNextSubcategory();
+                    // After main video, start playing subcategory parts
+                    isPlayingSubcategoryPart = true;
+                    currentSubcategoryPartIndex = 0;
+                    playSubcategoryParts();
                 }
             };
 
-            // Wait for video to be visible
             const checkVideoVisibility = setInterval(() => {
                 if (video.style.opacity !== "0") {
                     clearInterval(checkVideoVisibility);
-                    // Reset video
                     video.currentTime = 0;
                     
-                    // Play video if not paused
                     if (!isPaused) {
                         const playPromise = video.play();
                         if (playPromise !== undefined) {
@@ -167,8 +195,9 @@ function startAutoplay() {
                             }).catch(error => {
                                 console.log("Video play failed:", error);
                                 if (!isPaused) {
-                                    currentSubcategoryIndex++;
-                                    playNextSubcategory();
+                                    isPlayingSubcategoryPart = true;
+                                    currentSubcategoryPartIndex = 0;
+                                    playSubcategoryParts();
                                 }
                             });
                         }
@@ -176,17 +205,215 @@ function startAutoplay() {
                 }
             }, 100);
 
-            // Timeout after 5 seconds if video never becomes visible
             setTimeout(() => {
                 clearInterval(checkVideoVisibility);
                 if (!videoStarted && !isPaused) {
-                    currentSubcategoryIndex++;
-                    playNextSubcategory();
+                    isPlayingSubcategoryPart = true;
+                    currentSubcategoryPartIndex = 0;
+                    playSubcategoryParts();
                 }
             }, 5000);
         }
+    } else {
+        playSubcategoryParts();
     }
-    updateControlState();
+}
+
+function playSubcategoryParts() {
+    if (!isAutoplayActive || isPaused) return;
+
+    const currentSubcategory = subcategories[currentSubcategoryIndex];
+    const currentTitle = currentSubcategory.querySelector('#titleLeftDisplay')?.textContent.trim();
+    const subcategoryParts = Array.from(currentSubcategory.querySelectorAll('.subCategoryPart'));
+    
+    // Special handling for QMS section
+    if (currentTitle === "QMS") {
+        // First check if we need to play regular subcategory parts
+        if (currentSubcategoryPartIndex < subcategoryParts.length) {
+            const subcategoryPart = subcategoryParts[currentSubcategoryPartIndex];
+            if (subcategoryPart) {
+                subcategoryPart.click();
+                
+                const video = document.querySelector('#categoryVideo');
+                if (video) {
+                    let videoStarted = false;
+                    
+                    video.onended = () => {
+                        if (videoStarted && !isPaused) {
+                            currentSubcategoryPartIndex++;
+                            playSubcategoryParts();
+                        }
+                    };
+
+                    const checkVideoVisibility = setInterval(() => {
+                        if (video.style.opacity !== "0") {
+                            clearInterval(checkVideoVisibility);
+                            video.currentTime = 0;
+                            
+                            if (!isPaused) {
+                                const playPromise = video.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.then(() => {
+                                        videoStarted = true;
+                                    }).catch(error => {
+                                        console.log("Video play failed:", error);
+                                        if (!isPaused) {
+                                            currentSubcategoryPartIndex++;
+                                            playSubcategoryParts();
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }, 100);
+
+                    setTimeout(() => {
+                        clearInterval(checkVideoVisibility);
+                        if (!videoStarted && !isPaused) {
+                            currentSubcategoryPartIndex++;
+                            playSubcategoryParts();
+                        }
+                    }, 5000);
+                }
+            } else {
+                currentSubcategoryPartIndex++;
+                playSubcategoryParts();
+            }
+        } else {
+            // After regular subcategory parts, play continuous videos
+            const continuousVideos = subCategoryPartContinuousContent.filter(item => item.title === "QMS");
+            const continuousIndex = currentSubcategoryPartIndex - subcategoryParts.length;
+            
+            if (continuousIndex < continuousVideos.length) {
+                const videoContent = continuousVideos[continuousIndex];
+                updateRightDisplay(videoContent);
+                
+                // Find and highlight the corresponding subcategory part
+                const heading = videoContent.heading;
+                // Find the continuous part by its text content
+                const matchingPart = Array.from(document.querySelectorAll('.subCategoryPartContinuous')).find(part => {
+                    const partText = part.querySelector('#sub-heading2')?.textContent.trim();
+                    return partText === heading;
+                });
+                
+                // Remove highlight from any previously active parts
+                document.querySelectorAll('.subCategoryPart.active, .subCategoryPartContinuous.active').forEach(part => {
+                    part.classList.remove('active');
+                });
+                
+                // Add highlight to the current part
+                if (matchingPart) {
+                    matchingPart.classList.add('active');
+                }
+                
+                const video = document.querySelector('#categoryVideo');
+                if (video) {
+                    let videoStarted = false;
+                    
+                    video.onended = () => {
+                        if (videoStarted && !isPaused) {
+                            currentSubcategoryPartIndex++;
+                            playSubcategoryParts();
+                        }
+                    };
+
+                    const checkVideoVisibility = setInterval(() => {
+                        if (video.style.opacity !== "0") {
+                            clearInterval(checkVideoVisibility);
+                            video.currentTime = 0;
+                            
+                            if (!isPaused) {
+                                const playPromise = video.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.then(() => {
+                                        videoStarted = true;
+                                    }).catch(error => {
+                                        console.log("Video play failed:", error);
+                                        if (!isPaused) {
+                                            currentSubcategoryPartIndex++;
+                                            playSubcategoryParts();
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }, 100);
+
+                    setTimeout(() => {
+                        clearInterval(checkVideoVisibility);
+                        if (!videoStarted && !isPaused) {
+                            currentSubcategoryPartIndex++;
+                            playSubcategoryParts();
+                        }
+                    }, 5000);
+                }
+            } else {
+                // All videos played, move to next subcategory
+                isPlayingSubcategoryPart = false;
+                currentSubcategoryIndex++;
+                playCurrentContent();
+            }
+        }
+    } else {
+        // For non-QMS sections
+        if (currentSubcategoryPartIndex >= subcategoryParts.length) {
+            // All subcategory parts played, move to next subcategory
+            isPlayingSubcategoryPart = false;
+            currentSubcategoryIndex++;
+            playCurrentContent();
+            return;
+        }
+
+        const subcategoryPart = subcategoryParts[currentSubcategoryPartIndex];
+        if (subcategoryPart) {
+            subcategoryPart.click();
+            
+            const video = document.querySelector('#categoryVideo');
+            if (video) {
+                let videoStarted = false;
+                
+                video.onended = () => {
+                    if (videoStarted && !isPaused) {
+                        currentSubcategoryPartIndex++;
+                        playSubcategoryParts();
+                    }
+                };
+
+                const checkVideoVisibility = setInterval(() => {
+                    if (video.style.opacity !== "0") {
+                        clearInterval(checkVideoVisibility);
+                        video.currentTime = 0;
+                        
+                        if (!isPaused) {
+                            const playPromise = video.play();
+                            if (playPromise !== undefined) {
+                                playPromise.then(() => {
+                                    videoStarted = true;
+                                }).catch(error => {
+                                    console.log("Video play failed:", error);
+                                    if (!isPaused) {
+                                        currentSubcategoryPartIndex++;
+                                        playSubcategoryParts();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }, 100);
+
+                setTimeout(() => {
+                    clearInterval(checkVideoVisibility);
+                    if (!videoStarted && !isPaused) {
+                        currentSubcategoryPartIndex++;
+                        playSubcategoryParts();
+                    }
+                }, 5000);
+            }
+        } else {
+            currentSubcategoryPartIndex++;
+            playSubcategoryParts();
+        }
+    }
 }
 
 function stopAutoplay() {
@@ -198,74 +425,6 @@ function stopAutoplay() {
         video.removeEventListener('ended', playNextSubcategory);
     }
     updateControlState();
-}
-
-function playNextSubcategory() {
-    if (!isAutoplayActive || isPaused) return;
-
-    if (currentSubcategoryIndex >= subcategories.length) {
-        stopAutoplay();
-        return;
-    }
-    
-    // Trigger the subcategory click using clickSubCategoryPart
-    clickSubCategoryPart(currentSubcategoryIndex, "subCategory");
-    
-    // Find and play video
-    const video = document.querySelector('#categoryVideo');
-    if (video) {
-        let videoStarted = false;
-
-        // Set up the onended handler first
-        video.onended = () => {
-            if (videoStarted && !isPaused) {
-                currentSubcategoryIndex++;
-                playNextSubcategory();
-            }
-        };
-
-        // Wait for video to be visible
-        const checkVideoVisibility = setInterval(() => {
-            if (video.style.opacity !== "0") {
-                clearInterval(checkVideoVisibility);
-                // Reset video
-                video.currentTime = 0;
-                
-                // Play video if not paused
-                if (!isPaused) {
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            videoStarted = true;
-                        }).catch(error => {
-                            console.log("Video play failed:", error);
-                            if (!isPaused) {
-                                currentSubcategoryIndex++;
-                                playNextSubcategory();
-                            }
-                        });
-                    }
-                }
-            }
-        }, 100);
-
-        // Timeout after 5 seconds if video never becomes visible
-        setTimeout(() => {
-            clearInterval(checkVideoVisibility);
-            if (!videoStarted && !isPaused) {
-                currentSubcategoryIndex++;
-                playNextSubcategory();
-            }
-        }, 5000);
-    } else {
-        // If no video, move to next subcategory after a delay
-        if (!isPaused) {
-            setTimeout(() => {
-                currentSubcategoryIndex++;
-                playNextSubcategory();
-            }, 2000);
-        }
-    }
 }
 
 function highlightSubCategory(subCategory) {
