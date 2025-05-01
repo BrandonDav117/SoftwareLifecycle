@@ -6,6 +6,28 @@ let subcategoryParts = [];
 let isPaused = true;
 let currentVideo = null;
 let isPlayingSubcategoryPart = false;
+let animationInterval = null;
+
+function animateLogo() {
+    const hamlynLogo = document.querySelector('#HamlynLogo');
+    if (!hamlynLogo) return;
+    
+    let scale = 1;
+    let rotation = 0;
+    let direction = 1;
+    
+    animationInterval = setInterval(() => {
+        if (!isAutoplayActive) {
+            clearInterval(animationInterval);
+            hamlynLogo.style.transform = 'translateY(-40px) scale(1) rotate(0deg)';
+            return;
+        }
+        
+        scale = 1 + Math.sin(Date.now() / 1000 * Math.PI) * 0.05;
+        rotation = Math.sin(Date.now() / 1000 * Math.PI * 2) * 2;
+        hamlynLogo.style.transform = `translateY(-40px) scale(${scale}) rotate(${rotation}deg)`;
+    }, 16); // ~60fps
+}
 
 function initAutoplay() {
     // Get all subcategories in order
@@ -17,13 +39,28 @@ function initAutoplay() {
         hamlynLogo.style.cursor = 'pointer';
         hamlynLogo.addEventListener('click', (event) => {
             event.stopPropagation();
-            // Add animation class
+            // Add click animation class
             hamlynLogo.classList.add('clicked');
             // Remove class after animation completes
             setTimeout(() => {
                 hamlynLogo.classList.remove('clicked');
             }, 300);
-            toggleAutoplay();
+
+            if (isAutoplayActive) {
+                // If autoplay is active, stop it and reset to first section
+                stopAutoplay();
+                // Reset to first section
+                currentSubcategoryIndex = 0;
+                currentSubcategoryPartIndex = 0;
+                isPlayingSubcategoryPart = false;
+                // Clear all highlighting classes
+                document.querySelectorAll('.subCategoryPart.active, .subCategoryPartContinuous.active').forEach(part => {
+                    part.classList.remove('active');
+                });
+            } else {
+                // If autoplay is not active, start it
+                startAutoplay();
+            }
         });
     }
 
@@ -63,6 +100,19 @@ function initAutoplay() {
             }
         });
     }
+
+    // Add document click handler to stop autoplay when clicking anywhere else
+    document.addEventListener('click', (event) => {
+        // Check if the click was on the logo, play icon, or pause icon
+        const isLogoClick = event.target.closest('#HamlynLogo');
+        const isPlayClick = event.target.closest('#playIcon');
+        const isPauseClick = event.target.closest('#pauseIcon');
+        
+        // If click was not on any of these elements and autoplay is active, stop it
+        if (!isLogoClick && !isPlayClick && !isPauseClick && isAutoplayActive) {
+            stopAutoplay();
+        }
+    });
 
     // Initially disable play button until autoplay is started
     updateControlState();
@@ -136,11 +186,12 @@ function startAutoplay() {
     
     // Clear all highlighting classes
     document.querySelectorAll('.subCategoryPart.active, .subCategoryPartContinuous.active').forEach(part => {
-        part.classList.remove('active', 'subCategoryPartContinuous');
+        part.classList.remove('active');
     });
     
     const hamlynLogo = document.querySelector('#HamlynLogo');
     hamlynLogo.classList.add('clicked');
+    hamlynLogo.classList.add('autoplay-active');
     setTimeout(() => hamlynLogo.classList.remove('clicked'), 300);
     
     // Start from the first subcategory
@@ -424,6 +475,14 @@ function stopAutoplay() {
         video.pause();
         video.removeEventListener('ended', playNextSubcategory);
     }
+    const hamlynLogo = document.querySelector('#HamlynLogo');
+    hamlynLogo.classList.remove('autoplay-active');
+    // Force a reflow to ensure the animation stops
+    void hamlynLogo.offsetWidth;
+    // Reset the transform
+    hamlynLogo.style.transform = 'translateY(-40px) scale(1) rotate(0deg)';
+    // Remove any existing animation classes
+    hamlynLogo.classList.remove('clicked');
     updateControlState();
 }
 
@@ -432,6 +491,10 @@ function highlightSubCategory(subCategory) {
     const currentHighlight = document.querySelector('.subCategory.highlight');
     if (currentHighlight) {
         currentHighlight.classList.remove('highlight');
+        const currentSvg = currentHighlight.querySelector('.icon');
+        if (currentSvg) {
+            currentSvg.classList.remove('active');
+        }
         const video = document.querySelector('#categoryVideo');
         if (video) {
             video.pause();
@@ -441,6 +504,10 @@ function highlightSubCategory(subCategory) {
 
     // Add highlight to new subcategory
     subCategory.classList.add('highlight');
+    const newSvg = subCategory.querySelector('.icon');
+    if (newSvg) {
+        newSvg.classList.add('active');
+    }
     updateControlState();
 }
 
