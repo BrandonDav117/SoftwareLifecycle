@@ -46,16 +46,20 @@ html, body {
 
 /* Card styles */
 .regulatory-card, .regulatory-card.placed {
-    width: 300px;
-    height: 150px;
+    width: 22vw;
+    min-width: 140px;
+    max-width: 320px;
+    height: min(12vw, 14vh);
+    min-height: 50px;
+    max-height: 180px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     user-select: none;
     z-index: 10;
-  position: absolute;
-    font-size: 0.95em;
+    position: absolute;
+    font-size: 1em;
     cursor: pointer;
     bottom: 90px !important;
 }
@@ -67,10 +71,13 @@ html, body {
     position: static;
     z-index: 1;
     margin-bottom: 8px;
-  width: 100%;
-    padding: 5px 10px;
+    width: 100% !important;
+    min-width: 0;
+    max-width: none;
+    height: auto;
     min-height: 0;
-    max-height: 2.2em;
+    max-height: none;
+    padding: 5px 10px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -126,19 +133,22 @@ html, body {
 }
 
 .drop-zone {
-    width: 300px;
-    /* height: 150px; */
+    width: 22vw;
+    min-width: 140px;
+    max-width: 320px;
+    height: min(12vw, 14vh);
+    min-height: 50px;
+    max-height: 180px;
     border: 2px dashed #ccc;
     border-radius: 10px;
     margin: 8px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: flex-start;
     z-index: 1;
     background: none !important;
     position: relative;
-    /* min-height: 150px; */
     padding-bottom: 12px;
 }
 
@@ -311,4 +321,99 @@ html, body {
 
 #start-button:hover {
     background: #0056b3;
+}
+
+/* Medium screens */
+@media (max-width: 900px) {
+    .regulatory-card, .drop-zone {
+        width: 32vw;
+        min-width: 100px;
+        height: min(16vw, 12vh);
+        min-height: 40px;
+        max-height: 120px;
+        font-size: 0.95em;
+    }
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+    .regulatory-card, .drop-zone {
+        width: 90vw;
+        min-width: 60px;
+        height: min(22vw, 10vh);
+        min-height: 30px;
+        max-height: 80px;
+        font-size: 0.9em;
+    }
+    .drop-zones-container {
+        gap: 3vw;
+        padding: 10px;
+    }
+}
+
+/* Short screens */
+@media (max-height: 700px) {
+  .drop-zones-container {
+    margin-top: 20px;
+    padding: 8px;
+    gap: 8px 10px;
+  }
+  .regulatory-card, .drop-zone {
+    height: min(9vw, 10vh);
+    min-height: 30px;
+    max-height: 70px;
+    font-size: 0.85em;
+    padding: 8px;
+  }
+  #score {
+    top: 8px;
+    font-size: 18px;
+    padding: 6px 12px;
+  }
+  #instructions {
+    bottom: 8px;
+    font-size: 1em;
+    padding: 6px 12px;
+  }
+  .game-over h2 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+  }
+  .game-over p {
+    font-size: 1em;
+    margin: 6px 0;
+  }
+  #start-button {
+    font-size: 1.1em;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-height: 500px) {
+  .drop-zones-container {
+    margin-top: 8px;
+    padding: 4px;
+    gap: 4px 6px;
+  }
+  .regulatory-card, .drop-zone {
+    height: min(7vw, 8vh);
+    min-height: 20px;
+    max-height: 40px;
+    font-size: 0.7em;
+    padding: 4px;
+  }
+  #score, #instructions {
+    font-size: 0.8em;
+    padding: 4px 8px;
+  }
+  .game-over h2 {
+    font-size: 1em;
+  }
+  .game-over p {
+    font-size: 0.8em;
+  }
+  #start-button {
+    font-size: 0.9em;
+    padding: 6px 12px;
+  }
 }
