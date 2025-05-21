@@ -1528,7 +1528,7 @@ body{
 
 #score {
     position: absolute;
-    top: 0 !important;
+    top: 1.4% !important;
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.5em;
@@ -1581,7 +1581,7 @@ body{
 }
 
 .drop-zones-container {
-    margin-top: 40px !important;
+    margin-top: 45px !important;
     transition: opacity 1s ease-in-out !important;
 }
 

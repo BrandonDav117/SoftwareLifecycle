@@ -460,3 +460,31 @@ html, body {
 #score.score-pop {
   animation: score-pop 0.5s;
 }
+
+@keyframes error-flash {
+  0% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+    border-color: #f44336;
+  }
+  70% {
+    box-shadow: 0 0 16px 8px rgba(244, 67, 54, 0.5);
+    border-color: #f44336;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+    border-color: #f44336;
+  }
+}
+.drop-zone.error-flash {
+  animation: error-flash 0.7s ease;
+  border-color: #f44336 !important;
+}
+
+@keyframes score-pop-error {
+  0% { box-shadow: 0 0 0 0 #f44336; }
+  30% { box-shadow: 0 0 16px 6px #ffd6d6; }
+  100% { box-shadow: 0 0 0 0 #f44336; }
+}
+#score.score-pop-error {
+  animation: score-pop-error 0.5s;
+}

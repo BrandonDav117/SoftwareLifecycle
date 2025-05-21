@@ -100,16 +100,22 @@ class RegulatoryCard {
                             }
                             window.currentGame.placeCard(this, zone, true);
                         } else {
+                            if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
                             card.style.left = card.dataset.prevLeft;
                             card.style.top = card.dataset.prevTop;
                         }
                     } else {
+                        if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
                         card.style.left = card.dataset.prevLeft;
                         card.style.top = card.dataset.prevTop;
                     }
                     matched = true;
                     break;
                 }
+            }
+            if (!matched) {
+                card.style.left = card.dataset.prevLeft;
+                card.style.top = card.dataset.prevTop;
             }
             // Remove highlight
             getDropZones().forEach(zone => zone.classList.remove('active'));
@@ -180,16 +186,22 @@ class RegulatoryCard {
                             }
                             window.currentGame.placeCard(this, zone, true);
                         } else {
+                            if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
                             card.style.left = card.dataset.prevLeft;
                             card.style.top = card.dataset.prevTop;
                         }
                     } else {
+                        if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
                         card.style.left = card.dataset.prevLeft;
                         card.style.top = card.dataset.prevTop;
                     }
                     matched = true;
                     break;
                 }
+            }
+            if (!matched) {
+                card.style.left = card.dataset.prevLeft;
+                card.style.top = card.dataset.prevTop;
             }
             // Remove highlight
             getDropZones().forEach(zone => zone.classList.remove('active'));
@@ -337,6 +349,7 @@ class RegulatoryGame {
                 this.placeCard(this.currentCard, zone, true);
             } else {
                 this.currentCard.element.classList.add('incorrect');
+                handleIncorrectAction(zone, this.scoreElement);
                 setTimeout(() => {
                     this.currentCard.element.classList.remove('incorrect');
                     this.currentCard.element.style.left = this.currentCard.element.dataset.prevLeft;
@@ -345,6 +358,7 @@ class RegulatoryGame {
             }
         } else {
             this.currentCard.element.classList.add('incorrect');
+            handleIncorrectAction(zone, this.scoreElement);
             setTimeout(() => {
                 this.currentCard.element.classList.remove('incorrect');
                 this.currentCard.element.style.left = this.currentCard.element.dataset.prevLeft;
@@ -470,3 +484,13 @@ document.addEventListener('DOMContentLoaded', () => {
     game.setState('PLAYING'); // Force game to start in PLAYING state for debugging
     window.currentGame = game;
 });
+
+// Example: In the function that handles incorrect card drops or quiz answers
+function handleIncorrectAction(dropZone, scoreElement) {
+  dropZone.classList.add('error-flash');
+  scoreElement.classList.add('score-pop-error');
+  setTimeout(() => {
+    dropZone.classList.remove('error-flash');
+    scoreElement.classList.remove('score-pop-error');
+  }, 700); // Match the animation duration
+}
