@@ -97,10 +97,7 @@ class RegulatoryCard {
                             const dropZoneOrder = parseInt(zone.dataset.order);
                             if (!window.currentGame.filledDropZones.has(dropZoneOrder)) {
                                 window.currentGame.filledDropZones.add(dropZoneOrder);
-                                window.currentGame.cardsPlaced++;
                             }
-                            window.currentGame.score += 100;
-                            window.currentGame.scoreElement.textContent = window.currentGame.score;
                             window.currentGame.placeCard(this, zone, true);
                         } else {
                             card.style.left = card.dataset.prevLeft;
@@ -180,10 +177,7 @@ class RegulatoryCard {
                             const dropZoneOrder = parseInt(zone.dataset.order);
                             if (!window.currentGame.filledDropZones.has(dropZoneOrder)) {
                                 window.currentGame.filledDropZones.add(dropZoneOrder);
-                                window.currentGame.cardsPlaced++;
                             }
-                            window.currentGame.score += 100;
-                            window.currentGame.scoreElement.textContent = window.currentGame.score;
                             window.currentGame.placeCard(this, zone, true);
                         } else {
                             card.style.left = card.dataset.prevLeft;
@@ -403,8 +397,13 @@ class RegulatoryGame {
         const desc = card.element.querySelector('.card-content');
         if (desc) desc.style.display = 'none';
         zone.appendChild(card.element);
+        // Add success flash effect to drop zone
+        zone.classList.add('success-flash');
+        setTimeout(() => {
+            zone.classList.remove('success-flash');
+        }, 700);
         this.cardsPlaced++;
-        this.score += 100;
+        this.score += 1;
         // Update score as X/Y
         this.scoreElement.textContent = `${this.cardsPlaced}/${this.cards.length}`;
         card.element.classList.add('placed');

@@ -1599,7 +1599,7 @@ body{
     
     .leftDisplay, .rightDisplay {
         top: 12%;
-        transform: scale(0.9);
+        transform: scale(0.94);
         transform-origin: top center;
     }
     
@@ -1621,7 +1621,7 @@ body{
 }
 
 /* Even smaller screens */
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 600px) {
     .containerTest {
         transform: scale(0.8);
     }
@@ -1716,40 +1716,15 @@ html {
     }
 }
 
-/* Height-based adjustments */
-@media screen and (max-height: 800px) {
-    .containerTest {
-        transform: scale(0.9);
-        transform-origin: top center;
-        height: 90vh;
-    }
-    
-    .leftDisplay, .rightDisplay {
-        transform: scale(0.9);
-        transform-origin: top center;
-    }
-    
-    .drop-zones-container {
-        margin-top: 30px;
-    }
-    
-    #score {
-        top: 10px !important;
-    }
-    
-    #instructions {
-        bottom: 30px;
-    }
-}
 
 @media screen and (max-height: 700px) {
     .containerTest {
-        transform: scale(0.85);
+        transform: scale(0.96);
     }
     
     .leftDisplay, .rightDisplay {
         transform: scale(0.8);
-        top: 10%;
+        top: 12%;
     }
     
     .drop-zones-container {
