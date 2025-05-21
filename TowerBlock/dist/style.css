@@ -54,14 +54,14 @@ html, body {
     max-height: 180px;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12), 0 1.5px 8px rgba(0,0,0,0.10);
     padding: 15px;
     user-select: none;
     z-index: 10;
     position: absolute;
     font-size: 1em;
     cursor: pointer;
-    bottom: 90px !important;
+    bottom: 120px !important;
 }
 
 .regulatory-card.placed {
@@ -81,6 +81,7 @@ html, body {
     overflow: hidden;
     display: flex;
     align-items: center;
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.25), 0 1.5px 8px rgba(0,0,0,0.18);
 }
 
 .regulatory-card.placed .card-header {
@@ -252,6 +253,7 @@ html, body {
   opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out;
+    transform-origin: center;
 }
 
 /* Instructions */
@@ -440,4 +442,13 @@ html, body {
 .drop-zone.success-flash {
   animation: success-flash 0.7s ease;
   border-color: #4CAF50 !important;
+}
+
+@keyframes score-pop {
+  0% { box-shadow: 0 0 0 0 #4CAF50; }
+  30% { box-shadow: 0 0 16px 6px #d6ffd6; }
+  100% { box-shadow: 0 0 0 0 #4CAF50; }
+}
+#score.score-pop {
+  animation: score-pop 0.5s;
 }

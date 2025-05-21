@@ -406,6 +406,11 @@ class RegulatoryGame {
         this.score += 1;
         // Update score as X/Y
         this.scoreElement.textContent = `${this.cardsPlaced}/${this.cards.length}`;
+        // Add pop effect to score
+        this.scoreElement.classList.add('score-pop');
+        setTimeout(() => {
+            this.scoreElement.classList.remove('score-pop');
+        }, 500);
         card.element.classList.add('placed');
         // Check if all cards are placed
         if (this.cardsPlaced === this.cards.length) {
