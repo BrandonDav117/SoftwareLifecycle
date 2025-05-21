@@ -1,298 +1,468 @@
 "use strict";
 console.clear();
-class Stage {
-    constructor() {
-        // container
-        this.render = function () {
-            this.renderer.render(this.scene, this.camera);
-        };
-        this.add = function (elem) {
-            this.scene.add(elem);
-        };
-        this.remove = function (elem) {
-            this.scene.remove(elem);
-        };
-        this.container = document.getElementById('game');
-        // renderer
-        this.renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true
+class RegulatoryCard {
+    constructor(data) {
+        this.category = data.category;
+        this.subcategory = data.subcategory;
+        this.content = data.content;
+        this.order = data.order;
+        this.quizQuestion = data.quiz;
+        this.element = this.createCardElement();
+        this.placed = false;
+        this.initFreeDrag();
+    }
+
+    createCardElement() {
+        const card = document.createElement('div');
+        card.className = 'regulatory-card';
+        card.style.position = 'absolute';
+        card.style.zIndex = 10;
+        // Stack all cards at a fixed position (bottom left of the game area)
+        card.style.left = '30px';
+        card.style.bottom = '30px';
+        card.style.top = '';
+        card.style.right = '';
+        card.dataset.prevLeft = '30px';
+        card.dataset.prevTop = '';
+        card.innerHTML = `
+            <div class="card-header">${this.category}: ${this.subcategory}</div>
+            <div class="card-content">${this.content}</div>
+        `;
+        return card;
+    }
+
+    initFreeDrag() {
+        const card = this.element;
+        let offsetX, offsetY, startX, startY, dragging = false;
+        const gameContainer = document.getElementById('game');
+        const getDropZones = () => Array.from(document.querySelectorAll('.drop-zone'));
+        let lastDropZone = null;
+
+        // Mouse events
+        card.addEventListener('mousedown', (e) => {
+            if (this.placed) return;
+            dragging = true;
+            card.style.zIndex = 2000;
+            startX = e.clientX;
+            startY = e.clientY;
+            const rect = card.getBoundingClientRect();
+            offsetX = startX - rect.left;
+            offsetY = startY - rect.top;
+            card.dataset.prevLeft = card.style.left;
+            card.dataset.prevTop = card.style.top;
+            document.body.style.userSelect = 'none';
         });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setClearColor(0x000000, 0);  // Change this to make background transparent
-        this.container.appendChild(this.renderer.domElement);
-        // scene
-        this.scene = new THREE.Scene();
-        // camera
-        let aspect = window.innerWidth / window.innerHeight;
-        let d = 20;
-        this.camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, -100, 1000);
-        this.camera.position.x = 2;
-        this.camera.position.y = 2;
-        this.camera.position.z = 2;
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        //light
-        this.light = new THREE.DirectionalLight(0xffffff, 0.5);
-        this.light.position.set(0, 499, 0);
-        this.scene.add(this.light);
-        this.softLight = new THREE.AmbientLight(0xffffff, 0.4);
-        this.scene.add(this.softLight);
-        window.addEventListener('resize', () => this.onResize());
-        this.onResize();
+
+        document.addEventListener('mousemove', (e) => {
+            if (!dragging || this.placed) return;
+            const gameRect = gameContainer.getBoundingClientRect();
+            let x = e.clientX - gameRect.left - offsetX;
+            let y = e.clientY - gameRect.top - offsetY;
+            x = Math.max(0, Math.min(x, gameRect.width - card.offsetWidth));
+            y = Math.max(0, Math.min(y, gameRect.height - card.offsetHeight));
+            card.style.left = `${x}px`;
+            card.style.top = `${y}px`;
+
+            // Always remove highlight from all zones first
+            getDropZones().forEach(z => z.classList.remove('active'));
+            // Highlight drop zone if over
+            let found = false;
+            for (const zone of getDropZones()) {
+                if (this.isOverDropZone(card, zone)) {
+                    zone.classList.add('active');
+                    lastDropZone = zone;
+                    found = true;
+                    break; // Only one zone can be active
+                }
+            }
+            if (!found) lastDropZone = null;
+        });
+
+        document.addEventListener('mouseup', async (e) => {
+            if (!dragging || this.placed) return;
+            dragging = false;
+            card.style.zIndex = 10;
+            document.body.style.userSelect = '';
+            // Check if over a drop zone
+            let matched = false;
+            for (const zone of getDropZones()) {
+                if (this.isOverDropZone(card, zone)) {
+                    // Check match
+                    const expectedOrder = parseInt(zone.dataset.order);
+                    if (this.order === expectedOrder) {
+                        // Quiz/feedback
+                        const correct = await window.currentGame.showQuiz(this.quizQuestion);
+                        if (correct && !this.placed) {
+                            this.placed = true;
+                            const dropZoneOrder = parseInt(zone.dataset.order);
+                            if (!window.currentGame.filledDropZones.has(dropZoneOrder)) {
+                                window.currentGame.filledDropZones.add(dropZoneOrder);
+                                window.currentGame.cardsPlaced++;
+                            }
+                            window.currentGame.score += 100;
+                            window.currentGame.scoreElement.textContent = window.currentGame.score;
+                            window.currentGame.placeCard(this, zone, true);
+                        } else {
+                            card.style.left = card.dataset.prevLeft;
+                            card.style.top = card.dataset.prevTop;
+                        }
+                    } else {
+                        card.style.left = card.dataset.prevLeft;
+                        card.style.top = card.dataset.prevTop;
+                    }
+                    matched = true;
+                    break;
+                }
+            }
+            // Remove highlight
+            getDropZones().forEach(zone => zone.classList.remove('active'));
+        });
+
+        // Touch events
+        card.addEventListener('touchstart', (e) => {
+            if (this.placed) return;
+            dragging = true;
+            card.style.zIndex = 2000;
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            const rect = card.getBoundingClientRect();
+            offsetX = startX - rect.left;
+            offsetY = startY - rect.top;
+            card.dataset.prevLeft = card.style.left;
+            card.dataset.prevTop = card.style.top;
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!dragging || this.placed) return;
+            const touch = e.touches[0];
+            const gameRect = gameContainer.getBoundingClientRect();
+            let x = touch.clientX - gameRect.left - offsetX;
+            let y = touch.clientY - gameRect.top - offsetY;
+            x = Math.max(0, Math.min(x, gameRect.width - card.offsetWidth));
+            y = Math.max(0, Math.min(y, gameRect.height - card.offsetHeight));
+            card.style.left = `${x}px`;
+            card.style.top = `${y}px`;
+
+            // Always remove highlight from all zones first
+            getDropZones().forEach(z => z.classList.remove('active'));
+            // Highlight drop zone if over
+            let found = false;
+            for (const zone of getDropZones()) {
+                if (this.isOverDropZone(card, zone)) {
+                    zone.classList.add('active');
+                    lastDropZone = zone;
+                    found = true;
+                    break; // Only one zone can be active
+                }
+            }
+            if (!found) lastDropZone = null;
+        });
+
+        document.addEventListener('touchend', async (e) => {
+            if (!dragging || this.placed) return;
+            dragging = false;
+            card.style.zIndex = 10;
+            document.body.style.userSelect = '';
+
+            // Check if over a drop zone
+            let matched = false;
+            for (const zone of getDropZones()) {
+                if (this.isOverDropZone(card, zone)) {
+                    // Check match
+                    const expectedOrder = parseInt(zone.dataset.order);
+                    if (this.order === expectedOrder) {
+                        // Quiz/feedback
+                        const correct = await window.currentGame.showQuiz(this.quizQuestion);
+                        if (correct && !this.placed) {
+                            this.placed = true;
+                            const dropZoneOrder = parseInt(zone.dataset.order);
+                            if (!window.currentGame.filledDropZones.has(dropZoneOrder)) {
+                                window.currentGame.filledDropZones.add(dropZoneOrder);
+                                window.currentGame.cardsPlaced++;
+                            }
+                            window.currentGame.score += 100;
+                            window.currentGame.scoreElement.textContent = window.currentGame.score;
+                            window.currentGame.placeCard(this, zone, true);
+                        } else {
+                            card.style.left = card.dataset.prevLeft;
+                            card.style.top = card.dataset.prevTop;
+                        }
+                    } else {
+                        card.style.left = card.dataset.prevLeft;
+                        card.style.top = card.dataset.prevTop;
+                    }
+                    matched = true;
+                    break;
+                }
+            }
+            // Remove highlight
+            getDropZones().forEach(zone => zone.classList.remove('active'));
+        });
     }
-    setCamera(y, speed = 0.3) {
-        TweenLite.to(this.camera.position, speed, { y: y + 4, ease: Power1.easeInOut });
-        TweenLite.to(this.camera.lookAt, speed, { y: y, ease: Power1.easeInOut });
-    }
-    onResize() {
-        let viewSize = 30;
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.camera.left = window.innerWidth / -viewSize;
-        this.camera.right = window.innerWidth / viewSize;
-        this.camera.top = window.innerHeight / viewSize;
-        this.camera.bottom = window.innerHeight / -viewSize;
-        this.camera.updateProjectionMatrix();
+
+    isOverDropZone(card, zone) {
+        const cardRect = card.getBoundingClientRect();
+        const zoneRect = zone.getBoundingClientRect();
+        return !(
+            cardRect.right < zoneRect.left ||
+            cardRect.left > zoneRect.right ||
+            cardRect.bottom < zoneRect.top ||
+            cardRect.top > zoneRect.bottom
+        );
     }
 }
-class Block {
-    constructor(block) {
-        // set size and position
-        this.STATES = { ACTIVE: 'active', STOPPED: 'stopped', MISSED: 'missed' };
-        this.MOVE_AMOUNT = 12;
-        this.dimension = { width: 0, height: 0, depth: 0 };
-        this.position = { x: 0, y: 0, z: 0 };
-        this.targetBlock = block;
-        this.index = (this.targetBlock ? this.targetBlock.index : 0) + 1;
-        this.workingPlane = this.index % 2 ? 'x' : 'z';
-        this.workingDimension = this.index % 2 ? 'width' : 'depth';
-        // set the dimensions from the target block, or defaults.
-        this.dimension.width = this.targetBlock ? this.targetBlock.dimension.width : 10;
-        this.dimension.height = this.targetBlock ? this.targetBlock.dimension.height : 2;
-        this.dimension.depth = this.targetBlock ? this.targetBlock.dimension.depth : 10;
-        this.position.x = this.targetBlock ? this.targetBlock.position.x : 0;
-        this.position.y = this.dimension.height * this.index;
-        this.position.z = this.targetBlock ? this.targetBlock.position.z : 0;
-        this.colorOffset = this.targetBlock ? this.targetBlock.colorOffset : Math.round(Math.random() * 100);
-        // set color
-        if (!this.targetBlock) {
-            this.color = 0x333344;
-        }
-        else {
-            let offset = this.index + this.colorOffset;
-            var r = Math.sin(0.3 * offset) * 55 + 200;
-            var g = Math.sin(0.3 * offset + 2) * 55 + 200;
-            var b = Math.sin(0.3 * offset + 4) * 55 + 200;
-            this.color = new THREE.Color(r / 255, g / 255, b / 255);
-        }
-        // state
-        this.state = this.index > 1 ? this.STATES.ACTIVE : this.STATES.STOPPED;
-        // set direction
-        this.speed = -0.1 - (this.index * 0.005);
-        if (this.speed < -4)
-            this.speed = -4;
-        this.direction = this.speed;
-        // create block
-        let geometry = new THREE.BoxGeometry(this.dimension.width, this.dimension.height, this.dimension.depth);
-        geometry.applyMatrix(new THREE.Matrix4().makeTranslation(this.dimension.width / 2, this.dimension.height / 2, this.dimension.depth / 2));
-        this.material = new THREE.MeshToonMaterial({ color: this.color, shading: THREE.FlatShading });
-        this.mesh = new THREE.Mesh(geometry, this.material);
-        this.mesh.position.set(this.position.x, this.position.y + (this.state == this.STATES.ACTIVE ? 0 : 0), this.position.z);
-        if (this.state == this.STATES.ACTIVE) {
-            this.position[this.workingPlane] = Math.random() > 0.5 ? -this.MOVE_AMOUNT : this.MOVE_AMOUNT;
-        }
-    }
-    reverseDirection() {
-        this.direction = this.direction > 0 ? this.speed : Math.abs(this.speed);
-    }
-    place() {
-        this.state = this.STATES.STOPPED;
-        let overlap = this.targetBlock.dimension[this.workingDimension] - Math.abs(this.position[this.workingPlane] - this.targetBlock.position[this.workingPlane]);
-        let blocksToReturn = {
-            plane: this.workingPlane,
-            direction: this.direction
-        };
-        if (this.dimension[this.workingDimension] - overlap < 0.3) {
-            overlap = this.dimension[this.workingDimension];
-            blocksToReturn.bonus = true;
-            this.position.x = this.targetBlock.position.x;
-            this.position.z = this.targetBlock.position.z;
-            this.dimension.width = this.targetBlock.dimension.width;
-            this.dimension.depth = this.targetBlock.dimension.depth;
-        }
-        if (overlap > 0) {
-            let choppedDimensions = { width: this.dimension.width, height: this.dimension.height, depth: this.dimension.depth };
-            choppedDimensions[this.workingDimension] -= overlap;
-            this.dimension[this.workingDimension] = overlap;
-            let placedGeometry = new THREE.BoxGeometry(this.dimension.width, this.dimension.height, this.dimension.depth);
-            placedGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(this.dimension.width / 2, this.dimension.height / 2, this.dimension.depth / 2));
-            let placedMesh = new THREE.Mesh(placedGeometry, this.material);
-            let choppedGeometry = new THREE.BoxGeometry(choppedDimensions.width, choppedDimensions.height, choppedDimensions.depth);
-            choppedGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(choppedDimensions.width / 2, choppedDimensions.height / 2, choppedDimensions.depth / 2));
-            let choppedMesh = new THREE.Mesh(choppedGeometry, this.material);
-            let choppedPosition = {
-                x: this.position.x,
-                y: this.position.y,
-                z: this.position.z
-            };
-            if (this.position[this.workingPlane] < this.targetBlock.position[this.workingPlane]) {
-                this.position[this.workingPlane] = this.targetBlock.position[this.workingPlane];
-            }
-            else {
-                choppedPosition[this.workingPlane] += overlap;
-            }
-            placedMesh.position.set(this.position.x, this.position.y, this.position.z);
-            choppedMesh.position.set(choppedPosition.x, choppedPosition.y, choppedPosition.z);
-            blocksToReturn.placed = placedMesh;
-            if (!blocksToReturn.bonus)
-                blocksToReturn.chopped = choppedMesh;
-        }
-        else {
-            this.state = this.STATES.MISSED;
-        }
-        this.dimension[this.workingDimension] = overlap;
-        return blocksToReturn;
-    }
-    tick() {
-        if (this.state == this.STATES.ACTIVE) {
-            let value = this.position[this.workingPlane];
-            if (value > this.MOVE_AMOUNT || value < -this.MOVE_AMOUNT)
-                this.reverseDirection();
-            this.position[this.workingPlane] += this.direction;
-            this.mesh.position[this.workingPlane] = this.position[this.workingPlane];
-        }
-    }
-}
-class Game {
+
+class RegulatoryGame {
     constructor() {
-        this.STATES = {
-            'LOADING': 'loading',
-            'PLAYING': 'playing',
-            'READY': 'ready',
-            'ENDED': 'ended',
-            'RESETTING': 'resetting'
-        };
-        this.blocks = [];
-        this.state = this.STATES.LOADING;
-        this.stage = new Stage();
-        this.mainContainer = document.getElementById('container');
-        this.scoreContainer = document.getElementById('score');
+        this.state = 'READY';
+        this.score = 0;
+        this.cards = [];
+        this.dropZones = [];
+        this.currentCard = null;
+        this.gameContainer = document.getElementById('game');
+        this.container = document.getElementById('container');
+        this.scoreElement = document.getElementById('score');
+        this.instructionsElement = document.getElementById('instructions');
+        this.gameOverElement = document.querySelector('.game-over');
         this.startButton = document.getElementById('start-button');
-        this.instructions = document.getElementById('instructions');
-        this.scoreContainer.innerHTML = '0';
-        this.newBlocks = new THREE.Group();
-        this.placedBlocks = new THREE.Group();
-        this.choppedBlocks = new THREE.Group();
-        this.stage.add(this.newBlocks);
-        this.stage.add(this.placedBlocks);
-        this.stage.add(this.choppedBlocks);
-        this.addBlock();
-        this.tick();
-        this.updateState(this.STATES.READY);
-        document.addEventListener('keydown', e => {
-            if (e.keyCode == 32)
-                this.onAction();
-        });
-        document.addEventListener('click', e => {
-            this.onAction();
-        });
-        document.addEventListener('touchstart', e => {
-            e.preventDefault();
-            // this.onAction();
-            // ☝️ this triggers after click on android so you
-            // insta-lose, will figure it out later.
+        this.gameReadyElement = document.querySelector('.game-ready');
+        this.dropZonesContainer = null;
+        this.cardsPlaced = 0;
+        this.filledDropZones = new Set(); // Track filled drop zones by order
+        this.setupEventListeners();
+        this.setState('READY');
+        window.currentGame = this;
+    }
+
+    initializeGame() {
+        // Clear previous drop zones and cards
+        if (this.dropZonesContainer) this.dropZonesContainer.remove();
+        this.cards.forEach(card => card.element.remove());
+        this.cards = [];
+        this.dropZones = [];
+        this.cardsPlaced = 0;
+        this.filledDropZones = new Set();
+        // Create drop zones container
+        this.dropZonesContainer = document.createElement('div');
+        this.dropZonesContainer.className = 'drop-zones-container';
+        this.gameContainer.appendChild(this.dropZonesContainer);
+        // Create drop zones
+        this.createDropZones(this.dropZonesContainer);
+        // Move the game-ready (Start button) below drop zones
+        this.gameContainer.appendChild(this.gameReadyElement);
+        // Generate cards (one for each entry in lifecycle data)
+        this.generateCards();
+    }
+
+    createDropZones(container) {
+        // Find the max order in the lifecycle data
+        const maxOrder = Math.max(...regulatoryData.lifecycle.map(item => item.order));
+        for (let i = 1; i <= maxOrder; i++) {
+            const dropZone = document.createElement('div');
+            dropZone.className = 'drop-zone';
+            dropZone.dataset.order = i;
+            dropZone.innerHTML = `<div class=\"drop-zone-label\">Stage ${i}</div>`;
+            container.appendChild(dropZone);
+            this.dropZones.push(dropZone);
+        }
+    }
+
+    generateCards() {
+        // Shuffle the lifecycle data
+        const shuffledData = [...regulatoryData.lifecycle].sort(() => Math.random() - 0.5);
+        shuffledData.forEach(data => {
+            const card = new RegulatoryCard(data);
+            this.cards.push(card);
         });
     }
-    updateState(newState) {
-        for (let key in this.STATES)
-            this.mainContainer.classList.remove(this.STATES[key]);
-        this.mainContainer.classList.add(newState);
-        this.state = newState;
-    }
-    onAction() {
-        switch (this.state) {
-            case this.STATES.READY:
+
+    setupEventListeners() {
+        // Start button
+        if (this.startButton) {
+            this.startButton.addEventListener('click', () => {
                 this.startGame();
-                break;
-            case this.STATES.PLAYING:
-                this.placeBlock();
-                break;
-            case this.STATES.ENDED:
+            });
+        }
+        // Restart game
+        if (this.gameOverElement) {
+            this.gameOverElement.addEventListener('click', () => this.restartGame());
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && this.state === 'ENDED') {
                 this.restartGame();
+            }
+        });
+    }
+
+    enableDragAndDrop() {
+        // Add cards to the game area
+        this.cards.forEach(card => {
+            this.gameContainer.appendChild(card.element);
+            card.element.addEventListener('dragstart', (e) => {
+                if (card.placed) {
+                    e.preventDefault();
+                    return;
+                }
+                this.currentCard = card;
+                e.dataTransfer.setData('text/plain', '');
+                card.element.classList.add('dragging');
+            });
+            card.element.addEventListener('dragend', () => {
+                card.element.classList.remove('dragging');
+            });
+        });
+        // Drop zone events
+        this.dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                if (!zone.querySelector('.regulatory-card')) {
+                    zone.classList.add('active');
+                }
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('active');
+            });
+            zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+                zone.classList.remove('active');
+                this.onDrop(zone);
+            });
+        });
+    }
+
+    async onDrop(zone) {
+        if (!this.currentCard || this.currentCard.placed) return;
+        const expectedOrder = parseInt(zone.dataset.order);
+        const cardOrder = this.currentCard.order;
+        // Only allow drop if zone is empty
+        if (!zone.querySelector('.regulatory-card') && cardOrder === expectedOrder) {
+            const correct = await this.showQuiz(this.currentCard.quizQuestion);
+            if (correct) {
+                this.placeCard(this.currentCard, zone, true);
+            } else {
+                this.currentCard.element.classList.add('incorrect');
+                setTimeout(() => {
+                    this.currentCard.element.classList.remove('incorrect');
+                    this.currentCard.element.style.left = this.currentCard.element.dataset.prevLeft;
+                    this.currentCard.element.style.top = this.currentCard.element.dataset.prevTop;
+                }, 600);
+            }
+        } else {
+            this.currentCard.element.classList.add('incorrect');
+            setTimeout(() => {
+                this.currentCard.element.classList.remove('incorrect');
+                this.currentCard.element.style.left = this.currentCard.element.dataset.prevLeft;
+                this.currentCard.element.style.top = this.currentCard.element.dataset.prevTop;
+            }, 600);
+        }
+        this.currentCard = null;
+    }
+
+    showQuiz(quiz) {
+        return new Promise((resolve) => {
+            const modal = document.createElement('div');
+            modal.className = 'quiz-modal';
+            modal.style.position = 'fixed';
+            modal.style.zIndex = '9999';
+            modal.innerHTML = `
+                <div class="quiz-content">
+                    <h3>${quiz.question}</h3>
+                    <div class="quiz-buttons">
+                        <button class="quiz-btn true">True</button>
+                        <button class="quiz-btn false">False</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            const handleAnswer = (answer) => {
+                const correct = answer === quiz.answer;
+                modal.remove();
+                resolve(correct);
+            };
+
+            modal.querySelector('.true').addEventListener('click', () => handleAnswer(true));
+            modal.querySelector('.false').addEventListener('click', () => handleAnswer(false));
+        });
+    }
+
+    placeCard(card, zone, markPlaced) {
+        // Place card in drop zone
+        card.element.style.position = '';
+        card.element.style.top = '';
+        card.element.style.left = '';
+        card.element.style.right = '';
+        card.element.style.bottom = '';
+        card.element.style.margin = '';
+        card.element.style.width = '300px'; // Keep width for consistency
+        card.element.draggable = false;
+        card.placed = true;
+        // Hide the description when placed
+        const desc = card.element.querySelector('.card-content');
+        if (desc) desc.style.display = 'none';
+        zone.appendChild(card.element);
+        this.cardsPlaced++;
+        this.score += 100;
+        // Update score as X/Y
+        this.scoreElement.textContent = `${this.cardsPlaced}/${this.cards.length}`;
+        card.element.classList.add('placed');
+        // Check if all cards are placed
+        if (this.cardsPlaced === this.cards.length) {
+            this.endGame();
+        }
+    }
+
+    setState(state) {
+        this.state = state;
+        this.container.className = state.toLowerCase();
+        switch (state) {
+            case 'LOADING':
+                if (this.instructionsElement) this.instructionsElement.style.opacity = '0';
+                if (this.scoreElement) this.scoreElement.style.opacity = '0';
+                if (this.gameReadyElement) this.gameReadyElement.style.opacity = '0';
+                break;
+            case 'READY':
+                if (this.instructionsElement) this.instructionsElement.style.opacity = '1';
+                if (this.scoreElement) this.scoreElement.style.opacity = '0';
+                if (this.gameReadyElement) this.gameReadyElement.style.opacity = '1';
+                this.initializeGame();
+                // Set initial score as 0/Y
+                if (this.scoreElement) this.scoreElement.textContent = `0/${this.cards.length}`;
+                break;
+            case 'PLAYING':
+                if (this.instructionsElement) this.instructionsElement.style.opacity = '1';
+                if (this.scoreElement) this.scoreElement.style.opacity = '1';
+                if (this.gameReadyElement) this.gameReadyElement.style.opacity = '0';
+                this.enableDragAndDrop();
+                // Set initial score as 0/Y
+                if (this.scoreElement) this.scoreElement.textContent = `${this.cardsPlaced}/${this.cards.length}`;
+                break;
+            case 'ENDED':
+                if (this.instructionsElement) this.instructionsElement.style.opacity = '0';
+                if (this.scoreElement) this.scoreElement.style.opacity = '1';
+                if (this.gameReadyElement) this.gameReadyElement.style.opacity = '0';
                 break;
         }
     }
+
     startGame() {
-        if (this.state != this.STATES.PLAYING) {
-            this.scoreContainer.innerHTML = '0';
-            this.updateState(this.STATES.PLAYING);
-            this.addBlock();
-        }
+        this.setState('PLAYING');
     }
-    restartGame() {
-        this.updateState(this.STATES.RESETTING);
-        let oldBlocks = this.placedBlocks.children;
-        let removeSpeed = 0.2;
-        let delayAmount = 0.02;
-        for (let i = 0; i < oldBlocks.length; i++) {
-            TweenLite.to(oldBlocks[i].scale, removeSpeed, { x: 0, y: 0, z: 0, delay: (oldBlocks.length - i) * delayAmount, ease: Power1.easeIn, onComplete: () => this.placedBlocks.remove(oldBlocks[i]) });
-            TweenLite.to(oldBlocks[i].rotation, removeSpeed, { y: 0.5, delay: (oldBlocks.length - i) * delayAmount, ease: Power1.easeIn });
-        }
-        let cameraMoveSpeed = removeSpeed * 2 + (oldBlocks.length * delayAmount);
-        this.stage.setCamera(2, cameraMoveSpeed);
-        let countdown = { value: this.blocks.length - 1 };
-        TweenLite.to(countdown, cameraMoveSpeed, { value: 0, onUpdate: () => { this.scoreContainer.innerHTML = String(Math.round(countdown.value)); } });
-        this.blocks = this.blocks.slice(0, 1);
-        setTimeout(() => {
-            this.startGame();
-        }, cameraMoveSpeed * 1000);
-    }
-    placeBlock() {
-        let currentBlock = this.blocks[this.blocks.length - 1];
-        let newBlocks = currentBlock.place();
-        this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks.placed)
-            this.placedBlocks.add(newBlocks.placed);
-        if (newBlocks.chopped) {
-            this.choppedBlocks.add(newBlocks.chopped);
-            let positionParams = { y: '-=30', ease: Power1.easeIn, onComplete: () => this.choppedBlocks.remove(newBlocks.chopped) };
-            let rotateRandomness = 10;
-            let rotationParams = {
-                delay: 0.05,
-                x: newBlocks.plane == 'z' ? ((Math.random() * rotateRandomness) - (rotateRandomness / 2)) : 0.1,
-                z: newBlocks.plane == 'x' ? ((Math.random() * rotateRandomness) - (rotateRandomness / 2)) : 0.1,
-                y: Math.random() * 0.1,
-            };
-            if (newBlocks.chopped.position[newBlocks.plane] > newBlocks.placed.position[newBlocks.plane]) {
-                positionParams[newBlocks.plane] = '+=' + (40 * Math.abs(newBlocks.direction));
-            }
-            else {
-                positionParams[newBlocks.plane] = '-=' + (40 * Math.abs(newBlocks.direction));
-            }
-            TweenLite.to(newBlocks.chopped.position, 1, positionParams);
-            TweenLite.to(newBlocks.chopped.rotation, 1, rotationParams);
-        }
-        this.addBlock();
-    }
-    addBlock() {
-        let lastBlock = this.blocks[this.blocks.length - 1];
-        if (lastBlock && lastBlock.state == lastBlock.STATES.MISSED) {
-            return this.endGame();
-        }
-        this.scoreContainer.innerHTML = String(this.blocks.length - 1);
-        let newKidOnTheBlock = new Block(lastBlock);
-        this.newBlocks.add(newKidOnTheBlock.mesh);
-        this.blocks.push(newKidOnTheBlock);
-        this.stage.setCamera(this.blocks.length * 2);
-        if (this.blocks.length >= 5)
-            this.instructions.classList.add('hide');
-    }
+
     endGame() {
-        this.updateState(this.STATES.ENDED);
+        // Do nothing (disabled)
+        // this.setState('ENDED');
     }
-    tick() {
-        this.blocks[this.blocks.length - 1].tick();
-        this.stage.render();
-        requestAnimationFrame(() => { this.tick(); });
+
+    restartGame() {
+        this.setState('READY');
     }
 }
-let game = new Game();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const game = new RegulatoryGame();
+    game.setState('PLAYING'); // Force game to start in PLAYING state for debugging
+    window.currentGame = game;
+});

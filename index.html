@@ -33,6 +33,7 @@
     <!-- Then load your scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" defer></script>
+    <script src="TowerBlock/dist/data.js"></script>
     <script src="./TowerBlock/dist/script.js" defer></script>
     <script src="script.js" defer></script>
     <script src="autoplay.js" defer></script>
@@ -43,6 +44,15 @@
 </head>
 
 <body>
+  <div id="container" style="display:none; position:relative; z-index:9999;">
+    <div id="game"></div>
+    <div id="score">0</div>
+    <div id="instructions">Drag and drop cards in the correct order to build the regulatory lifecycle</div>
+    <div class="game-ready">
+      <div id="start-button">Start</div>
+    </div>
+  </div>
+
   <div class="wrapper">
 
     <!-- Background Effect -->
@@ -84,20 +94,6 @@
         <img src="Hamlyn logo.png" alt="Logo 1">
         <img id="ImperialLogo" src="Imperial logo.png" alt="Logo 2">
         <img id="WelcomeLogo" src="Welcome Trust logo.png" alt="Logo 3">
-      </div>
-
-      <!-- Game -->
-      <div id="container">
-        <div id="game"></div>
-        <div id="score">0</div>
-        <div id="instructions">Click to build a mini-game</div>
-        <div class="game-over">
-          <h2>Game Over</h2>
-          <p>Click or spacebar to start again</p>
-        </div>
-        <div class="game-ready">
-          <div id="start-button">Start</div>
-        <div></div>
       </div>
 
     </div>

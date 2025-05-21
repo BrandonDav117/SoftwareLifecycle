@@ -713,12 +713,13 @@ document.addEventListener("DOMContentLoaded", () => {
         fadeOutOrder.forEach((orderIndex, delayIndex) => {
             setTimeout(() => {
                 const element = ClickElementsFadeout[orderIndex];
+                if (element) {
                 element.classList.add("fade-out");
-
                 // Delay adding 'fade-out-hidden' to allow smooth opacity transition
                 setTimeout(() => {
                     element.classList.add("fade-out-hidden");
                 }, 1000); // This matches the opacity transition duration
+                }
             }, delayIndex * 250);
         });
 
@@ -747,6 +748,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fadeElements = document.querySelectorAll(".leftDisplay, .rightDisplay, .menu, .logosMainDisplay");
   const game = document.querySelector("#container #game");
   const gameOver = document.querySelector("#container .game-over");
+  const gameContainer = document.getElementById('container');
 
   let isContainerVisible = false;
   let isAnimating = false;
@@ -756,6 +758,8 @@ document.addEventListener("DOMContentLoaded", () => {
   async function toggleGame() {
     if (isAnimating) return;
     isAnimating = true;
+
+    // Disable pointer events during animation
     arrowsButton.style.pointerEvents = "none";
 
     // Update button text smoothly
@@ -770,32 +774,75 @@ document.addEventListener("DOMContentLoaded", () => {
       fadeElements.forEach((el) => el.classList.add("fade-out"));
       await delay(fadeElements.length * 250 + 100);
 
+      // Show the game container and fade in
+      gameContainer.style.display = 'block';
+      // Force reflow before adding visible
+      void gameContainer.offsetWidth;
+      gameContainer.classList.add('visible');
+      gameContainer.classList.add('playing');
+      gameContainer.style.opacity = "0";
+      await delay(10); // allow style to apply
+      gameContainer.style.opacity = "1";
+
       // Ensure the game elements are ready to transition
+      if (!game || !gameOver) {
+        console.warn('toggleGame: game or gameOver is null', { game, gameOver });
+      }
       [game, gameOver].forEach((el) => {
+        if (!el) return;
         el.style.transition = "opacity 1s ease-in-out";
         el.style.visibility = "visible";
         el.style.opacity = "0"; // Start from transparent
       });
-
       requestAnimationFrame(() => {
-        [game, gameOver].forEach((el) => (el.style.opacity = "1"));
+        [game, gameOver].forEach((el) => {
+          if (!el) return;
+          el.style.opacity = "1";
+        });
       });
 
     } else {
-      [game, gameOver].forEach((el) => (el.style.opacity = "0"));
+      console.debug('toggleGame: Switching back to interface');
+      if (!game || !gameOver) {
+        console.warn('toggleGame: game or gameOver is null', { game, gameOver });
+      }
+      [game, gameOver].forEach((el) => {
+        if (!el) return;
+        el.style.opacity = "0";
+      });
+      // Fade out the game container
+      gameContainer.style.opacity = "0";
+      // Wait for the game to fade out before fading in the interface
       await delay(1000);
-      [game, gameOver].forEach((el) => (el.style.visibility = "hidden"));
+      [game, gameOver].forEach((el) => {
+        if (!el) return;
+        el.style.visibility = "hidden";
+      });
 
+      // Now fade in the interface
       fadeElements.forEach((el) => el.classList.replace("fade-out", "fade-in"));
+
+      gameContainer.classList.remove('visible');
+      gameContainer.classList.remove('playing');
+      // Wait for the opacity transition to finish before hiding
+      await delay(10); // allow style to apply
+      gameContainer.style.display = 'none';
     }
 
     isContainerVisible = !isContainerVisible;
     await delay(1000);
     isAnimating = false;
+
+    // Re-enable pointer events after animation
     arrowsButton.style.pointerEvents = "auto";
   }
 
-  if (arrowsButton) arrowsButton.addEventListener("click", toggleGame);
+  if (arrowsButton) {
+    arrowsButton.addEventListener("click", () => {
+      console.debug("arrowsButton clicked");
+      toggleGame();
+    });
+  }
 });
 
 
