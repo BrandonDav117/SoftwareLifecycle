@@ -101,21 +101,24 @@ class RegulatoryCard {
                             window.currentGame.placeCard(this, zone, true);
                         } else {
                             if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
-                            card.style.left = card.dataset.prevLeft;
-                            card.style.top = card.dataset.prevTop;
+                            // Keep the card where it was dropped
+                            card.dataset.prevLeft = card.style.left;
+                            card.dataset.prevTop = card.style.top;
                         }
                     } else {
                         if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
-                        card.style.left = card.dataset.prevLeft;
-                        card.style.top = card.dataset.prevTop;
+                        // Keep the card where it was dropped
+                        card.dataset.prevLeft = card.style.left;
+                        card.dataset.prevTop = card.style.top;
                     }
                     matched = true;
                     break;
                 }
             }
             if (!matched) {
-                card.style.left = card.dataset.prevLeft;
-                card.style.top = card.dataset.prevTop;
+                // Keep the card where it was dropped
+                card.dataset.prevLeft = card.style.left;
+                card.dataset.prevTop = card.style.top;
             }
             // Remove highlight
             getDropZones().forEach(zone => zone.classList.remove('active'));
@@ -187,21 +190,24 @@ class RegulatoryCard {
                             window.currentGame.placeCard(this, zone, true);
                         } else {
                             if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
-                            card.style.left = card.dataset.prevLeft;
-                            card.style.top = card.dataset.prevTop;
+                            // Keep the card where it was dropped
+                            card.dataset.prevLeft = card.style.left;
+                            card.dataset.prevTop = card.style.top;
                         }
                     } else {
                         if (lastDropZone) handleIncorrectAction(lastDropZone, window.currentGame.scoreElement);
-                        card.style.left = card.dataset.prevLeft;
-                        card.style.top = card.dataset.prevTop;
+                        // Keep the card where it was dropped
+                        card.dataset.prevLeft = card.style.left;
+                        card.dataset.prevTop = card.style.top;
                     }
                     matched = true;
                     break;
                 }
             }
             if (!matched) {
-                card.style.left = card.dataset.prevLeft;
-                card.style.top = card.dataset.prevTop;
+                // Keep the card where it was dropped
+                card.dataset.prevLeft = card.style.left;
+                card.dataset.prevTop = card.style.top;
             }
             // Remove highlight
             getDropZones().forEach(zone => zone.classList.remove('active'));
@@ -377,22 +383,27 @@ class RegulatoryGame {
             modal.innerHTML = `
                 <div class="quiz-content">
                     <h3>${quiz.question}</h3>
-                    <div class="quiz-buttons">
-                        <button class="quiz-btn true">True</button>
-                        <button class="quiz-btn false">False</button>
+                    <div class="quiz-options">
+                        ${quiz.options.map((option, index) => `
+                            <button class="quiz-btn" data-index="${index}">${option}</button>
+                        `).join('')}
                     </div>
                 </div>
             `;
             document.body.appendChild(modal);
 
-            const handleAnswer = (answer) => {
-                const correct = answer === quiz.answer;
+            const handleAnswer = (selectedIndex) => {
+                const correct = selectedIndex === quiz.correctIndex;
                 modal.remove();
                 resolve(correct);
             };
 
-            modal.querySelector('.true').addEventListener('click', () => handleAnswer(true));
-            modal.querySelector('.false').addEventListener('click', () => handleAnswer(false));
+            modal.querySelectorAll('.quiz-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const selectedIndex = parseInt(button.dataset.index);
+                    handleAnswer(selectedIndex);
+                });
+            });
         });
     }
 

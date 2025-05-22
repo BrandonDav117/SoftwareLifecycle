@@ -67,7 +67,7 @@ html, body {
     user-select: none;
     z-index: 10;
     position: absolute;
-    font-size: 1em;
+    font-size: 0.8em;
     cursor: pointer;
     bottom: 120px !important;
 }
@@ -209,21 +209,24 @@ html, body {
     position: relative;
 }
 
-.quiz-buttons {
+.quiz-options {
     display: flex;
-  justify-content: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 12px;
     margin-top: 20px;
 }
 
 .quiz-btn {
-    padding: 10px 30px;
+    padding: 12px 20px;
     border: none;
     border-radius: 5px;
     background: #007bff;
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
+    text-align: left;
+    font-size: 0.95em;
+    line-height: 1.4;
 }
 
 .quiz-btn:hover {
