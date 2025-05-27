@@ -33,19 +33,12 @@ function initAutoplay() {
     // Get all subcategories in order
     subcategories = Array.from(document.querySelectorAll('.subCategory'));
     
-    // Add click handler to Hamlyn logo
-    const hamlynLogo = document.querySelector('#HamlynLogo');
-    if (hamlynLogo) {
-        hamlynLogo.style.cursor = 'pointer';
-        hamlynLogo.addEventListener('click', (event) => {
+    // Add click handler to autoplay button
+    const autoplayIcon = document.querySelector('#autoplayIcon');
+    if (autoplayIcon) {
+        autoplayIcon.addEventListener('click', (event) => {
             event.stopPropagation();
-            // Add click animation class
-            hamlynLogo.classList.add('clicked');
-            // Remove class after animation completes
-            setTimeout(() => {
-                hamlynLogo.classList.remove('clicked');
-            }, 300);
-
+            
             if (isAutoplayActive) {
                 // If autoplay is active, stop it and reset to first section
                 stopAutoplay();
@@ -57,9 +50,11 @@ function initAutoplay() {
                 document.querySelectorAll('.subCategoryPart.active, .subCategoryPartContinuous.active').forEach(part => {
                     part.classList.remove('active');
                 });
+                autoplayIcon.classList.remove('active');
             } else {
                 // If autoplay is not active, start it
                 startAutoplay();
+                autoplayIcon.classList.add('active');
             }
         });
     }
@@ -103,14 +98,18 @@ function initAutoplay() {
 
     // Add document click handler to stop autoplay when clicking anywhere else
     document.addEventListener('click', (event) => {
-        // Check if the click was on the logo, play icon, or pause icon
-        const isLogoClick = event.target.closest('#HamlynLogo');
+        // Check if the click was on the autoplay icon, play icon, or pause icon
+        const isAutoplayClick = event.target.closest('#autoplayIcon');
         const isPlayClick = event.target.closest('#playIcon');
         const isPauseClick = event.target.closest('#pauseIcon');
         
         // If click was not on any of these elements and autoplay is active, stop it
-        if (!isLogoClick && !isPlayClick && !isPauseClick && isAutoplayActive) {
+        if (!isAutoplayClick && !isPlayClick && !isPauseClick && isAutoplayActive) {
             stopAutoplay();
+            const autoplayIcon = document.querySelector('#autoplayIcon');
+            if (autoplayIcon) {
+                autoplayIcon.classList.remove('active');
+            }
         }
     });
 
@@ -147,25 +146,48 @@ function resumePlayback() {
 function updateControlState() {
     const playIcon = document.querySelector('#playIcon');
     const pauseIcon = document.querySelector('#pauseIcon');
+    const autoplayIcon = document.querySelector('#autoplayIcon');
     const video = document.querySelector('#categoryVideo');
 
     // Enable/disable play button
     if (video) {
         playIcon.classList.remove('disabled');
         pauseIcon.classList.remove('disabled');
+        autoplayIcon.classList.remove('disabled');
         
-        if (isPaused) {
+        if (isAutoplayActive) {
+            // When autoplay is active, remove active state from play/pause buttons
+            playIcon.style.opacity = '0.5';
+            pauseIcon.style.opacity = '0.5';
+            playIcon.classList.remove('active');
+            pauseIcon.classList.remove('active');
+            autoplayIcon.style.opacity = '1';
+            autoplayIcon.classList.add('active');
+        } else if (isPaused) {
             playIcon.style.opacity = '1';
             pauseIcon.style.opacity = '0.5';
+            autoplayIcon.style.opacity = '0.5';
+            playIcon.classList.add('active');
+            pauseIcon.classList.remove('active');
+            autoplayIcon.classList.remove('active');
         } else {
             playIcon.style.opacity = '0.5';
             pauseIcon.style.opacity = '1';
+            autoplayIcon.style.opacity = '0.5';
+            playIcon.classList.remove('active');
+            pauseIcon.classList.add('active');
+            autoplayIcon.classList.remove('active');
         }
     } else {
         playIcon.classList.add('disabled');
         pauseIcon.classList.add('disabled');
+        autoplayIcon.classList.add('disabled');
         playIcon.style.opacity = '0.5';
         pauseIcon.style.opacity = '0.5';
+        autoplayIcon.style.opacity = '0.5';
+        playIcon.classList.remove('active');
+        pauseIcon.classList.remove('active');
+        autoplayIcon.classList.remove('active');
     }
 }
 
@@ -189,10 +211,10 @@ function startAutoplay() {
         part.classList.remove('active');
     });
     
-    const hamlynLogo = document.querySelector('#HamlynLogo');
-    hamlynLogo.classList.add('clicked');
-    hamlynLogo.classList.add('autoplay-active');
-    setTimeout(() => hamlynLogo.classList.remove('clicked'), 300);
+    const autoplayIcon = document.querySelector('#autoplayIcon');
+    if (autoplayIcon) {
+        autoplayIcon.classList.add('active');
+    }
     
     // Start from the first subcategory
     if (subcategories.length > 0) {
@@ -470,19 +492,23 @@ function playSubcategoryParts() {
 function stopAutoplay() {
     isAutoplayActive = false;
     isPaused = true;
+    
+    const autoplayIcon = document.querySelector('#autoplayIcon');
+    if (autoplayIcon) {
+        autoplayIcon.classList.remove('active');
+    }
+    
+    // Clear all highlighting classes
+    document.querySelectorAll('.subCategoryPart.active, .subCategoryPartContinuous.active').forEach(part => {
+        part.classList.remove('active');
+    });
+    
+    // Stop any playing video
     const video = document.querySelector('#categoryVideo');
     if (video) {
         video.pause();
-        video.removeEventListener('ended', playNextSubcategory);
     }
-    const hamlynLogo = document.querySelector('#HamlynLogo');
-    hamlynLogo.classList.remove('autoplay-active');
-    // Force a reflow to ensure the animation stops
-    void hamlynLogo.offsetWidth;
-    // Reset the transform
-    hamlynLogo.style.transform = 'translateY(-40px) scale(1) rotate(0deg)';
-    // Remove any existing animation classes
-    hamlynLogo.classList.remove('clicked');
+    
     updateControlState();
 }
 

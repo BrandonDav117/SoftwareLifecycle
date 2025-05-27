@@ -96,17 +96,28 @@ html *::after {
     top: 0;
 }
 
+#WelcomeLogo2 {
+    width: auto !important;
+    height: 5vh !important;
+    position: absolute !important;
+    min-height: 50px;
+    margin-top: -12.5px;
+    left: 22.5%;
+}
+
 #HamlynLogo {
     width: auto !important;
     height: 10.5vh !important;
-    position: relative !important;
+    position: absolute !important;
     min-height: 100px;
     margin-top: 0;
     transition: transform 0.2s ease;
-    left: 0 !important;
+    left: 16% !important;
     cursor: pointer;
     vertical-align: top;
     transform: translateY(-40px);
+    margin-top: 0;
+    top: 0;
 }
 
 #HamlynLogo.clicked {
@@ -1182,6 +1193,7 @@ body{
     width: 100%;
     position: absolute;
     top: 50vh;
+
 } */
 
 .context h1{
@@ -1448,51 +1460,66 @@ body{
 }
 
 .control-icon {
-    width: 24px;
-    height: 24px;
-    fill: black !important;
+    width: 48px;
+    height: 48px;
+    margin-top: -10px;
     cursor: pointer;
-    transition: transform 0.2s ease;
-    margin: 0 10px;
-    z-index: 100;
-    position: relative;
-    top: 0;
-    vertical-align: top;
-    transform: translateY(-40px);
+    fill: #333;
+    transition: all 0.3s ease;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 5px 5px 10px #d9d9d9,
+                -5px -5px 10px #ffffff;
 }
 
 .control-icon:hover {
-    transform: translateY(-40px) scale(1.1);
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 12px #d9d9d9,
+                -6px -6px 12px #ffffff;
+    border-color: #0390b7;
+    fill: #0390b7;
 }
 
-#playIcon {
-    margin-right: 15px;
-    margin-top: 0;
-}
-
-#pauseIcon {
-    margin-left: 15px;
-    margin-top: 0;
+.control-icon:active {
+    transform: translateY(0);
+    box-shadow: inset 5px 5px 10px #d9d9d9,
+                inset -5px -5px 10px #ffffff;
 }
 
 .control-icon.disabled {
     opacity: 0.5;
-    cursor: pointer;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
-.subCategory.highlight .icon {
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
-    animation: strok 2.8s reverse forwards;
-    stroke: black !important;
-    fill: white !important;
+#playIcon {
+    margin-right: 2px;
 }
 
-.subCategory.highlight .icon.active {
-    stroke: var(--highlight-color);
-    animation: continuousDraw 14s linear infinite;
-    stroke: black !important;
-    fill: white !important;
+#pauseIcon {
+    margin-left: 2px;
+}
+
+#playIcon.active, #pauseIcon.active {
+    border-color: #0390b7;
+    fill: #0390b7;
+}
+
+#autoplayIcon.active {
+    animation: rotate 12s linear infinite;
+    border-color: #0390b7;
+    fill: #0390b7;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 #container {
@@ -1586,11 +1613,10 @@ body{
 }
 
 /* Scale down interface for smaller screens */
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 750px) {
     html {
         font-size: 15px;
     }
-    
     .containerTest {
         transform: scale(0.9);
         transform-origin: top center;
@@ -1599,8 +1625,11 @@ body{
     
     .leftDisplay, .rightDisplay {
         top: 12%;
-        transform: scale(0.94);
+        transform: scale(0.9);
         transform-origin: top center;
+    }
+    .menuContainer {
+        bottom: -40%;
     }
     
     .drop-zones-container {
@@ -1621,23 +1650,27 @@ body{
 }
 
 /* Even smaller screens */
-@media screen and (max-height: 600px) {
+@media screen and (max-height: 650px) {
+    html {
+        font-size: 13px;
+    }
     .containerTest {
+        top: 5%;
         transform: scale(0.8);
+        transform-origin: top center;
     }
     
     .leftDisplay, .rightDisplay {
+        top: 12%;
         transform: scale(0.8);
+        transform-origin: top center;
     }
-    
     .drop-zones-container {
         margin-top: 20px;
     }
-}
-
-/* Base responsive styles */
-html {
-    font-size: 16px;
+    .menuContainer {
+        bottom: -34%;
+    }
 }
 
 /* Large screens (1440px and up) */
@@ -1716,29 +1749,21 @@ html {
     }
 }
 
-
-@media screen and (max-height: 700px) {
-    .containerTest {
-        transform: scale(0.96);
-    }
-    
-    .leftDisplay, .rightDisplay {
-        transform: scale(0.8);
-        top: 12%;
-    }
-    
-    .drop-zones-container {
-        margin-top: 20px;
-    }
-    
-    .menuContainer {
-        bottom: -30%;
-    }
-}
-
 /* Hide interface for very small screens */
 @media screen and (max-width: 47.9375em) and (max-height: 500px) {
     body {
         display: none !important;
     }
+}
+
+@media screen and (max-width: 1420px) {
+  #ImperialLogo2 {
+    
+  }
+  #HamlynLogo {
+    display: none;
+  }
+  #WelcomeLogo2 {
+    display: none;
+  }
 }
