@@ -113,7 +113,6 @@ html *::after {
     margin-top: 0;
     transition: transform 0.2s ease;
     left: 16% !important;
-    cursor: pointer;
     vertical-align: top;
     transform: translateY(-40px);
     margin-top: 0;
