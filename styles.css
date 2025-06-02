@@ -523,10 +523,6 @@ html *::after {
     font-size: 1.6rem;
 }
 
-/* #testTower {
-    width: 200vw;
-} */
-
 #heading {
     font-size: 1.6rem;
     font-weight: bold;
@@ -753,7 +749,7 @@ body{
 
 .categoryHeadingsContainer {
     position: absolute; /* Make it stick to the parent */
-    top: -6.8%;  /* Aligns it at the very top */
+    top: -6.3%;  /* Aligns it at the very top */
     left: 0%;
     
     display: flex;
@@ -917,13 +913,16 @@ body{
 }
 
 .subCategoryPart.active {
-    background-color: var(--highlight-color); 
-    color: white !important;
-    font-weight: bolder;
-
-    border-color: white;
-    transform: scale(1.03); /* Slight zoom */
-    transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    background: linear-gradient(120deg, var(--highlight-color) 60%, rgba(255,255,255,0.35) 100%) !important;
+    color: #fff !important;
+    font-weight: bold;
+    border-color: #e0e0e0 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10), 0 1.5px 8px rgba(0,0,0,0.08) !important;
+    opacity: 1 !important;
+    transition: opacity 0.4s ease, color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(1.5px);
+    border: 1.5px solid rgba(255,255,255,0.5);
 }
 
 .ph-arrow-u-up-left {
@@ -1009,15 +1008,16 @@ body{
 }
 
 .subCategoryPartContinuous.active {
-    background-color: var(--highlight-color); 
+    background: linear-gradient(120deg, var(--highlight-color) 60%, rgba(255,255,255,0.35) 100%) !important;
+    color: #fff !important;
+    font-weight: bold;
+    border-color: #e0e0e0 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10), 0 1.5px 8px rgba(0,0,0,0.08) !important;
     opacity: 1 !important;
-    color: white;
-    font-weight: bolder;
-    transition: opacity 0.4s ease;
-
-    border-color: white;
-    transform: scale(1.01); /* Slight zoom */
-    transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    transition: opacity 0.4s ease, color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(1.5px);
+    border: 1.5px solid rgba(255,255,255,0.5);
 }
 
 #QMS {
@@ -1620,13 +1620,16 @@ body{
     .containerTest {
         transform: scale(0.9);
         transform-origin: top center;
-        height: 90vh;
+        
     }
     
     .leftDisplay, .rightDisplay {
         top: 12%;
         transform: scale(0.9);
         transform-origin: top center;
+    }
+    .rightDisplay {
+        width: 34%;
     }
     .menuContainer {
         bottom: -40%;
@@ -1651,25 +1654,12 @@ body{
 
 /* Even smaller screens */
 @media screen and (max-height: 650px) {
-    html {
-        font-size: 13px;
-    }
-    .containerTest {
-        top: 5%;
-        transform: scale(0.8);
-        transform-origin: top center;
-    }
-    
-    .leftDisplay, .rightDisplay {
-        top: 12%;
-        transform: scale(0.8);
-        transform-origin: top center;
-    }
+
     .drop-zones-container {
         margin-top: 20px;
     }
     .menuContainer {
-        bottom: -34%;
+        bottom: -38%;
     }
 }
 
@@ -1691,11 +1681,11 @@ body{
     }
     
     .leftDisplay {
-        width: 60%;
+        width: 54%;
     }
     
     .rightDisplay {
-        width: 35%;
+        width: 40%;
     }
 }
 
@@ -1708,44 +1698,23 @@ body{
     .containerTest {
         padding: 0 1.5em;
     }
-    
-    .leftDisplay {
-        width: 55%;
-    }
-    
-    .rightDisplay {
-        width: 40%;
-    }
-    
-    .menuContainer {
-        bottom: -40%;
-    }
-}
 
-/* Extra small screens (below 768px) */
-@media screen and (max-width: 47.9375em) {
-    html {
-        font-size: 13px;
-    }
-    
-    .containerTest {
-        padding: 0 1em;
+    .leftDisplay, .rightDisplay {
+        top: 12%;
+        transform: scale(0.9);
+        transform-origin: top center;
     }
     
     .leftDisplay {
-        width: 100%;
-        height: 60vh;
+        width: 52%;
     }
     
     .rightDisplay {
-        width: 100%;
-        height: 30vh;
-        top: auto;
-        bottom: 0;
+        width: 42%;
     }
     
     .menuContainer {
-        bottom: -35%;
+        bottom: -38%;
     }
 }
 
@@ -1757,13 +1726,97 @@ body{
 }
 
 @media screen and (max-width: 1420px) {
-  #ImperialLogo2 {
-    
-  }
   #HamlynLogo {
     display: none;
   }
   #WelcomeLogo2 {
     display: none;
   }
+}
+
+/* Quiz modal */
+.quiz-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.quiz-content {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    z-index: 10000;
+    position: relative;
+    border: 2px solid #e0e0e0;
+    box-shadow: 8px 8px 16px #d9d9d9,
+                -8px -8px 16px #ffffff;
+}
+
+.quiz-content h3 {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.quiz-btn {
+    background: #fff !important;
+    color: #333 !important;
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    box-shadow: 5px 5px 12px #e9e9e9, -5px -5px 12px #fff !important;
+    padding: 15px 20px !important;
+    margin-bottom: 8px !important;
+    outline: none !important;
+    font-weight: 500 !important;
+    font-size: 1em !important;
+    text-align: left !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(.4,0,.2,1) !important;
+}
+
+.quiz-btn:hover, .quiz-btn:focus {
+    border-color: #0390b7 !important;
+    color: #0390b7 !important;
+    background: #fafdff !important;
+    box-shadow: 0 0 0 2px #e0f4ff, 5px 5px 12px #e9e9e9, -5px -5px 12px #fff !important;
+}
+
+.quiz-btn:active {
+    border-color: #0390b7 !important;
+    color: #0390b7 !important;
+    background: #fafdff !important;
+    box-shadow: inset 2px 2px 6px #e0e0e0 !important;
+}
+
+.quiz-btn.correct {
+    background: linear-gradient(145deg, #e6fff6, #ccfff0);
+    border-color: #4CAF50;
+    color: #2E7D32;
+    box-shadow: 0 0 0 2px #d6ffe6, 5px 5px 12px #e9e9e9, -5px -5px 12px #fff;
+}
+
+.quiz-btn.incorrect {
+    background: linear-gradient(145deg, #ffe6e6, #ffcccc);
+    border-color: #f44336;
+    color: #c62828;
+    box-shadow: 0 0 0 2px #ffe6e6, 5px 5px 12px #e9e9e9, -5px -5px 12px #fff;
 }

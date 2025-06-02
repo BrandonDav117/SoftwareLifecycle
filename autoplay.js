@@ -38,7 +38,7 @@ function initAutoplay() {
     if (autoplayIcon) {
         autoplayIcon.addEventListener('click', (event) => {
             event.stopPropagation();
-            
+
             if (isAutoplayActive) {
                 // If autoplay is active, stop it and reset to first section
                 stopAutoplay();
