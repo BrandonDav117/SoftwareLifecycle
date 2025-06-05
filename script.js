@@ -136,67 +136,6 @@ const subCategoryPartContinuousContent = [
 // Add a variable to track the current highlighted subcategory
 let currentHighlightedSubcategory = null;
 
-// Video preloading functionality
-const videoCache = new Map();
-const preloadQueue = [];
-let isPreloading = false;
-
-function preloadVideo(src) {
-  if (videoCache.has(src)) return;
-  
-  const video = document.createElement('video');
-  video.preload = 'auto';
-  video.src = src;
-  
-  videoCache.set(src, video);
-  
-  // Add to preload queue
-  preloadQueue.push(src);
-  
-  // Start preloading if not already in progress
-  if (!isPreloading) {
-    processPreloadQueue();
-  }
-}
-
-function processPreloadQueue() {
-  if (preloadQueue.length === 0) {
-    isPreloading = false;
-    return;
-  }
-  
-  isPreloading = true;
-  const src = preloadQueue.shift();
-  const video = videoCache.get(src);
-  
-  video.load();
-  
-  video.onloadeddata = () => {
-    console.log(`Preloaded video: ${src}`);
-    processPreloadQueue();
-  };
-  
-  video.onerror = (error) => {
-    console.error(`Error preloading video ${src}:`, error);
-    processPreloadQueue();
-  };
-}
-
-// Preload all videos from content arrays
-function preloadAllVideos() {
-  const allContent = [
-    ...rightDisplayContent2,
-    ...subCategoryContent,
-    ...subCategoryPartContinuousContent
-  ];
-  
-  allContent.forEach(content => {
-    if (content.videoSrc) {
-      preloadVideo(content.videoSrc);
-    }
-  });
-}
-
 function clickMenuItem(menuIndex, item, itemIndex) {
   // Reset active states for other menus
   menus.forEach((menu, i) => {
@@ -584,10 +523,7 @@ function updateRightDisplay(content) {
   }
 
   // Step 1: Fade out video
-  if (videoElement) {
-    videoElement.style.opacity = "0";
-    videoElement.pause();
-  }
+  videoElement.style.opacity = "0";
 
   // Wait for opacity transition to complete before hiding
   setTimeout(() => {
@@ -595,40 +531,8 @@ function updateRightDisplay(content) {
 
     // Update video source only after fade-out completes
     if (videoElement && content.videoSrc) {
-      // Check if video is preloaded
-      const preloadedVideo = videoCache.get(content.videoSrc);
-      
-      if (preloadedVideo) {
-        // Use preloaded video
-        videoElement.src = content.videoSrc;
-        videoElement.load();
-      } else {
-        // If not preloaded, load it now and add to cache
-        videoElement.src = content.videoSrc;
-        videoElement.load();
-        preloadVideo(content.videoSrc);
-      }
-
-      // Add error handling
-      videoElement.onerror = (error) => {
-        console.error('Error loading video:', error);
-        // Show error message in the description
-        if (fields.description) {
-          fields.description.innerHTML = "Error loading video. Please try again later.";
-          fields.description.style.display = "block";
-          fields.description.style.opacity = "1";
-        }
-      };
-
-      // Add loading indicator
-      videoElement.onwaiting = () => {
-        if (fields.description) {
-          fields.description.innerHTML = "Loading video...";
-          fields.description.style.display = "block";
-          fields.description.style.opacity = "1";
-        }
-      };
-
+      videoElement.src = content.videoSrc;
+      videoElement.load();
       videoElement.style.display = "block";
     }
 
@@ -665,24 +569,22 @@ function updateRightDisplay(content) {
       // Fade in text and border first
       Object.values(fields).forEach(element => element.style.opacity = "1");
       if (border) border.style.opacity = "1";
-      if (videoElement && content.videoSrc) {
-        videoElement.style.opacity = "1";
-        // Try to play the video
-        const playPromise = videoElement.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.error('Error playing video:', error);
-          });
-        }
-      }
+      if (videoElement && content.videoSrc) videoElement.style.opacity = "1";
 
       // Show and animate the icon immediately
       if (rightDisplayIcon) {
+        // Make icon visible
         rightDisplayIcon.style.opacity = "1";
+        
+        // Force reflow
         void rightDisplayIcon.offsetWidth;
+        
+        // Start animation and add active class immediately
         rightDisplayIcon.querySelectorAll('path').forEach(path => {
           path.style.animation = 'strok 2.8s reverse forwards';
         });
+        
+        // Add active class immediately to start fill transition
         rightDisplayIcon.classList.add('active');
         rightDisplayIcon.querySelectorAll('path').forEach(path => {
           path.style.fill = 'white';
@@ -692,7 +594,7 @@ function updateRightDisplay(content) {
       typeWriterEffect(content);
     }, 300);
 
-  }, 1000);
+  }, 1000); // Matches the fade-out duration
 }
 
 
@@ -1014,13 +916,4 @@ function playVideo() {
 function pauseVideo() {
   video.pause();
 }
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Start preloading videos
-  preloadAllVideos();
-  
-  // Initialize autoplay
-  initAutoplay();
-});
 
